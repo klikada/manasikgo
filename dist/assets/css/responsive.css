@@ -1,0 +1,611 @@
+/* Tablet (landscape/portrait) */
+@media (max-width: 991.98px) {
+  .article-detail-layout {
+    display: block;
+  }
+  .article-toc-sidebar {
+    position: static;
+    max-height: none;
+    margin-top: 2rem;
+  }
+  .article-toc-sidebar .article-toc {
+    margin-bottom: 2rem;
+  }
+  /* Di layar mobile/tablet, Daftar Isi tidak lagi tampil sebagai bagian
+     dari alur artikel — nav-nya dipindah JS (positionArticleTocForViewport)
+     langsung ke <body> dan disajikan sebagai bottom-sheet yang dibuka
+     lewat tombol bulat melayang (.article-toc-bubble) di pojok layar. */
+  .article-toc--sheet {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1045;
+    max-height: min(75vh, 560px);
+    margin: 0 !important;
+    overflow-y: auto;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -12px 30px rgba(15, 56, 43, 0.18);
+    transform: translateY(100%);
+    transition: transform 0.28s ease;
+  }
+  .article-toc--sheet.is-open {
+    transform: translateY(0);
+  }
+  .article-toc--sheet::before {
+    top: 0.6rem;
+    right: 0;
+    left: 0;
+    width: 2.5rem;
+    height: 4px;
+    margin: 0 auto;
+    border-radius: 999px;
+    background: rgba(94, 143, 115, 0.25);
+  }
+  .article-toc-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding-top: 0.5rem;
+  }
+  .article-toc-header .article-toc-title {
+    margin: 0;
+  }
+  .article-toc-close {
+    display: grid;
+    width: 2rem;
+    height: 2rem;
+    place-items: center;
+    border: none;
+    border-radius: 50%;
+    background: rgba(94, 143, 115, 0.1);
+    color: var(--primary);
+    font-size: 0.85rem;
+  }
+  .article-toc-bubble {
+    position: fixed;
+    bottom: 1rem;
+    left: 1rem;
+    z-index: 1030;
+    display: none;
+    width: 3.1rem;
+    height: 3.1rem;
+    place-items: center;
+    border: none;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #fff;
+    font-size: 1.2rem;
+    box-shadow: 0 10px 24px rgba(15, 56, 43, 0.28);
+  }
+  .article-toc-bubble:not([hidden]) {
+    display: grid;
+  }
+  .article-toc-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1040;
+    background: rgba(20, 33, 27, 0.45);
+  }
+  .section {
+    padding: 2.5rem 0;
+  }
+  .hero {
+    padding: 5.5rem 0 2.5rem;
+  }
+  .hero-compact {
+    padding: calc(5.5rem + 26px) 0 2rem;
+  }
+  .hero-search {
+    background: rgba(255, 253, 248, 0.96);
+    padding: 0.3rem;
+    border: none;
+    border-radius: 999px;
+    box-shadow: 0 10px 22px -14px rgba(22, 35, 29, 0.4);
+  }
+  .hero-search .row {
+    flex-wrap: nowrap;
+  }
+  .hero-search .col-lg {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: none;
+  }
+  .hero-search .col-lg-auto {
+    flex: 0 0 auto;
+    width: auto;
+    max-width: none;
+  }
+  .hero-search .search-field-wrap {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+  }
+  .hero-search .btn {
+    width: 40px;
+    height: 40px;
+    min-height: 40px;
+    min-width: 40px;
+    padding: 0;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: none;
+  }
+  .hero-search .btn i {
+    margin: 0;
+    font-size: 1.05rem;
+  }
+  .hero-search-btn-label {
+    display: none;
+  }
+  .search-panel {
+    margin-top: -1.25rem;
+  }
+  .nav-clock {
+    display: none !important;
+  }
+  .hub-card {
+    padding: 0.9rem;
+  }
+  .hub-card .hub-icon {
+    width: 36px;
+    height: 36px;
+    flex-basis: 36px;
+    font-size: 1rem;
+  }
+}
+
+/* Tablet portrait / large phones */
+@media (max-width: 767.98px) {
+  .section-title {
+    font-size: 1.15rem;
+  }
+  /* Judul hero: satu formula clamp yang mengalir halus mengikuti lebar
+     layar (bukan lompat antar breakpoint seperti sebelumnya), dan nilainya
+     dibuat lebih besar dari sebelumnya karena ini judul utama hero --
+     harus lebih menonjol dibanding eyebrow & subjudul. Di titik lebar
+     ~551px formula ini sudah mencapai 2.15rem, sama persis dengan nilai
+     dasar .hero h1 di style.css untuk lebar di bawah 860px, jadi tidak
+     ada lompatan ukuran saat melewati breakpoint desktop (768px). */
+  .hero h1 {
+    font-size: clamp(1.6rem, 4.5vw + 0.6rem, 2.15rem);
+  }
+  .col-6.col-lg-3 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+  .admin-content {
+    padding: 0 0.85rem 1.5rem;
+  }
+  .table-responsive {
+    font-size: 0.88rem;
+  }
+
+  /* Hero mobile: compact (tidak fullscreen). Konten teksnya sama persis
+     dengan desktop (tidak ada yang disembunyikan), cuma ukuran & jarak
+     yang menyesuaikan layar sempit. */
+  .hero-compact {
+    padding-top: calc(4.25rem + 26px);
+    padding-bottom: 2rem;
+  }
+  .hero-trust {
+    gap: 0.45rem !important;
+  }
+  .hero-trust-item {
+    font-size: 0.74rem;
+    padding: 0.35rem 0.7rem;
+    text-align: left;
+  }
+  /* Chip topik jadi satu baris yang bisa digeser, bukan menumpuk 2 baris */
+  .hero-quick-terms {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin-inline: -1rem;
+    padding-inline: 1rem;
+    padding-bottom: 2px;
+    mask-image: linear-gradient(
+      90deg,
+      transparent,
+      #000 5%,
+      #000 92%,
+      transparent
+    );
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent,
+      #000 5%,
+      #000 92%,
+      transparent
+    );
+  }
+  .hero-quick-terms::-webkit-scrollbar {
+    display: none;
+  }
+  .hero-quick-terms a {
+    flex: 0 0 auto;
+  }
+
+  /* Konten hero di mobile: dulu dijadikan satu kolom flex yang direntangkan
+     penuh dari atas sampai bawah hero (justify-content: space-between,
+     margin dihapus semua) supaya mengisi layar penuh -- tapi ini membuat
+     susunan & jarak antar tulisan di mobile beda dari desktop. Sekarang
+     dikembalikan ke alur normal: konten tetap satu blok yang berada di
+     tengah (align-items: center, sama seperti perilaku dasar .hero),
+     dan jarak antar elemen memakai class Bootstrap yang sama persis
+     dengan desktop (mb-3, mb-3, mb-4, mt-4 yang sudah ada di HTML) --
+     jadi susunan & jaraknya konsisten di semua ukuran layar, tidak perlu
+     override apa pun di sini lagi. */
+  .hero-compact .eyebrow {
+    /* Eyebrow dibuat lebih kecil di mobile supaya tidak mengalahkan judul
+       secara visual -- judul (h1) tetap elemen paling menonjol. */
+    font-size: clamp(0.58rem, 1.6vw + 0.4rem, 0.68rem);
+    padding: clamp(0.28rem, 1vw + 0.18rem, 0.35rem)
+      clamp(0.6rem, 2vw + 0.35rem, 0.8rem);
+    letter-spacing: 0.08em;
+  }
+  .hero-compact h1 {
+    line-height: 1.28;
+  }
+  .hero-subtitle {
+    /* Subjudul dibuat lebih kecil di mobile, mengalir mengikuti lebar
+       layar, supaya tidak lebih dominan dari judul. */
+    font-size: clamp(0.86rem, 1.6vw + 0.55rem, 0.96rem) !important;
+  }
+
+  /* Isyarat gulir: teksnya disembunyikan di mobile supaya ringkas, cukup
+     panahnya saja, dan jaraknya dari tepi bawah sedikit lebih dekat. */
+  .hero-scroll-cue {
+    bottom: 12px;
+  }
+  .hero-scroll-cue-text {
+    display: none;
+  }
+  .hero-scroll-cue-arrow {
+    width: 26px;
+    height: 26px;
+    font-size: 0.85rem;
+  }
+
+  /* Header tiap section di mobile: deskripsi (paragraf .lead-muted) di
+     bawah judul disembunyikan supaya section header cuma tampil eyebrow +
+     judul saja, lebih ringkas untuk layar sempit. Konten paragrafnya tetap
+     ada di HTML (tetap tampil normal di tablet/desktop), cuma disembunyikan
+     lewat CSS di breakpoint ini. */
+  .section-heading p.lead-muted,
+  .services-section-header p.lead-muted,
+  #cerita-jemaah p.lead-muted {
+    display: none;
+  }
+
+  /* Eyebrow + judul tiap section header rata tengah di mobile (bukan rata
+     kiri seperti di desktop/tablet). Baris header (.section-header-row)
+     pakai utility Bootstrap "d-flex/justify-content-between/align-items-
+     start" yang semuanya !important, jadi override-nya di sini juga perlu
+     !important supaya benar-benar menang (kalau tidak, baris header tetap
+     jadi flex-row seperti semula dan teksnya tidak kelihatan di tengah). */
+  .section-heading,
+  #cerita-jemaah .col-lg-4 {
+    text-align: center;
+  }
+  .section-header-row {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  .section-header-row .section-heading {
+    width: 100%;
+  }
+
+  /* Tombol "Lihat Semua" di baris header (sejajar eyebrow) disembunyikan
+     di mobile, diganti salinannya yang sudah ditaruh di HTML tepat di
+     akhir section (setelah konten utama: carousel/artikel/slider) --
+     lihat class .section-view-all-mobile. Jadi urutannya di mobile jadi:
+     eyebrow + judul (rata tengah) → konten utama → tombol Lihat Semua. */
+  .section-header-row > .btn {
+    display: none;
+  }
+  .section-view-all-mobile {
+    display: block;
+    width: max-content;
+    max-width: 100%;
+    margin: 1rem auto 0;
+  }
+
+  /* Section "Cerita Jamaah": grup tombol (Bagikan Cerita + Lihat Semua)
+     sekarang cuma ada satu salinan di HTML, diletakkan di akhir section
+     (di bawah slider cerita) dan rata tengah -- sudah tampil sama baik di
+     mobile maupun desktop, jadi tidak perlu override tambahan di sini. */
+}
+
+/* Phones */
+@media (max-width: 575.98px) {
+  .section {
+    padding: 2rem 0;
+  }
+  .page-header {
+    padding-top: 5.5rem;
+    padding-bottom: 1.5rem;
+  }
+  .hero {
+    padding-top: 5rem;
+  }
+  .hero-compact {
+    padding: calc(5rem + 26px) 0 1.5rem;
+  }
+  .article-list-item {
+    padding-left: 2.5rem;
+  }
+  .article-list-item::before {
+    font-size: 1.25rem;
+  }
+  .hero-search .btn {
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+    min-width: 44px;
+  }
+  .btn,
+  .form-control,
+  .form-select {
+    min-height: 46px;
+  }
+  /* Tombol "Lihat Semua" (btn-sm) di sebelah label eyebrow (mis. "Short
+     Edukasi") ikut tertarik ke tinggi minimum 46px di atas, jadi terlihat
+     jauh lebih tinggi dibanding badge eyebrow di sebelahnya. Turunkan
+     lagi khusus untuk btn-sm supaya tingginya sejajar dengan badge
+     eyebrow (~31px). */
+  .btn-sm {
+    min-height: 31px;
+    padding: 0.3rem 0.85rem;
+  }
+  .surface {
+    border-radius: 8px;
+  }
+  .card-body-pad {
+    padding: 0.9rem;
+  }
+  .meta {
+    gap: 0.5rem;
+  }
+  .section-title {
+    font-size: 1.05rem;
+  }
+  .hub-card {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 0.5rem;
+    padding: 1.1rem 0.6rem;
+    min-height: 112px;
+  }
+  .hub-card .hub-icon {
+    margin: 0 auto;
+  }
+  .hub-card .hub-desc {
+    display: none;
+  }
+  .hub-card .hub-title {
+    font-size: 0.8rem;
+    line-height: 1.25;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .hub-card .bi-chevron-right {
+    display: none;
+  }
+  .clock-card .time {
+    font-size: 1.6rem;
+  }
+  .video-frame {
+    aspect-ratio: 16/10;
+  }
+  .breadcrumb {
+    font-size: 0.8rem;
+  }
+  .footer {
+    text-align: center;
+  }
+  /* Baris logo + "ManasikGo" di footer memakai flexbox, jadi
+     text-align:center di atas tidak berlaku untuknya (flex item rata
+     kiri secara default). Pusatkan juga secara horizontal supaya
+     sejajar dengan paragraf lain yang sudah rata tengah. */
+  .footer-brand-row {
+    justify-content: center;
+  }
+  .footer-social {
+    justify-content: center;
+  }
+  .footer .d-flex.justify-content-between {
+    justify-content: center !important;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .back-to-top {
+    right: 0.75rem;
+    bottom: 0.75rem;
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Small phones */
+@media (max-width: 380px) {
+  .navbar-brand {
+    font-size: 0.95rem;
+  }
+  .btn-sm {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.78rem;
+  }
+}
+
+/* Larger screens */
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1260px;
+  }
+}
+
+/* ==========================================================================
+   Homepage — mobile-first refinements (section Layanan, Panduan Ibadah,
+   Artikel Terbaru/Populer, header baris judul+tombol, story slider).
+   Tujuannya: tampilan ringkas & rapi khusus di layar kecil, tanpa mengubah
+   tampilan desktop yang sudah ada.
+   ========================================================================== */
+@media (max-width: 767.98px) {
+  /* Section pertama setelah hero jangan terlalu jauh jaraknya */
+  #layanan {
+    padding-top: 1.75rem;
+  }
+  .services-section-header .section-title {
+    font-size: 1.2rem;
+  }
+  .services-section-header p.lead-muted {
+    font-size: 0.88rem;
+  }
+
+  /* Baris judul + tombol "Lihat Semua": kalau kepanjangan, tombol turun
+     ke baris baru alih-alih memepetkan judul. */
+  main .section .d-flex.flex-wrap.justify-content-between.align-items-end,
+  main .section .d-flex.flex-wrap.justify-content-between.align-items-start {
+    row-gap: 0.6rem;
+  }
+  main .section .d-flex.flex-wrap.justify-content-between.align-items-end
+    > .btn,
+  main .section .d-flex.flex-wrap.justify-content-between.align-items-start
+    > .btn {
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 575.98px) {
+  /* Kartu "Layanan ManasikGo": lebih ringkas di HP, tetap 2 kolom */
+  .service-card {
+    padding: 1.25rem 1rem;
+    gap: 0.6rem;
+  }
+  .service-card-icon {
+    width: 38px;
+    height: 38px;
+    font-size: 1.5rem;
+  }
+  .service-card-label {
+    font-size: 0.88rem;
+  }
+  .service-card-desc {
+    font-size: 0.8rem;
+  }
+
+  /* Panduan Ibadah: teks intro & kartu fitur dipadatkan */
+  .panduan-header {
+    margin-bottom: 1.25rem !important;
+  }
+  .panduan-header p.lead-muted {
+    font-size: 0.88rem;
+  }
+  .panduan-feature-card {
+    min-height: 260px;
+    padding: 1.25rem;
+  }
+  .panduan-feature-icon {
+    width: 130px;
+  }
+  .panduan-feature-badge {
+    font-size: 0.68rem;
+    padding: 0.32rem 0.75rem;
+  }
+  .panduan-feature-content {
+    margin-top: 1.25rem;
+  }
+  .panduan-feature-title {
+    font-size: 1.05rem;
+    margin-bottom: 0.5rem;
+  }
+  .panduan-feature-desc {
+    font-size: 0.82rem;
+    margin-bottom: 1rem;
+  }
+  .panduan-list-item {
+    padding: 0.85rem 1rem;
+    font-size: 0.88rem;
+  }
+
+  /* Artikel Terbaru: gambar & ringkasan dipangkas biar kartu tidak
+     terlalu tinggi saat di-scroll di HP */
+  .featured-article-media img {
+    aspect-ratio: 16 / 10;
+    max-height: 220px;
+  }
+  .featured-article-card .card-body-pad {
+    padding: 1.1rem;
+  }
+  .featured-article-card .card-body-pad p.lead-muted {
+    -webkit-line-clamp: 3;
+    font-size: 0.88rem;
+  }
+  .featured-article-card .article-title {
+    font-size: 1.05rem;
+  }
+
+  /* Artikel Populer: kartu list lebih ramping. Sebelumnya rule ini
+     me-reset padding-left ke 0.55rem lewat shorthand "padding", padahal
+     ruang itu dipakai untuk nomor urut dekoratif (::before) -- akibatnya
+     angka "01/02/dst" jadi menumpuk/menabrak label kategori & judul,
+     terlihat semrawut. Nomor dekoratif itu dihapus saja khusus di
+     mobile (tidak terlalu penting di lebar sempit), sehingga konten bisa
+     rapat rapi tanpa perlu ruang sisa untuknya. */
+  .article-list-item {
+    margin: 0;
+    padding: 0.85rem 1rem;
+    gap: 0.75rem;
+  }
+  .article-list-item::before {
+    display: none;
+  }
+  .article-list-thumb {
+    display: block;
+    flex: 0 0 64px;
+    width: 64px;
+    height: 64px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--border);
+  }
+  .article-list-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .btn,
+  .nav-link,
+  .dropdown-item,
+  .hub-card,
+  .tip-card {
+    min-height: 44px;
+  }
+  .article-card:hover,
+  .category-card:hover,
+  .story-card:hover,
+  .tip-card:hover,
+  .hub-card:hover {
+    border-color: transparent;
+    box-shadow: none;
+  }
+}

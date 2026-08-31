@@ -1,0 +1,2615 @@
+/* ==========================================================================
+   MANASIKGO — CHECKLIST.CSS
+   ==========================================================================
+
+   KHUSUS:
+   - checklist-perlengkapan.html
+   - perlengkapan-haji.html
+   - perlengkapan-umroh.html
+
+   TUJUAN:
+   - Merapikan halaman checklist
+   - Responsif desktop / tablet / mobile
+   - Mobile lebih lega
+   - Mencegah horizontal overflow
+   - Warna teks halaman pilihan tidak hijau
+   - Card informasi Gelombang menggunakan warna kuning lembut
+
+   TIDAK MENGUBAH:
+   - HTML
+   - isi/data
+   - urutan data
+   - checklist.js
+   - checklist-data.js
+   - filter logic
+   - checkbox logic
+   - navigasi
+========================================================================== */
+
+
+/* ==========================================================================
+   01. TOKEN
+========================================================================== */
+
+.checklist-page {
+  --hc-ink: #304037;
+  --hc-text: #3f4d45;
+  --hc-muted: #68746d;
+
+  --hc-bg: #f8faf7;
+  --hc-card: #ffffff;
+  --hc-soft: #f2f6f3;
+
+  --hc-line: #dfe7e1;
+  --hc-line-soft: #ebf0ec;
+
+  --hc-green: #5f9075;
+  --hc-green-dark: #4d795f;
+  --hc-green-soft: #edf4ef;
+
+  --hc-gold: #b0924f;
+  --hc-gold-soft: #fff8e8;
+
+  --hc-radius: 18px;
+
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+
+  overflow-x: clip;
+}
+
+
+/* ==========================================================================
+   02. RESET KHUSUS CHECKLIST
+========================================================================== */
+
+.checklist-page *,
+.checklist-page *::before,
+.checklist-page *::after {
+  box-sizing: border-box;
+}
+
+.checklist-page img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.checklist-page button,
+.checklist-page input,
+.checklist-page select,
+.checklist-page textarea {
+  font: inherit;
+}
+
+.checklist-page button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.checklist-page a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.checklist-page [class*="col-"] {
+  min-width: 0;
+}
+
+
+/* ==========================================================================
+   03. HALAMAN PILIHAN
+   checklist-perlengkapan.html
+========================================================================== */
+
+body:has(.checklist-page:not(.hc-pack-page)) .page-header {
+  /* padding-top sengaja TIDAK di-override lagi di sini supaya jarak
+     breadcrumb ke navbar sama persis dengan halaman lain (termasuk
+     perlengkapan-haji.html & perlengkapan-umroh.html yang memakai
+     padding-top bawaan situs). */
+  padding-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+body:has(.checklist-page:not(.hc-pack-page)) .page-header .container {
+  width: 100%;
+  max-width: 1080px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+body:has(.checklist-page:not(.hc-pack-page)) .page-header h1 {
+  max-width: 820px;
+
+  color: var(--hc-ink) !important;
+
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+
+  overflow-wrap: anywhere;
+}
+
+body:has(.checklist-page:not(.hc-pack-page))
+.page-header > .container > p {
+  max-width: 680px;
+
+  color: var(--hc-muted) !important;
+
+  line-height: 1.65;
+}
+
+
+/* Container utama halaman pilihan */
+
+.checklist-page:not(.hc-pack-page) {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+
+  overflow-x: clip;
+}
+
+.checklist-page:not(.hc-pack-page) > .container {
+  width: 100%;
+  max-width: 1080px;
+
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.checklist-page:not(.hc-pack-page) .row {
+  --bs-gutter-x: 1.25rem;
+  --bs-gutter-y: 1.25rem;
+}
+
+
+/* ==========================================================================
+   04. CARD PILIHAN HAJI / UMRAH
+========================================================================== */
+
+.checklist-page:not(.hc-pack-page)
+.checklist-choice-card {
+  position: relative;
+
+  width: 100%;
+  min-width: 0;
+  min-height: 285px;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 1.4rem;
+
+  overflow: hidden;
+
+  border: 1px solid var(--hc-line);
+  border-radius: 22px;
+
+  background:
+    radial-gradient(
+      circle at 100% 100%,
+      rgba(176, 146, 79, 0.09),
+      transparent 35%
+    ),
+    #ffffff;
+
+  color: var(--hc-text);
+
+  box-shadow:
+    0 8px 25px rgba(35, 55, 45, 0.045);
+
+  text-decoration: none;
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
+}
+
+
+/* Garis aksen kecil kartu */
+
+.checklist-page:not(.hc-pack-page)
+.checklist-choice-card::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 24px;
+  bottom: 24px;
+
+  width: 3px;
+
+  border-radius: 0 5px 5px 0;
+
+  background: var(--hc-gold);
+
+  opacity: 0.55;
+}
+
+
+/* Jangan biarkan judul kartu menjadi hijau */
+
+.checklist-page:not(.hc-pack-page)
+.checklist-choice-card
+.service-card-label {
+  color: var(--hc-ink) !important;
+}
+
+.checklist-page:not(.hc-pack-page)
+.checklist-choice-card
+.service-card-desc {
+  color: var(--hc-muted) !important;
+}
+
+.checklist-page:not(.hc-pack-page)
+.checklist-choice-card
+.service-card-cta {
+  color: var(--hc-green) !important;
+}
+
+
+/* ==========================================================================
+   05. ICON CARD PILIHAN
+========================================================================== */
+
+.checklist-page:not(.hc-pack-page)
+.checklist-choice-card
+.service-card-icon {
+  flex-shrink: 0;
+
+  border-radius: 17px;
+
+  background: var(--hc-green-soft);
+}
+
+.checklist-page:not(.hc-pack-page)
+.checklist-choice-card
+.service-card-icon img {
+  max-width: 100%;
+}
+
+
+/* ==========================================================================
+   06. LIST STATIC
+========================================================================== */
+
+.checklist-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+
+  width: 100%;
+}
+
+
+/* ==========================================================================
+   07. ITEM STATIC
+========================================================================== */
+
+.checklist-item {
+  display: flex;
+  align-items: flex-start;
+
+  width: 100%;
+  min-width: 0;
+
+  gap: 0.7rem;
+
+  padding: 0.75rem 0.85rem;
+
+  border: 1px solid var(--hc-line);
+  border-radius: 12px;
+
+  background: #ffffff;
+  color: var(--hc-text);
+
+  cursor: pointer;
+
+  line-height: 1.5;
+
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease,
+    transform 0.18s ease;
+}
+
+.checklist-item input {
+  flex: 0 0 auto;
+
+  width: 1.1rem;
+  height: 1.1rem;
+
+  margin-top: 0.15rem;
+
+  accent-color: var(--hc-green);
+}
+
+.checklist-item:hover {
+  border-color: rgba(95, 144, 117, 0.4);
+  background: #fbfdfb;
+
+  transform: translateY(-1px);
+}
+
+
+/* ==========================================================================
+   08. CATATAN HALAMAN PILIHAN
+========================================================================== */
+
+.checklist-page:not(.hc-pack-page)
+> .container > .surface {
+  width: 100%;
+
+  margin-top: 2rem !important;
+
+  border: 1px solid var(--hc-line);
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.94);
+
+  box-shadow:
+    0 7px 22px rgba(35, 55, 45, 0.035);
+}
+
+.checklist-page:not(.hc-pack-page)
+> .container > .surface h2 {
+  color: var(--hc-ink) !important;
+}
+
+.checklist-page:not(.hc-pack-page)
+> .container > .surface p {
+  color: var(--hc-muted) !important;
+}
+
+
+/* ==========================================================================
+   09. HOVER DESKTOP
+========================================================================== */
+
+@media (hover: hover) and (pointer: fine) {
+
+  .checklist-page:not(.hc-pack-page)
+  .checklist-choice-card:hover {
+    transform: translateY(-3px);
+
+    border-color: rgba(95, 144, 117, 0.3);
+
+    box-shadow:
+      0 14px 30px rgba(35, 55, 45, 0.08);
+  }
+
+}
+
+
+/* ==========================================================================
+   10. DETAIL HAJI / UMRAH
+   perlengkapan-haji.html
+   perlengkapan-umroh.html
+========================================================================== */
+
+.hc-pack-page {
+  width: 100%;
+  max-width: 1180px;
+  min-width: 0;
+
+  margin-left: auto;
+  margin-right: auto;
+
+  padding-top: clamp(1.5rem, 3vw, 2.5rem);
+  padding-bottom: clamp(2.5rem, 5vw, 4rem);
+
+  padding-left: clamp(20px, 3vw, 48px);
+  padding-right: clamp(20px, 3vw, 48px);
+
+  overflow-x: clip;
+}
+
+.hc-pack-page > * {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+
+/* ==========================================================================
+   11. TOMBOL KEMBALI
+========================================================================== */
+
+.hc-pack-page .checklist-back-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  gap: 0.65rem;
+
+  margin-top: 0.5rem;
+  margin-bottom: 1.25rem !important;
+}
+
+.hc-pack-page .checklist-back-btn,
+.hc-pack-page .checklist-switch-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 0.45rem;
+
+  min-height: 42px;
+
+  padding: 0.55rem 0.85rem;
+
+  border-radius: 12px;
+
+  font-size: 0.82rem;
+  font-weight: 700;
+
+  text-align: center;
+}
+
+
+/* ==========================================================================
+   12. PANEL FILTER
+========================================================================== */
+
+.hc-pack-page .hc-filter-panel {
+  position: relative;
+
+  width: 100%;
+  min-width: 0;
+
+  margin-bottom: 1.6rem;
+
+  padding: clamp(1.15rem, 2vw, 1.5rem);
+
+  border: 1px solid var(--hc-line);
+  border-radius: 22px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.98),
+      rgba(247, 250, 247, 0.97)
+    );
+
+  box-shadow:
+    0 10px 28px rgba(35, 55, 45, 0.05);
+}
+
+
+/* Header filter */
+
+.hc-pack-page .hc-filter-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 1rem;
+
+  margin-bottom: 1.2rem;
+}
+
+.hc-pack-page .hc-filter-head h2 {
+  margin: 0;
+
+  color: var(--hc-ink);
+
+  line-height: 1.25;
+}
+
+.hc-pack-page .hc-filter-head p {
+  margin: 0.25rem 0 0;
+
+  color: var(--hc-muted);
+}
+
+
+/* ==========================================================================
+   13. BADGE STATUS
+========================================================================== */
+
+.hc-pack-page .hc-current-badge {
+  flex: 0 0 auto;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 0.4rem;
+
+  min-height: 36px;
+
+  padding: 0.45rem 0.75rem;
+
+  border: 1px solid rgba(95, 144, 117, 0.18);
+  border-radius: 999px;
+
+  background: var(--hc-green-soft);
+  color: var(--hc-green-dark);
+
+  font-size: 0.76rem;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   14. FILTER GRID
+========================================================================== */
+
+.hc-pack-page .hc-filter-grid {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 1fr);
+
+  gap: 1rem;
+
+  width: 100%;
+}
+
+.hc-pack-page .hc-filter-field {
+  width: 100%;
+  min-width: 0;
+}
+
+.hc-pack-page .hc-filter-field > label {
+  display: block;
+
+  margin-bottom: 0.5rem;
+
+  color: var(--hc-ink);
+
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+
+/* ==========================================================================
+   15. GENDER / GELOMBANG
+========================================================================== */
+
+.hc-pack-page .hc-segment {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 0.35rem;
+
+  width: 100%;
+  min-height: 48px;
+
+  padding: 0.25rem;
+
+  border: 1px solid var(--hc-line);
+  border-radius: 14px;
+
+  background: var(--hc-soft);
+}
+
+.hc-pack-page .hc-segment button {
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
+
+  border: 0;
+  border-radius: 11px;
+
+  padding: 0.55rem 0.65rem;
+
+  background: transparent;
+  color: var(--hc-muted);
+
+  font-size: 0.8rem;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.hc-pack-page .hc-segment button:hover {
+  color: var(--hc-ink);
+}
+
+.hc-pack-page .hc-segment button.active {
+  background: var(--hc-green);
+  color: #ffffff;
+
+  box-shadow:
+    0 3px 10px rgba(35, 55, 45, 0.1);
+}
+
+
+/* ==========================================================================
+   16. CUSTOM SELECT
+========================================================================== */
+
+.hc-pack-page .hc-custom-select {
+  position: relative;
+
+  width: 100%;
+  min-width: 0;
+}
+
+.hc-pack-page .hc-select-trigger {
+  width: 100%;
+  min-height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 0.65rem;
+
+  padding: 0.65rem 0.75rem;
+
+  border: 1px solid var(--hc-line);
+  border-radius: 13px;
+
+  background: #ffffff;
+  color: var(--hc-ink);
+
+  font-size: 0.82rem;
+  font-weight: 500;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  appearance: none;
+  -webkit-appearance: none;
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.hc-pack-page .hc-select-trigger:hover {
+  border-color: rgba(95, 144, 117, 0.35);
+}
+
+.hc-pack-page
+.hc-custom-select.is-open
+.hc-select-trigger {
+  border-color: rgba(95, 144, 117, 0.45);
+
+  box-shadow:
+    0 0 0 3px rgba(95, 144, 117, 0.08);
+}
+
+.hc-pack-page .hc-select-trigger i {
+  flex: 0 0 auto;
+
+  transition: transform 0.18s ease;
+}
+
+.hc-pack-page
+.hc-custom-select.is-open
+.hc-select-trigger i {
+  transform: rotate(180deg);
+}
+
+
+/* Dropdown */
+
+.hc-pack-page .hc-select-menu {
+  position: absolute;
+
+  z-index: 100;
+
+  top: calc(100% + 0.4rem);
+  left: 0;
+
+  width: 100%;
+
+  display: none;
+
+  padding: 0.5rem;
+
+  border: 1px solid var(--hc-line);
+  border-radius: 16px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 14px 32px rgba(35, 55, 45, 0.12);
+}
+
+.hc-pack-page
+.hc-custom-select.is-open
+.hc-select-menu {
+  display: grid;
+
+  gap: 0.4rem;
+}
+
+.hc-pack-page .hc-select-option {
+  width: 100%;
+  min-height: 46px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 0.6rem;
+
+  padding: 0.7rem 0.8rem;
+
+  border: 0;
+  border-radius: 11px;
+
+  background: transparent;
+  color: var(--hc-ink);
+
+  font-weight: 500;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease;
+}
+
+.hc-pack-page .hc-select-option i {
+  width: 20px;
+  flex: 0 0 20px;
+
+  color: var(--hc-green);
+
+  text-align: center;
+
+  transition: color 0.18s ease;
+}
+
+.hc-pack-page .hc-select-option:hover {
+  background: var(--hc-green-soft);
+  color: var(--hc-green-dark);
+}
+
+/* Opsi terpilih: kotak hijau penuh, teks & ikon putih (sesuai referensi) */
+.hc-pack-page .hc-select-option.active {
+  background: var(--hc-green);
+  color: #ffffff;
+
+  font-weight: 700;
+
+  box-shadow:
+    0 3px 10px rgba(35, 55, 45, 0.12);
+}
+
+.hc-pack-page .hc-select-option.active i {
+  color: #ffffff;
+}
+
+.hc-pack-page .hc-select-option.active:hover {
+  background: var(--hc-green-dark);
+}
+
+
+/* Native select tetap ada untuk logic */
+
+.hc-pack-page .hc-select-native {
+  position: absolute !important;
+
+  width: 1px !important;
+  height: 1px !important;
+
+  padding: 0 !important;
+  margin: -1px !important;
+
+  overflow: hidden !important;
+
+  clip: rect(0, 0, 0, 0) !important;
+
+  white-space: nowrap !important;
+
+  border: 0 !important;
+}
+
+
+/* ==========================================================================
+   17. INFORMASI CAIRAN
+========================================================================== */
+
+.hc-pack-page .hc-luggage-info {
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  align-items: flex-start;
+
+  gap: 0.7rem;
+
+  margin-top: 1rem;
+
+  padding: 0.85rem 1rem;
+
+  border: 1px solid rgba(95, 144, 117, 0.15);
+  border-radius: 14px;
+
+  background: #f7faf7;
+  color: var(--hc-muted);
+
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+.hc-pack-page .hc-luggage-info > i {
+  flex: 0 0 auto;
+
+  margin-top: 0.1rem;
+
+  color: var(--hc-green);
+
+  font-size: 1rem;
+}
+
+.hc-pack-page .hc-luggage-info strong {
+  color: var(--hc-ink);
+}
+
+
+/* ==========================================================================
+   FIX FINAL — INFO GELOMBANG
+   Khusus halaman Checklist Haji & Umrah
+   Tidak mengubah HTML / JS / isi / alur
+   ========================================================================== */
+
+.hc-pack-page .hc-wave-info {
+    width: 100% !important;
+    max-width: 100% !important;
+
+    display: flex !important;
+    align-items: flex-start !important;
+
+    box-sizing: border-box !important;
+
+    margin: 1rem 0 1.25rem !important;
+    padding: 1rem 1.1rem !important;
+
+    gap: .8rem !important;
+
+    border: 1px solid #ead9a9 !important;
+    border-radius: 16px !important;
+
+    background: #fff9e9 !important;
+
+    color: #665d47 !important;
+
+    font-size: .82rem !important;
+    line-height: 1.65 !important;
+
+    overflow: hidden !important;
+}
+
+
+/* Ikon lampu */
+.hc-pack-page .hc-wave-info > i,
+.hc-pack-page .hc-wave-info .hc-wave-icon {
+    flex: 0 0 32px !important;
+
+    width: 32px !important;
+    height: 32px !important;
+
+    display: grid !important;
+    place-items: center !important;
+
+    margin-top: .05rem !important;
+
+    border-radius: 10px !important;
+
+    background: #f4e4b5 !important;
+    color: #a07d35 !important;
+
+    font-size: .95rem !important;
+}
+
+
+/* Area teks */
+.hc-pack-page .hc-wave-info p,
+.hc-pack-page .hc-wave-info > div {
+    width: auto !important;
+    max-width: none !important;
+    min-width: 0 !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    color: #665d47 !important;
+
+    font-size: .82rem !important;
+    line-height: 1.65 !important;
+
+    white-space: normal !important;
+    overflow-wrap: break-word !important;
+    word-break: normal !important;
+}
+
+
+/* Tulisan "Gelombang 1" */
+.hc-pack-page .hc-wave-info strong {
+    color: #4e4633 !important;
+
+    font-size: inherit !important;
+    font-weight: 800 !important;
+}
+
+
+
+
+/* ==========================================================================
+   19. TOOLBAR KATEGORI
+========================================================================== */
+
+.hc-pack-page .hc-category-toolbar {
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 1rem;
+
+  margin: 0 0 1rem;
+
+  padding: 0.1rem;
+}
+
+.hc-pack-page .hc-category-toolbar > div {
+  min-width: 0;
+}
+
+.hc-pack-page .hc-category-toolbar .eyebrow {
+  display: inline-flex;
+
+  margin-bottom: 0.3rem;
+
+  color: var(--hc-gold);
+
+  font-size: 0.74rem;
+  font-weight: 800;
+
+  letter-spacing: 0.11em;
+
+  text-transform: uppercase;
+}
+
+.hc-pack-page .hc-category-toolbar h2 {
+  margin: 0;
+
+  color: var(--hc-ink);
+
+  line-height: 1.3;
+}
+
+.hc-pack-page .hc-category-toolbar > button {
+  flex: 0 0 auto;
+
+  min-height: 38px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 0.35rem;
+
+  padding: 0.5rem 0.75rem;
+
+  border-radius: 999px;
+
+  white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   20. GRID KATEGORI
+========================================================================== */
+
+.hc-pack-page .hc-category-grid {
+  display: grid;
+
+  grid-template-columns: 1fr;
+
+  gap: 0.85rem;
+
+  width: 100%;
+  min-width: 0;
+}
+
+
+/* ==========================================================================
+   21. CARD KATEGORI
+========================================================================== */
+
+.hc-pack-page .hc-category-card {
+  width: 100%;
+  min-width: 0;
+
+  overflow: hidden;
+
+  border: 1px solid var(--hc-line);
+  border-radius: var(--hc-radius);
+
+  background: var(--hc-card);
+
+  box-shadow:
+    0 5px 18px rgba(35, 55, 45, 0.035);
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.hc-pack-page .hc-category-card:hover {
+  border-color: rgba(95, 144, 117, 0.3);
+
+  box-shadow:
+    0 8px 24px rgba(35, 55, 45, 0.055);
+}
+
+
+/* ==========================================================================
+   22. HEADER KATEGORI
+========================================================================== */
+
+.hc-pack-page .hc-category-header {
+  width: 100%;
+  min-width: 0;
+  min-height: 70px;
+
+  display: grid;
+
+  grid-template-columns:
+    44px
+    minmax(0, 1fr)
+    30px;
+
+  align-items: center;
+
+  gap: 0.75rem;
+
+  padding: 0.85rem 1rem;
+
+  border: 0;
+
+  background: transparent;
+  color: var(--hc-ink);
+
+  text-align: left;
+
+  cursor: pointer;
+}
+
+.hc-pack-page .hc-category-header:hover {
+  background: #fafcf9;
+}
+
+
+/* ==========================================================================
+   23. ICON KATEGORI
+========================================================================== */
+
+.hc-pack-page .hc-category-icon {
+  width: 42px;
+  height: 42px;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px solid rgba(95, 144, 117, 0.14);
+  border-radius: 13px;
+
+  background: var(--hc-green-soft);
+  color: var(--hc-green);
+
+  font-size: 1rem;
+}
+
+
+/* ==========================================================================
+   24. JUDUL KATEGORI
+========================================================================== */
+
+.hc-pack-page .hc-category-title {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.12rem;
+}
+
+.hc-pack-page .hc-category-title small {
+  color: var(--hc-muted);
+
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.hc-pack-page .hc-category-title strong {
+  min-width: 0;
+
+  overflow-wrap: anywhere;
+
+  color: var(--hc-ink);
+
+  font-size: 0.98rem;
+  line-height: 1.35;
+}
+
+
+/* ==========================================================================
+   25. CHEVRON
+========================================================================== */
+
+.hc-pack-page .hc-category-chevron {
+  width: 30px;
+  height: 30px;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px solid var(--hc-line);
+  border-radius: 50%;
+
+  color: var(--hc-muted);
+
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.hc-pack-page
+.hc-category-card.is-open
+.hc-category-chevron {
+  transform: rotate(180deg);
+
+  color: var(--hc-green);
+}
+
+
+/* ==========================================================================
+   26. BODY ITEM CHECKLIST
+========================================================================== */
+
+.hc-pack-page .hc-category-body {
+  width: 100%;
+  min-width: 0;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 0 1.25rem;
+
+  padding: 0.25rem 1rem 0.8rem;
+
+  border-top: 1px solid var(--hc-line-soft);
+}
+
+
+/* ==========================================================================
+   27. ITEM CHECKLIST
+========================================================================== */
+
+.hc-pack-page .hc-item-card {
+  min-width: 0;
+
+  display: grid;
+
+  grid-template-columns: minmax(0, 1fr);
+
+  gap: 0.3rem;
+
+  padding: 0.8rem 0.15rem;
+
+  border-bottom: 1px solid var(--hc-line-soft);
+}
+
+
+/* ==========================================================================
+   28. CHECKBOX + TEKS
+========================================================================== */
+
+.hc-pack-page .hc-item-main {
+  min-width: 0;
+
+  display: flex;
+  align-items: flex-start;
+
+  gap: 0.65rem;
+}
+
+
+/* Checkbox */
+
+.hc-pack-page .hc-item-check {
+  flex: 0 0 25px;
+
+  width: 25px;
+  height: 25px;
+
+  display: grid;
+  place-items: center;
+
+  margin-top: 0.05rem;
+
+  padding: 0;
+
+  border: 1.5px solid #c8d5cc;
+  border-radius: 8px;
+
+  background: #ffffff;
+  color: #ffffff;
+
+  cursor: pointer;
+
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.hc-pack-page .hc-item-check:hover {
+  border-color: var(--hc-green);
+}
+
+
+/* Checked */
+
+.hc-pack-page
+.hc-item-card.is-checked
+.hc-item-check {
+  border-color: var(--hc-green);
+
+  background: var(--hc-green);
+}
+
+
+/* ==========================================================================
+   29. TEKS ITEM
+========================================================================== */
+
+.hc-pack-page .hc-item-copy {
+  min-width: 0;
+}
+
+.hc-pack-page .hc-item-title {
+  min-width: 0;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+
+  gap: 0.4rem;
+
+  color: var(--hc-ink);
+
+  line-height: 1.4;
+}
+
+.hc-pack-page .hc-item-title span {
+  min-width: 0;
+
+  overflow-wrap: anywhere;
+
+  color: var(--hc-ink);
+
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.hc-pack-page .hc-item-title b {
+  color: var(--hc-muted);
+
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+
+.hc-pack-page .hc-item-copy p {
+  margin: 0.2rem 0 0;
+
+  color: var(--hc-muted);
+
+  font-size: 0.72rem;
+  line-height: 1.5;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* ==========================================================================
+   30. META ITEM
+========================================================================== */
+
+.hc-pack-page .hc-item-meta {
+  min-width: 0;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  gap: 0.35rem;
+
+  margin-left: 2.15rem;
+}
+
+
+/* ==========================================================================
+   31. BADGE TAS / GELOMBANG
+========================================================================== */
+
+.hc-pack-page .hc-bag,
+.hc-pack-page .hc-wave {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 0.3rem;
+
+  min-height: 25px;
+
+  padding: 0.25rem 0.5rem;
+
+  border-radius: 999px;
+
+  font-size: 0.66rem;
+  font-weight: 700;
+
+  line-height: 1.2;
+}
+
+.hc-pack-page .hc-bag.small-bag {
+  color: #4f7d63;
+  background: #edf5ef;
+}
+
+.hc-pack-page .hc-bag.large-bag {
+  color: #8a7040;
+  background: #f7f0e2;
+}
+
+.hc-pack-page .hc-wave {
+  color: #68736e;
+  background: #f1f4f2;
+}
+
+
+/* ==========================================================================
+   32. CATATAN
+========================================================================== */
+
+.hc-pack-page .hc-note-card {
+  width: 100%;
+  min-width: 0;
+
+  margin-top: 1.15rem !important;
+
+  padding: 1rem 1.1rem !important;
+
+  border: 1px solid var(--hc-line);
+
+  border-radius: 17px;
+
+  background: var(--hc-card);
+}
+
+.hc-pack-page .hc-note-card h2 {
+  color: var(--hc-ink);
+}
+
+.hc-pack-page .hc-note-card p {
+  color: var(--hc-muted);
+
+  line-height: 1.6;
+
+  overflow-wrap: anywhere;
+}
+
+.hc-pack-page .hc-note-icon {
+  flex: 0 0 34px;
+
+  width: 34px;
+  height: 34px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 11px;
+
+  color: var(--hc-green);
+  background: var(--hc-green-soft);
+}
+
+
+/* ==========================================================================
+   33. ACCESSIBILITY
+========================================================================== */
+
+.hc-pack-page .hc-item-check:focus-visible,
+.hc-pack-page .hc-category-header:focus-visible,
+.hc-pack-page .hc-select-trigger:focus-visible,
+.hc-pack-page .hc-select-option:focus-visible,
+.hc-pack-page .hc-segment button:focus-visible {
+  outline: 3px solid rgba(95, 144, 117, 0.2);
+
+  outline-offset: 2px;
+}
+
+
+/* ==========================================================================
+   34. TABLET
+========================================================================== */
+
+@media (max-width: 991.98px) {
+
+  .hc-pack-page {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .hc-pack-page .hc-category-body {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+/* ==========================================================================
+   35. MOBILE
+========================================================================== */
+
+@media (max-width: 767.98px) {
+
+  /* -----------------------------------------------------------------------
+     HALAMAN PILIHAN
+  ----------------------------------------------------------------------- */
+
+  body:has(.checklist-page:not(.hc-pack-page)) .page-header {
+    /* padding-top tidak di-override di mobile juga, ikut nilai bawaan
+       situs (sama seperti halaman lain) supaya jarak breadcrumb ke
+       navbar konsisten di semua halaman. */
+    padding-bottom: 1.5rem;
+  }
+
+  body:has(.checklist-page:not(.hc-pack-page))
+  .page-header .container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  body:has(.checklist-page:not(.hc-pack-page))
+  .page-header h1 {
+    font-size: clamp(1.9rem, 8vw, 2.5rem);
+    line-height: 1.12;
+  }
+
+  body:has(.checklist-page:not(.hc-pack-page))
+  .page-header > .container > p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+
+  /* Container lebih lega */
+
+  .checklist-page:not(.hc-pack-page) {
+    padding-bottom: 2.5rem;
+  }
+
+  .checklist-page:not(.hc-pack-page) > .container {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .checklist-page:not(.hc-pack-page) .row {
+    --bs-gutter-x: 0;
+    --bs-gutter-y: 1rem;
+
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .checklist-page:not(.hc-pack-page)
+  .row > [class*="col-"] {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+
+  /* Card Haji / Umrah */
+
+  .checklist-page:not(.hc-pack-page)
+  .checklist-choice-card {
+    min-height: 132px;
+
+    display: grid;
+
+    grid-template-columns:
+      54px
+      minmax(0, 1fr)
+      34px;
+
+    grid-template-areas:
+      "icon label arrow"
+      "icon desc arrow";
+
+    align-items: center;
+
+    column-gap: 14px;
+    row-gap: 4px;
+
+    padding: 1rem;
+
+    border-radius: 20px;
+  }
+
+
+  /* Garis aksen */
+
+  .checklist-page:not(.hc-pack-page)
+  .checklist-choice-card::before {
+    top: 20px;
+    bottom: 20px;
+
+    width: 3px;
+  }
+
+
+  /* Icon */
+
+  .checklist-page:not(.hc-pack-page)
+  .checklist-choice-card
+  .service-card-icon {
+    grid-area: icon;
+
+    width: 54px;
+    height: 54px;
+
+    margin: 0;
+
+    border-radius: 16px;
+  }
+
+  .checklist-page:not(.hc-pack-page)
+  .checklist-choice-card
+  .service-card-icon img {
+    width: 32px;
+    height: 32px;
+  }
+
+
+  /* Judul */
+
+  .checklist-page:not(.hc-pack-page)
+  .checklist-choice-card
+  .service-card-label {
+    grid-area: label;
+
+    align-self: end;
+
+    min-width: 0;
+
+    margin: 0;
+
+    color: var(--hc-ink) !important;
+
+    font-size: 0.98rem;
+    line-height: 1.25;
+
+    overflow-wrap: anywhere;
+  }
+
+
+  /* Deskripsi */
+
+  .checklist-page:not(.hc-pack-page)
+  .checklist-choice-card
+  .service-card-desc {
+    grid-area: desc;
+
+    align-self: start;
+
+    min-width: 0;
+
+    max-width: none;
+
+    margin: 0;
+
+    color: var(--hc-muted) !important;
+
+    font-size: 0.76rem;
+    line-height: 1.45;
+
+    display: -webkit-box;
+
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+
+    overflow: hidden;
+  }
+
+
+  /* Panah */
+
+  .checklist-page:not(.hc-pack-page)
+  .checklist-choice-card
+  .service-card-cta {
+    grid-area: arrow;
+
+    width: 34px;
+    height: 34px;
+
+    display: grid;
+    place-items: center;
+
+    margin: 0;
+    padding: 0;
+
+    border: 1px solid rgba(95, 144, 117, 0.18);
+    border-radius: 50%;
+
+    color: var(--hc-green) !important;
+  }
+
+  .checklist-page:not(.hc-pack-page)
+  .checklist-choice-card
+  .service-card-cta i {
+    width: auto;
+    height: auto;
+
+    margin: 0;
+
+    border: 0;
+
+    background: transparent;
+  }
+
+
+  /* Catatan halaman pilihan */
+
+  .checklist-page:not(.hc-pack-page)
+  > .container > .surface {
+    margin-top: 1.4rem !important;
+
+    padding: 1rem !important;
+
+    border-radius: 16px;
+  }
+
+
+  /* -----------------------------------------------------------------------
+     DETAIL HAJI / UMRAH
+  ----------------------------------------------------------------------- */
+
+  .hc-pack-page {
+    width: 100%;
+
+    padding-top: 1.25rem !important;
+    padding-bottom: 2.5rem !important;
+
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+
+
+  /* Tombol kembali */
+
+  .hc-pack-page .checklist-back-wrap {
+    margin-bottom: 1rem !important;
+  }
+
+  .hc-pack-page .checklist-back-btn,
+  .hc-pack-page .checklist-switch-btn {
+    width: 100%;
+  }
+
+
+  /* Filter */
+
+  .hc-pack-page .hc-filter-panel {
+    padding: 1rem;
+
+    border-radius: 18px;
+  }
+
+  .hc-pack-page .hc-filter-head {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 0.65rem;
+
+    margin-bottom: 1rem;
+  }
+
+  .hc-pack-page .hc-current-badge {
+    align-self: flex-start;
+  }
+
+  .hc-pack-page .hc-filter-grid {
+    grid-template-columns: 1fr;
+
+    gap: 0.85rem;
+  }
+
+
+  /* Gender */
+
+  .hc-pack-page .hc-segment {
+    min-height: 46px;
+  }
+
+  .hc-pack-page .hc-segment button {
+    min-height: 40px;
+
+    font-size: 0.8rem;
+  }
+
+
+  /* Cairan */
+
+  .hc-pack-page .hc-luggage-info {
+    padding: 0.8rem 0.9rem;
+
+    font-size: 0.76rem;
+
+    line-height: 1.55;
+  }
+
+
+  /* Card gelombang kuning */
+
+  .hc-pack-page .hc-wave-info {
+    margin: 0.9rem 0 1.1rem;
+
+    padding: 0.9rem;
+
+    gap: 0.65rem;
+
+    border-radius: 15px;
+  }
+
+  .hc-pack-page .hc-wave-info > i,
+  .hc-pack-page .hc-wave-info .hc-wave-icon {
+    flex: 0 0 30px;
+
+    width: 30px;
+    height: 30px;
+
+    border-radius: 9px;
+
+    font-size: 0.88rem;
+  }
+
+  .hc-pack-page .hc-wave-info p,
+  .hc-pack-page .hc-wave-info > div {
+    font-size: 0.76rem;
+
+    line-height: 1.55;
+  }
+
+
+  /* Toolbar */
+
+  .hc-pack-page .hc-category-toolbar {
+    align-items: flex-start;
+
+    gap: 0.75rem;
+
+    margin-bottom: 0.85rem;
+  }
+
+  .hc-pack-page .hc-category-toolbar h2 {
+    font-size: 1.05rem;
+
+    line-height: 1.35;
+  }
+
+  .hc-pack-page .hc-category-toolbar > button {
+    min-width: 42px;
+    min-height: 38px;
+
+    padding-left: 0.65rem;
+    padding-right: 0.65rem;
+  }
+
+
+  /* Kategori */
+
+  .hc-pack-page .hc-category-grid {
+    gap: 0.75rem;
+  }
+
+  .hc-pack-page .hc-category-card {
+    border-radius: 17px;
+  }
+
+  .hc-pack-page .hc-category-header {
+    min-height: 64px;
+
+    grid-template-columns:
+      40px
+      minmax(0, 1fr)
+      28px;
+
+    gap: 0.65rem;
+
+    padding: 0.8rem 0.85rem;
+  }
+
+  .hc-pack-page .hc-category-icon {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 12px;
+  }
+
+  .hc-pack-page .hc-category-title small {
+    font-size: 0.68rem;
+  }
+
+  .hc-pack-page .hc-category-title strong {
+    font-size: 0.9rem;
+
+    line-height: 1.3;
+  }
+
+
+  /* Item */
+
+  .hc-pack-page .hc-category-body {
+    grid-template-columns: 1fr;
+
+    padding:
+      0.15rem
+      0.85rem
+      0.65rem;
+  }
+
+  .hc-pack-page .hc-item-card {
+    padding: 0.75rem 0;
+  }
+
+  .hc-pack-page .hc-item-title span {
+    font-size: 0.79rem;
+  }
+
+  .hc-pack-page .hc-item-title b {
+    font-size: 0.72rem;
+  }
+
+  .hc-pack-page .hc-item-copy p {
+    font-size: 0.7rem;
+  }
+
+  .hc-pack-page .hc-item-meta {
+    margin-left: 2rem;
+  }
+
+
+  /* Catatan */
+
+  .hc-pack-page .hc-note-card {
+    padding: 0.95rem !important;
+
+    border-radius: 16px;
+  }
+
+}
+
+
+/* ==========================================================================
+   36. HP KECIL
+========================================================================== */
+
+@media (max-width: 420px) {
+
+  /* Halaman pilihan */
+
+  body:has(.checklist-page:not(.hc-pack-page))
+  .page-header .container {
+    padding-left: 17px;
+    padding-right: 17px;
+  }
+
+  .checklist-page:not(.hc-pack-page)
+  > .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+
+  /* Card pilihan */
+
+  .checklist-page:not(.hc-pack-page)
+  .checklist-choice-card {
+    min-height: 128px;
+
+    grid-template-columns:
+      50px
+      minmax(0, 1fr)
+      32px;
+
+    column-gap: 12px;
+
+    padding: 0.9rem;
+
+    border-radius: 18px;
+  }
+
+  .checklist-page:not(.hc-pack-page)
+  .checklist-choice-card
+  .service-card-icon {
+    width: 50px;
+    height: 50px;
+
+    border-radius: 15px;
+  }
+
+  .checklist-page:not(.hc-pack-page)
+  .checklist-choice-card
+  .service-card-icon img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .checklist-page:not(.hc-pack-page)
+  .checklist-choice-card
+  .service-card-label {
+    font-size: 0.94rem;
+  }
+
+  .checklist-page:not(.hc-pack-page)
+  .checklist-choice-card
+  .service-card-desc {
+    font-size: 0.73rem;
+  }
+
+  .checklist-page:not(.hc-pack-page)
+  .checklist-choice-card
+  .service-card-cta {
+    width: 32px;
+    height: 32px;
+  }
+
+
+  /* Detail */
+
+  .hc-pack-page {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  .hc-pack-page .hc-filter-panel {
+    padding: 0.9rem;
+  }
+
+  .hc-pack-page .hc-category-toolbar {
+    gap: 0.5rem;
+  }
+
+  .hc-pack-page
+  .hc-category-toolbar
+  .hc-expand-label {
+    display: none;
+  }
+
+  .hc-pack-page .hc-category-header {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .hc-pack-page .hc-category-title strong {
+    font-size: 0.84rem;
+  }
+
+  .hc-pack-page .hc-category-body {
+    padding-left: 0.7rem;
+    padding-right: 0.7rem;
+  }
+
+  .hc-pack-page .hc-item-title span {
+    font-size: 0.76rem;
+  }
+
+  .hc-pack-page .hc-item-copy p {
+    font-size: 0.67rem;
+  }
+
+  .hc-pack-page .hc-luggage-info {
+    font-size: 0.7rem;
+  }
+
+  .hc-pack-page .hc-wave-info {
+    padding: 0.8rem;
+
+    gap: 0.6rem;
+  }
+
+  .hc-pack-page .hc-wave-info p,
+  .hc-pack-page .hc-wave-info > div {
+    font-size: 0.72rem;
+  }
+
+}
+
+
+/* ==========================================================================
+   37. HP SANGAT KECIL
+========================================================================== */
+
+@media (max-width: 359.98px) {
+
+  .hc-pack-page {
+    padding-left: 13px !important;
+    padding-right: 13px !important;
+  }
+
+  .hc-pack-page .hc-filter-grid {
+    gap: 0.7rem;
+  }
+
+  .hc-pack-page .hc-segment button {
+    font-size: 0.75rem;
+  }
+
+  .hc-pack-page .hc-category-title strong {
+    font-size: 0.81rem;
+  }
+
+  .hc-pack-page .hc-item-title span {
+    font-size: 0.73rem;
+  }
+
+  .hc-pack-page .hc-wave-info {
+    padding: 0.75rem;
+
+    border-radius: 13px;
+  }
+
+  .hc-pack-page .hc-wave-info p,
+  .hc-pack-page .hc-wave-info > div {
+    font-size: 0.69rem;
+  }
+
+}
+
+
+/* ==========================================================================
+   38. DARK MODE
+========================================================================== */
+
+html.theme-dark-preload .checklist-page,
+body.dark-mode .checklist-page {
+  --hc-ink: #eef5ef;
+  --hc-text: #dbe6df;
+  --hc-muted: #bfcac2;
+
+  --hc-bg: #16231d;
+  --hc-card: #24382f;
+  --hc-soft: #20352b;
+
+  --hc-line: #365246;
+  --hc-line-soft: #30483c;
+
+  --hc-green: #9fd3a8;
+  --hc-green-dark: #9fd3a8;
+  --hc-green-soft: #294238;
+
+  --hc-gold: #d6b97a;
+  --hc-gold-soft: #403823;
+}
+
+
+/* Dark filter */
+
+html.theme-dark-preload
+.hc-pack-page .hc-filter-panel,
+body.dark-mode
+.hc-pack-page .hc-filter-panel {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(30, 48, 40, 0.98),
+      rgba(36, 56, 47, 0.98)
+    );
+
+  box-shadow: none;
+}
+
+
+/* Dark controls */
+
+html.theme-dark-preload
+.hc-pack-page .hc-select-trigger,
+body.dark-mode
+.hc-pack-page .hc-select-trigger,
+
+html.theme-dark-preload
+.hc-pack-page .hc-select-menu,
+body.dark-mode
+.hc-pack-page .hc-select-menu {
+  background: #24382f;
+
+  color: var(--hc-ink);
+
+  border-color: var(--hc-line);
+}
+
+html.theme-dark-preload
+.hc-pack-page .hc-select-option,
+body.dark-mode
+.hc-pack-page .hc-select-option {
+  color: var(--hc-ink);
+}
+
+html.theme-dark-preload
+.hc-pack-page .hc-category-header:hover,
+body.dark-mode
+.hc-pack-page .hc-category-header:hover {
+  background: rgba(159, 211, 168, 0.05);
+}
+
+html.theme-dark-preload
+.hc-pack-page .hc-item-check,
+body.dark-mode
+.hc-pack-page .hc-item-check {
+  background: #20352b;
+
+  border-color: #496455;
+}
+
+html.theme-dark-preload
+.checklist-page:not(.hc-pack-page)
+.checklist-choice-card,
+body.dark-mode
+.checklist-page:not(.hc-pack-page)
+.checklist-choice-card {
+  background: var(--hc-card);
+
+  box-shadow: none;
+}
+
+
+/* Dark wave card */
+
+html.theme-dark-preload
+.hc-pack-page .hc-wave-info,
+body.dark-mode
+.hc-pack-page .hc-wave-info {
+  border-color: #665a3d;
+
+  background: #302b20;
+
+  color: #ddd1ad;
+}
+
+html.theme-dark-preload
+.hc-pack-page .hc-wave-info p,
+body.dark-mode
+.hc-pack-page .hc-wave-info p,
+html.theme-dark-preload
+.hc-pack-page .hc-wave-info > div,
+body.dark-mode
+.hc-pack-page .hc-wave-info > div {
+  color: #d6cdaF;
+}
+
+html.theme-dark-preload
+.hc-pack-page .hc-wave-info strong,
+body.dark-mode
+.hc-pack-page .hc-wave-info strong {
+  color: #eee2bd;
+}
+
+html.theme-dark-preload
+.hc-pack-page .hc-wave-info > i,
+body.dark-mode
+.hc-pack-page .hc-wave-info > i,
+html.theme-dark-preload
+.hc-pack-page .hc-wave-info .hc-wave-icon,
+body.dark-mode
+.hc-pack-page .hc-wave-info .hc-wave-icon {
+  background: #4a412c;
+
+  color: #d6b97a;
+}
+
+
+/* ==========================================================================
+   SELESAI
+========================================================================== */
+
+
+/* ==========================================================================
+   FIX FINAL — CARD INFORMASI GELOMBANG
+   --------------------------------------------------------------------------
+   HTML yang dipakai checklist.js adalah:
+       <div class="checklist-wave-info" data-wave-info></div>
+
+   Jadi selector yang benar adalah .checklist-wave-info,
+   BUKAN .hc-wave-info.
+
+   Bagian ini hanya memperbaiki tampilan card gelombang.
+   Tidak mengubah HTML, JS, data, urutan, filter, atau alur checklist.
+   ========================================================================== */
+
+.hc-pack-page .checklist-wave-info {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+
+  box-sizing: border-box;
+
+  margin: 1rem 0 1.25rem;
+  padding: 1rem 1.1rem;
+
+  border: 1px solid var(--hc-line);
+  border-radius: 16px;
+
+  background: #fbfaf6;
+
+  color: var(--hc-muted);
+
+  font-size: 0.82rem;
+  line-height: 1.6;
+
+  box-shadow: none;
+
+  overflow: hidden;
+}
+
+
+/* Ikon lampu (outline, tanpa kotak latar — sesuai referensi) */
+.hc-pack-page .checklist-wave-info > i {
+  flex: 0 0 auto;
+
+  margin-top: 0.15rem;
+
+  color: var(--hc-muted);
+
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+
+/* Teks yang dimasukkan oleh checklist.js */
+.hc-pack-page .checklist-wave-info > div {
+  flex: 1 1 auto;
+
+  width: auto;
+  min-width: 0;
+  max-width: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  color: var(--hc-muted);
+
+  font-size: 0.82rem;
+  line-height: 1.6;
+
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+
+/* Tulisan "Gelombang 1" / "Gelombang 2" */
+.hc-pack-page .checklist-wave-info strong {
+  color: var(--hc-gold);
+  font-size: inherit;
+  font-weight: 800;
+}
+
+
+/* Badge "Khusus G2" di dalam teks info gelombang */
+.hc-pack-page .checklist-wave-info .wave-chip {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 0.15rem 0.6rem;
+  margin: 0 0.05rem;
+
+  border: 1px solid rgba(176, 146, 79, 0.35);
+  border-radius: 999px;
+
+  background: var(--hc-gold-soft);
+  color: var(--hc-gold);
+
+  font-size: 0.88em;
+  font-weight: 800;
+
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+
+/* --------------------------------------------------------------------------
+   MOBILE
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 767.98px) {
+
+  .hc-pack-page .checklist-wave-info {
+    width: 100%;
+    max-width: 100%;
+
+    margin: 0.85rem 0 1rem;
+    padding: 0.85rem 0.9rem;
+
+    gap: 0.65rem;
+
+    border-radius: 14px;
+
+    font-size: 0.76rem;
+    line-height: 1.55;
+  }
+
+  .hc-pack-page .checklist-wave-info > i {
+    flex: 0 0 auto;
+
+    font-size: 0.95rem;
+  }
+
+  .hc-pack-page .checklist-wave-info > div {
+    flex: 1 1 auto;
+
+    min-width: 0;
+    max-width: 100%;
+
+    font-size: 0.76rem;
+    line-height: 1.55;
+
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .hc-pack-page .checklist-wave-info strong {
+    font-size: inherit;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   HP KECIL
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 420px) {
+
+  .hc-pack-page .checklist-wave-info {
+    margin: 0.8rem 0 0.95rem;
+    padding: 0.8rem 0.85rem;
+    gap: 0.6rem;
+  }
+
+  .hc-pack-page .checklist-wave-info > i {
+    flex: 0 0 auto;
+
+    font-size: 0.88rem;
+  }
+
+  .hc-pack-page .checklist-wave-info > div {
+    font-size: 0.72rem;
+    line-height: 1.55;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   HP SANGAT KECIL
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 359.98px) {
+
+  .hc-pack-page .checklist-wave-info {
+    padding: 0.7rem 0.75rem;
+    gap: 0.55rem;
+    border-radius: 13px;
+  }
+
+  .hc-pack-page .checklist-wave-info > i {
+    flex: 0 0 auto;
+
+    font-size: 0.82rem;
+  }
+
+  .hc-pack-page .checklist-wave-info > div {
+    font-size: 0.69rem;
+    line-height: 1.5;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   DARK MODE — tetap bernuansa gold, hanya dibuat lebih gelap
+   -------------------------------------------------------------------------- */
+
+html.theme-dark-preload .hc-pack-page .checklist-wave-info,
+body.dark-mode .hc-pack-page .checklist-wave-info {
+  border-color: #665a3d;
+
+  background:
+    linear-gradient(
+      135deg,
+      #383326 0%,
+      #302b20 100%
+    );
+
+  color: #d6cdaf;
+
+  box-shadow: none;
+}
+
+html.theme-dark-preload .hc-pack-page .checklist-wave-info > div,
+body.dark-mode .hc-pack-page .checklist-wave-info > div {
+  color: #d6cdaf;
+}
+
+html.theme-dark-preload .hc-pack-page .checklist-wave-info strong,
+body.dark-mode .hc-pack-page .checklist-wave-info strong {
+  color: #eee2bd;
+}
+
+html.theme-dark-preload .hc-pack-page .checklist-wave-info > i,
+body.dark-mode .hc-pack-page .checklist-wave-info > i {
+  color: var(--hc-muted);
+}
+
+html.theme-dark-preload .hc-pack-page .checklist-wave-info .wave-chip,
+body.dark-mode .hc-pack-page .checklist-wave-info .wave-chip {
+  border-color: rgba(214, 185, 122, 0.35);
+}
+
+/* ==========================================================================
+   39. UPDATE — FILTER CHECKLIST MENYERUPAI DESAIN REFERENSI
+   --------------------------------------------------------------------------
+   Hanya mengubah tampilan/layout filter dan status item yang sudah dicentang.
+   Tidak mengubah isi data, urutan kategori, filter logic, navigasi,
+   accordion, atau penyimpanan checklist.
+========================================================================== */
+
+@media (min-width: 992px) {
+  .hc-pack-page {
+    max-width: 1740px;
+  }
+
+  .hc-pack-page .hc-filter-panel {
+    padding: 2rem;
+    border-radius: 26px;
+  }
+
+  .hc-pack-page .hc-filter-head {
+    gap: 1.5rem;
+    margin-bottom: 1.8rem;
+  }
+
+  .hc-pack-page .hc-filter-head h2 {
+    font-size: 1.55rem;
+  }
+
+  .hc-pack-page .hc-filter-head p {
+    font-size: 1rem;
+  }
+
+  .hc-pack-page .hc-current-badge {
+    min-height: 46px;
+    padding: 0.65rem 1rem;
+    border-color: #d3e0d7;
+    background: #f7faf8;
+    color: var(--hc-green);
+    font-size: 0.95rem;
+  }
+
+  .hc-pack-page .hc-filter-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.4rem;
+  }
+
+  .hc-pack-page .hc-filter-grid--two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hc-pack-page .hc-filter-field > label {
+    margin-bottom: 0.7rem;
+    font-size: 1rem;
+  }
+
+  .hc-pack-page .hc-segment {
+    min-height: 52px;
+    padding: 0.3rem;
+    border-radius: 15px;
+    background: #fbfcfb;
+  }
+
+  .hc-pack-page .hc-segment button {
+    min-height: 44px;
+    padding: 0.55rem 0.85rem;
+    border-radius: 12px;
+    font-size: 0.86rem;
+  }
+
+  .hc-pack-page .hc-select-trigger {
+    min-height: 52px;
+    padding: 0.65rem 0.85rem;
+    border-radius: 14px;
+    font-size: 0.86rem;
+  }
+
+  .hc-pack-page .hc-select-menu {
+    top: calc(100% + 0.5rem);
+    padding: 0.4rem;
+    border-radius: 15px;
+  }
+
+  .hc-pack-page .hc-select-option {
+    min-height: 46px;
+    padding: 0.6rem 0.75rem;
+    border-radius: 11px;
+    font-size: 0.86rem;
+  }
+
+  .hc-pack-page .hc-luggage-info {
+    margin-top: 1.25rem;
+    padding: 1rem 1.1rem;
+    border-radius: 17px;
+    font-size: 0.92rem;
+  }
+
+  .hc-pack-page .checklist-wave-info {
+    margin: 1.25rem 0 1.25rem;
+    padding: 1rem 1.1rem;
+    border-radius: 17px;
+    font-size: 0.92rem;
+  }
+
+  .hc-pack-page .checklist-wave-info > div {
+    font-size: 0.92rem;
+  }
+}
+
+/* Item yang sudah dicentang: nama barang dan jumlah dicoret. */
+.hc-pack-page .hc-item-card.is-checked .hc-item-title span,
+.hc-pack-page .hc-item-card.is-checked .hc-item-title b {
+  text-decoration-line: line-through;
+  text-decoration-thickness: 1.5px;
+  text-decoration-color: currentColor;
+  text-decoration-skip-ink: auto;
+}
+
+.hc-pack-page .hc-item-card.is-checked .hc-item-title span {
+  color: var(--hc-muted);
+}
+
+.hc-pack-page .hc-item-card.is-checked .hc-item-check {
+  box-shadow: 0 0 0 3px rgba(95, 144, 117, 0.08);
+}
+
+/* ==========================================================================
+   40. UPDATE — MOBILE TETAP RAPI
+========================================================================== */
+
+@media (max-width: 991.98px) {
+  .hc-pack-page {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .hc-pack-page .hc-filter-grid,
+  .hc-pack-page .hc-filter-grid--two {
+    grid-template-columns: 1fr;
+  }
+}

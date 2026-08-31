@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8"><script>(function(){try{var t=localStorage.getItem("manasikgo-theme");if(!t){t=(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light";}if(t==="dark"){document.documentElement.classList.add("theme-dark-preload");}}catch(e){}})();</script><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Daftar Member | ManasikGo</title><meta name="description" content="Daftar sebagai member ManasikGo untuk mengakses layanan Badal Umroh, Wakaf Al-Qur'an, dan Rekrutmen PPIH."><meta name="robots" content="noindex, follow">
+  <link rel="canonical" href="https://klikada.github.io/manasikgo/daftar.html"><meta property="og:type" content="website"><meta property="og:title" content="Daftar Member | ManasikGo"><meta name="twitter:card" content="summary">
+  <link rel="manifest" href="manifest.json"><link rel="icon" href="assets/images/logo.png" type="image/png"><link rel="apple-touch-icon" href="assets/images/logo.png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"><link rel="stylesheet" href="assets/css/style.css"><link rel="stylesheet" href="assets/css/responsive.css"><link rel="stylesheet" href="assets/css/animation.css">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Lewati ke konten</a><script src="assets/js/navbar.js"></script>
+  <header class="page-header"><div class="container"><nav aria-label="Breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="index.html">Beranda</a></li><li class="breadcrumb-item active">Daftar</li></ol></nav><span class="eyebrow">Akun ManasikGo</span><h1 class="display-5 fw-bold">Daftar sebagai member.</h1><p class="lead lead-muted col-lg-8">Masuk untuk mengakses layanan Badal Umroh dan Wakaf Al-Qur'an.</p></div></header>
+  <main id="main" class="section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+          <form id="registerForm" class="surface p-4 p-lg-5">
+            <div id="registerAlert" class="alert alert-danger d-none" role="alert"></div>
+            <div class="mb-3">
+              <label class="form-label" for="regNama">Nama Lengkap</label>
+              <input id="regNama" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="regEmail">Email</label>
+              <input id="regEmail" type="email" class="form-control" autocomplete="email" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="regWhatsapp">Nomor WhatsApp</label>
+              <input id="regWhatsapp" type="tel" class="form-control" placeholder="08xxxxxxxxxx" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="regPassword">Password</label>
+              <input id="regPassword" type="password" class="form-control" autocomplete="new-password" minlength="8" required>
+              <div class="form-text">Minimal 8 karakter.</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="regPasswordConfirm">Ulangi Password</label>
+              <input id="regPasswordConfirm" type="password" class="form-control" autocomplete="new-password" minlength="8" required>
+            </div>
+            <button id="registerSubmit" class="btn btn-primary w-100" type="submit">
+              <i class="bi bi-person-plus"></i> Daftar
+            </button>
+            <p class="small lead-muted text-center mt-3 mb-0">
+              Sudah punya akun? <a href="login.html">Masuk di sini</a>
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="assets/js/footer.js"></script><button id="backToTop" class="back-to-top" type="button" aria-label="Kembali ke atas"><i class="bi bi-arrow-up"></i></button><div class="toast-container position-fixed top-0 end-0 p-3"></div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script><script src="assets/js/api.js" defer></script><script src="assets/js/auth.js" defer></script><script src="assets/js/seo-routes.js" defer></script><script src="assets/js/app.js" defer></script><script src="assets/js/darkmode.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var session = window.HCAuth && window.HCAuth.getSession();
+      if (session && session.user) {
+        window.location.href = session.user.role === "member" ? "akun.html" : "admin.html";
+        return;
+      }
+
+      var form = document.getElementById("registerForm");
+      var alertBox = document.getElementById("registerAlert");
+      var submitBtn = document.getElementById("registerSubmit");
+
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        alertBox.classList.add("d-none");
+
+        var nama = document.getElementById("regNama").value.trim();
+        var email = document.getElementById("regEmail").value.trim();
+        var whatsapp = document.getElementById("regWhatsapp").value.trim();
+        var password = document.getElementById("regPassword").value;
+        var passwordConfirm = document.getElementById("regPasswordConfirm").value;
+
+        if (password !== passwordConfirm) {
+          alertBox.textContent = "Password dan ulangi password tidak sama.";
+          alertBox.classList.remove("d-none");
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Memproses...';
+
+        window.HCAuth.register({ nama: nama, email: email, whatsapp: whatsapp, password: password })
+          .then(function () {
+            window.location.href = "akun.html";
+          })
+          .catch(function (error) {
+            alertBox.textContent = error.message || "Pendaftaran gagal, silakan coba lagi.";
+            alertBox.classList.remove("d-none");
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="bi bi-person-plus"></i> Daftar';
+          });
+      });
+    });
+  </script>
+</body>
+</html>

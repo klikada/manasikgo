@@ -1,0 +1,893 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("manasikgo-theme");
+          if (!t) {
+            t =
+              window.matchMedia &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light";
+          }
+          if (t === "dark") {
+            document.documentElement.classList.add("theme-dark-preload");
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dashboard Petugas Badal | ManasikGo</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" href="assets/images/logo.png" type="image/png" />
+    <link rel="apple-touch-icon" href="assets/images/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/responsive.css" />
+    <link rel="stylesheet" href="assets/css/animation.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"
+    />
+    <!-- Leaflet: peta realtime posisi petugas sendiri (konfirmasi visual GPS) -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      defer
+    ></script>
+    <!-- NoSleep.js: fallback paksa layar tetap menyala di browser/HP yang
+         BELUM mendukung Screen Wake Lock API bawaan (mis. Firefox Android,
+         WebView lama, Safari < 16.4). Wake Lock API tetap jadi cara utama;
+         NoSleep hanya dipakai kalau API itu tidak tersedia. -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/nosleep.js/dist/NoSleep.min.js"
+      defer
+    ></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Lewati ke konten</a>
+    <script src="assets/js/navbar.js"></script>
+    <header class="page-header">
+      <div class="container">
+        <nav aria-label="Breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Beranda</a></li>
+            <li class="breadcrumb-item active">Dashboard Petugas Badal</li>
+          </ol>
+        </nav>
+        <span class="eyebrow">Khusus Petugas Badal</span>
+        <h1 class="display-5 fw-bold" id="petugasSapaan">Halo, Petugas!</h1>
+        <p class="lead lead-muted col-lg-8">
+          Pesanan Badal Umroh yang ditugaskan admin kepada Anda muncul di
+          bawah ini. Tekan <strong>"Mulai Badal"</strong> saat berangkat
+          melaksanakan agar pemesan bisa memantau posisi Anda secara live,
+          lalu tekan <strong>"Selesai"</strong> setelah pelaksanaan tuntas.
+          Seluruh rute perjalanan akan terekam otomatis dan dikirim sebagai
+          bukti ke pemesan, lalu menunggu verifikasi admin sebelum pesanan
+          resmi ditandai selesai.
+        </p>
+      </div>
+    </header>
+
+    <main id="main" class="section">
+      <div class="container">
+        <div id="notConnectedAlert" class="alert alert-warning d-none">
+          <i class="bi bi-exclamation-triangle"></i>
+          Akun Anda belum terhubung ke data Petugas Badal. Nama pada akun
+          Anda harus <strong>sama persis</strong> dengan nama yang didaftarkan
+          admin di menu Layanan &rarr; Petugas Badal. Hubungi admin
+          ManasikGo untuk memperbaikinya.
+        </div>
+
+        <div class="alert alert-warning small mb-4">
+          <i class="bi bi-exclamation-triangle-fill"></i>
+          <strong>Sebelum mulai badal:</strong> atur dulu pengaturan HP Anda
+          ke
+          <strong>Pengaturan &rarr; Layar &rarr; Waktu Tunggu Layar (Screen
+          Timeout)</strong>
+          dan pilih durasi <strong>paling lama</strong> (atau "Tidak
+          Pernah / Never" jika tersedia). Fitur layar-tetap-menyala di
+          aplikasi ini membantu, tapi pengaturan HP tetap yang menentukan --
+          kalau layar sampai mati/terkunci di tengah jalan, rute lokasi yang
+          tercatat bisa terputus dan hasil tracking jadi kurang sempurna
+          sebagai bukti badal. Jangan lupa juga nonaktifkan mode hemat
+          baterai untuk browser ini selama live tracking berjalan.
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-4 order-1 order-lg-2">
+            <div class="surface p-3 p-md-4 badal-gps-card">
+              <div class="badal-gps-card-head">
+                <span class="badal-gps-icon">
+                  <i class="bi bi-geo-alt-fill"></i>
+                </span>
+                <div class="flex-grow-1 min-w-0">
+                  <h2 class="h6 fw-bold mb-1">Status GPS Anda</h2>
+                  <span class="badal-gps-pill" id="gpsStatusPill">
+                    <span class="badal-gps-pill-dot"></span>
+                    <span id="gpsStatusPillText">Belum Aktif</span>
+                  </span>
+                </div>
+              </div>
+
+              <p class="badal-gps-status mb-2" id="gpsStatusText">
+                Belum aktif. Tekan "Mulai Badal" pada salah satu pesanan di
+                samping untuk mengaktifkan pelacakan.
+              </p>
+
+              <p
+                class="badal-gps-wakelock d-none"
+                id="wakeLockIndicator"
+              >
+                <i class="bi bi-phone-fill"></i> Layar dikunci menyala
+                otomatis selama tracking berjalan. Layar hanya akan mati jika
+                Anda menekan tombol power sendiri.
+              </p>
+
+              <div
+                class="badal-gps-metrics d-none"
+                id="badalGpsMetrics"
+                aria-live="polite"
+              >
+                <div class="badal-gps-metric">
+                  <div class="val" id="badalMetricDuration">0 mnt</div>
+                  <div class="lbl">Berjalan</div>
+                </div>
+                <div class="badal-gps-metric">
+                  <div class="val" id="badalMetricDistance">0 m</div>
+                  <div class="lbl">Jarak Tercatat</div>
+                </div>
+              </div>
+
+              <div id="petugasMap" class="badal-mini-map d-none"></div>
+
+              <div class="badal-gps-note">
+                <i class="bi bi-info-circle"></i>
+                <span>
+                  Lokasi hanya dikirim selama live tracking aktif, dan
+                  berhenti otomatis begitu Anda menekan "Selesai". Pastikan
+                  izin lokasi browser diaktifkan.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-8 order-2 order-lg-1">
+            <div class="surface p-3 p-md-4">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="h5 fw-bold mb-0">
+                  <i class="bi bi-list-task text-primary"></i> Pesanan
+                  Ditugaskan
+                </h2>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-secondary"
+                  id="refreshOrdersBtn"
+                >
+                  <i class="bi bi-arrow-clockwise"></i> Muat Ulang
+                </button>
+              </div>
+              <div
+                class="badal-filter-bar"
+                id="orderFilterBar"
+                role="tablist"
+                aria-label="Filter status pesanan"
+              ></div>
+              <p class="small lead-muted mb-3 d-none" id="orderFilterHint">
+                <i class="bi bi-info-circle"></i> Menampilkan pesanan yang
+                masih perlu ditindaklanjuti (belum dimulai, sedang live, atau
+                menunggu verifikasi admin).
+              </p>
+              <div id="ordersList">
+                <div class="text-center py-5">
+                  <div class="spinner-border text-primary"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      defer
+    ></script>
+    <script src="assets/js/api.js" defer></script>
+    <script src="assets/js/auth.js" defer></script>
+    <script src="assets/js/app.js" defer></script>
+    <script src="assets/js/darkmode.js" defer></script>
+    <script src="assets/js/footer.js" defer></script>
+    <div class="toast-container position-fixed top-0 end-0 p-3"></div>
+    <script>
+      document.addEventListener("DOMContentLoaded", async function () {
+        await window.HCAuth.me(); // sinkronkan sesi ke server (ambil role terbaru, tolak sesi basi/nonaktif)
+        var user = window.HCAuth.requireRole(
+          ["petugas_badal", "super_admin"],
+          "login.html?redirect=petugas-badal.html",
+        );
+        if (!user) return;
+
+        document.getElementById("petugasSapaan").textContent =
+          "Halo, " + String(user.nama || "Petugas").split(" ")[0] + "!";
+
+        var token = window.HCAuth.getToken();
+        var orders = [];
+        // Filter status pesanan yang sedang aktif dipilih petugas. Default
+        // "diproses" -- pesanan yang masih perlu ditindaklanjuti (belum
+        // dimulai / sedang live / menunggu verifikasi admin) -- supaya
+        // petugas langsung lihat yang perlu dikerjakan begitu buka halaman,
+        // tanpa harus menyaring sendiri dari daftar "selesai" yang menumpuk.
+        var currentOrderFilter = "diproses";
+
+        // Hanya SATU pesanan yang bisa dilacak dalam satu waktu di
+        // perangkat ini (sesuai konteks: 1 petugas sedang menjalankan 1
+        // pelaksanaan badal). Kalau petugas menutup tab/browser lalu
+        // membuka lagi, tracking harus dimulai ulang secara sengaja --
+        // demi menghindari lokasi "menggantung" di sisi pemesan.
+        var activeOrderId = null;
+        var watchId = null;
+        var lastSentAt = 0;
+        var wakeLock = null; // Screen Wake Lock: cegah layar mati/terkunci otomatis selagi live tracking berjalan
+        var noSleep = null; // Fallback untuk browser yang tidak dukung Wake Lock API
+        var wakeLockActive = false; // status logis "seharusnya menyala" (dipakai utk auto-reacquire)
+
+        // Minta browser agar layar tidak mati sendiri (auto-lock) selama live
+        // tracking. Ini TIDAK mencegah petugas menekan tombol power manual
+        // atau pindah ke app lain -- itu batas web browser, watchPosition
+        // akan berhenti kalau itu terjadi. Tapi ini menghilangkan penyebab
+        // paling umum: layar mati sendiri karena idle timeout HP.
+        async function requestWakeLock() {
+          wakeLockActive = true;
+          setWakeLockIndicator(true);
+
+          if ("wakeLock" in navigator) {
+            try {
+              wakeLock = await navigator.wakeLock.request("screen");
+              wakeLock.addEventListener("release", function () {
+                wakeLock = null;
+                // Browser bisa melepas wake lock sendiri di luar kendali kita
+                // (mis. baterai lemah, kebijakan OS tertentu) TANPA tab pernah
+                // disembunyikan. Kalau tracking masih dianggap aktif & tab
+                // masih terlihat, coba minta lagi supaya layar tetap menyala.
+                if (wakeLockActive && document.visibilityState === "visible") {
+                  requestWakeLock();
+                }
+              });
+              return;
+            } catch (err) {
+              console.warn("Wake lock API gagal diminta:", err.message);
+              // lanjut ke fallback NoSleep.js di bawah
+            }
+          }
+
+          // Fallback: Wake Lock API tidak tersedia / gagal -> pakai NoSleep.js
+          // (trik video loop tak terlihat) supaya layar tetap dipaksa menyala.
+          try {
+            if (!noSleep && window.NoSleep) noSleep = new window.NoSleep();
+            if (noSleep && !noSleep.isEnabled) await noSleep.enable();
+          } catch (err) {
+            console.warn("NoSleep fallback gagal diaktifkan:", err.message);
+          }
+        }
+
+        function releaseWakeLock() {
+          wakeLockActive = false;
+          setWakeLockIndicator(false);
+          if (wakeLock) {
+            wakeLock.release().catch(function () {});
+            wakeLock = null;
+          }
+          if (noSleep && noSleep.isEnabled) {
+            noSleep.disable();
+          }
+        }
+
+        // PENTING: video.play() yang dipakai NoSleep.js (fallback) hanya
+        // diizinkan browser (terutama Safari/iOS) kalau dipanggil LANGSUNG di
+        // dalam event klik pengguna -- bukan setelah menunggu izin lokasi
+        // atau request ke server selesai (itu sudah "basi" dari sisi
+        // browser). Karena itu fungsi ini dipanggil SINKRON, persis saat
+        // tombol "Mulai Badal" ditekan, sebelum ada proses async apa pun.
+        // Wake Lock API asli (bukan fallback) tidak butuh ini, jadi kalau API
+        // itu tersedia fungsi ini tidak melakukan apa-apa.
+        function primeScreenLockGesture() {
+          if ("wakeLock" in navigator) return;
+          try {
+            if (!noSleep && window.NoSleep) noSleep = new window.NoSleep();
+            if (noSleep && !noSleep.isEnabled) noSleep.enable();
+          } catch (err) {
+            console.warn("NoSleep priming gagal:", err.message);
+          }
+        }
+
+        // Kalau ternyata badal gagal dimulai (izin lokasi ditolak / request ke
+        // server gagal) SETELAH kita sempat priming NoSleep di atas, matikan
+        // lagi -- supaya tidak ada video tersembunyi yang terus menyala
+        // percuma padahal tracking tidak jadi berjalan.
+        function cancelPrimedScreenLock() {
+          if (!wakeLockActive && noSleep && noSleep.isEnabled) {
+            noSleep.disable();
+          }
+        }
+
+        // Indikator visual kecil di status GPS supaya petugas yakin layar
+        // memang sedang "dikunci menyala" oleh sistem, bukan cuma kebetulan.
+        function setWakeLockIndicator(on) {
+          var el = document.getElementById("wakeLockIndicator");
+          if (!el) return;
+          el.classList.toggle("d-none", !on);
+        }
+
+        // Wake lock otomatis dilepas OS begitu tab disembunyikan (mis. pindah
+        // app sebentar) atau layar mati sesaat. Begitu petugas kembali ke tab
+        // ini dan tracking masih aktif, minta lagi supaya layar tetap menyala.
+        document.addEventListener("visibilitychange", function () {
+          if (
+            document.visibilityState === "visible" &&
+            activeOrderId &&
+            wakeLockActive &&
+            !wakeLock
+          ) {
+            requestWakeLock();
+          }
+        });
+
+        // Jaga-jaga tambahan: sebagian browser Android tidak selalu memicu
+        // event 'release'/'visibilitychange' secara konsisten. Cek ulang tiap
+        // 20 detik selama tracking aktif -- kalau ternyata wake lock sudah
+        // lepas padahal seharusnya masih aktif, minta lagi.
+        setInterval(function () {
+          if (
+            wakeLockActive &&
+            document.visibilityState === "visible" &&
+            "wakeLock" in navigator &&
+            !wakeLock
+          ) {
+            requestWakeLock();
+          }
+        }, 20000);
+        var SEND_INTERVAL_MS = 10000; // kirim ke server maks tiap 10 detik
+        var petugasMap = null;
+        var petugasMarker = null;
+        var liveStartTime = null;
+        var liveDistanceKm = 0;
+        var lastMetricLatLng = null;
+        var metricsTimer = null;
+        var youAreHereIcon =
+          typeof L !== "undefined"
+            ? L.divIcon({
+                className: "badal-you-are-here-wrap",
+                html: '<span class="badal-you-are-here-icon"></span>',
+                iconSize: [18, 18],
+                iconAnchor: [9, 9],
+              })
+            : null;
+
+        function haversineKm(a, b) {
+          var R = 6371;
+          var dLat = ((b.lat - a.lat) * Math.PI) / 180;
+          var dLng = ((b.lng - a.lng) * Math.PI) / 180;
+          var lat1 = (a.lat * Math.PI) / 180;
+          var lat2 = (b.lat * Math.PI) / 180;
+          var h =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.sin(dLng / 2) *
+              Math.sin(dLng / 2) *
+              Math.cos(lat1) *
+              Math.cos(lat2);
+          return R * 2 * Math.atan2(Math.sqrt(h), Math.sqrt(1 - h));
+        }
+
+        function formatDurationMinutes(ms) {
+          var totalMin = Math.max(0, Math.floor(ms / 60000));
+          if (totalMin < 60) return totalMin + " mnt";
+          return (
+            Math.floor(totalMin / 60) + " jam " + (totalMin % 60) + " mnt"
+          );
+        }
+
+        function formatDistanceKm(km) {
+          return km < 1
+            ? Math.round(km * 1000) + " m"
+            : km.toFixed(2) + " km";
+        }
+
+        function refreshGpsMetricsDisplay() {
+          if (!liveStartTime) return;
+          document.getElementById("badalMetricDuration").textContent =
+            formatDurationMinutes(Date.now() - liveStartTime);
+          document.getElementById("badalMetricDistance").textContent =
+            formatDistanceKm(liveDistanceKm);
+        }
+
+        function startGpsMetrics(lat, lng) {
+          liveStartTime = Date.now();
+          liveDistanceKm = 0;
+          lastMetricLatLng = { lat: lat, lng: lng };
+          document
+            .getElementById("badalGpsMetrics")
+            .classList.remove("d-none");
+          refreshGpsMetricsDisplay();
+          if (metricsTimer) clearInterval(metricsTimer);
+          metricsTimer = setInterval(refreshGpsMetricsDisplay, 15000);
+        }
+
+        function trackGpsMetrics(lat, lng) {
+          if (!liveStartTime) return;
+          if (lastMetricLatLng) {
+            liveDistanceKm += haversineKm(lastMetricLatLng, { lat: lat, lng: lng });
+          }
+          lastMetricLatLng = { lat: lat, lng: lng };
+          refreshGpsMetricsDisplay();
+        }
+
+        function stopGpsMetrics() {
+          liveStartTime = null;
+          liveDistanceKm = 0;
+          lastMetricLatLng = null;
+          if (metricsTimer) {
+            clearInterval(metricsTimer);
+            metricsTimer = null;
+          }
+          document.getElementById("badalGpsMetrics").classList.add("d-none");
+        }
+
+        function showToast(message, variant) {
+          if (typeof window.showToast === "function") {
+            window.showToast(message, variant);
+            return;
+          }
+          alert(message);
+        }
+
+        function setGpsStatus(text, isLive) {
+          var el = document.getElementById("gpsStatusText");
+          el.textContent = text;
+          el.classList.toggle("is-live-text", !!isLive);
+
+          var pill = document.getElementById("gpsStatusPill");
+          var pillText = document.getElementById("gpsStatusPillText");
+          if (pill && pillText) {
+            pill.classList.toggle("is-live", !!isLive);
+            pillText.textContent = isLive ? "Live Tracking" : "Belum Aktif";
+          }
+        }
+
+        function ensurePetugasMap() {
+          if (petugasMap || typeof L === "undefined") return;
+          var el = document.getElementById("petugasMap");
+          el.classList.remove("d-none");
+          // Default awal: tampilan luas seluruh Indonesia (bukan dipatok ke
+          // Arab Saudi) supaya gampang dites dari mana saja di Indonesia --
+          // peta tetap otomatis pindah/zoom ke lokasi GPS asli begitu ada
+          // posisi masuk (lihat updatePetugasMap() di bawah).
+          petugasMap = L.map(el).setView([-2.5489, 118.0149], 5);
+          L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            maxZoom: 19,
+            attribution: "&copy; OpenStreetMap",
+          }).addTo(petugasMap);
+          setTimeout(function () {
+            petugasMap.invalidateSize();
+          }, 200);
+        }
+
+        function updatePetugasMap(lat, lng) {
+          ensurePetugasMap();
+          if (!petugasMap) return;
+          var latLng = [lat, lng];
+          if (!petugasMarker) {
+            petugasMarker = L.marker(latLng, {
+              icon: youAreHereIcon || undefined,
+            }).addTo(petugasMap);
+            petugasMap.setView(latLng, 16);
+          } else {
+            petugasMarker.setLatLng(latLng);
+            petugasMap.panTo(latLng);
+          }
+        }
+
+        function orderLabel(o) {
+          var untuk = (o.untuk || "").trim();
+          return untuk ? "Badal untuk " + untuk : "Badal Umroh #" + o.id;
+        }
+
+        function trackingBadge(o) {
+          if (o.tracking_status === "berlangsung") {
+            return '<span class="badal-live-badge"><span class="tracking-dot tracking-dot-live"></span> Live</span>';
+          }
+          if (o.tracking_status === "menunggu_verifikasi") {
+            return '<span class="badge bg-warning text-dark">Menunggu Verifikasi Admin</span>';
+          }
+          if (o.tracking_status === "selesai") {
+            return '<span class="badge bg-success">Selesai &amp; Terverifikasi</span>';
+          }
+          return '<span class="badge bg-secondary">Belum Dimulai</span>';
+        }
+
+        // Urutan prioritas tampil dalam satu filter: yang sedang LIVE paling
+        // atas (paling butuh perhatian petugas), lalu yang belum dimulai,
+        // lalu yang sudah dikirim & tinggal menunggu verifikasi, baru yang
+        // sudah selesai total.
+        function orderSortWeight(o) {
+          if (o.tracking_status === "berlangsung") return 0;
+          if (!o.tracking_status) return 1;
+          if (o.tracking_status === "menunggu_verifikasi") return 2;
+          return 3;
+        }
+
+        // Definisi tab filter status pesanan. "diproses" adalah default --
+        // pesanan yang statusnya masih "diproses" di sisi admin, artinya
+        // masih jadi tanggung jawab aktif petugas (baik yang belum dimulai,
+        // sedang live, maupun sudah dikirim & menunggu verifikasi admin).
+        var ORDER_FILTERS = [
+          {
+            key: "diproses",
+            label: "Diproses",
+            icon: "bi-hourglass-split",
+            match: function (o) {
+              return o.status === "diproses";
+            },
+          },
+          {
+            key: "selesai",
+            label: "Selesai",
+            icon: "bi-check2-circle",
+            match: function (o) {
+              return o.status === "selesai";
+            },
+          },
+          {
+            key: "semua",
+            label: "Semua",
+            icon: "bi-list-ul",
+            match: function () {
+              return true;
+            },
+          },
+        ];
+
+        function renderOrderFilterBar() {
+          var bar = document.getElementById("orderFilterBar");
+          if (!orders.length) {
+            bar.innerHTML = "";
+            bar.classList.add("d-none");
+            return;
+          }
+          bar.classList.remove("d-none");
+          bar.innerHTML = ORDER_FILTERS.map(function (f) {
+            var count = orders.filter(f.match).length;
+            var isActive = currentOrderFilter === f.key;
+            return (
+              '<button type="button" role="tab" aria-selected="' +
+              isActive +
+              '" class="badal-filter-tab' +
+              (isActive ? " is-active" : "") +
+              '" data-filter="' +
+              f.key +
+              '"><i class="bi ' +
+              f.icon +
+              '"></i><span class="badal-filter-label">' +
+              f.label +
+              '</span><span class="badal-filter-count">' +
+              count +
+              "</span></button>"
+            );
+          }).join("");
+          bar.querySelectorAll(".badal-filter-tab").forEach(function (btn) {
+            btn.addEventListener("click", function () {
+              if (btn.dataset.filter === currentOrderFilter) return;
+              currentOrderFilter = btn.dataset.filter;
+              renderOrders();
+            });
+          });
+        }
+
+        function renderOrders() {
+          var container = document.getElementById("ordersList");
+          var hint = document.getElementById("orderFilterHint");
+          renderOrderFilterBar();
+
+          if (!orders.length) {
+            hint.classList.add("d-none");
+            container.innerHTML =
+              '<p class="text-center lead-muted py-4 mb-0"><i class="bi bi-inbox display-6 d-block mb-2"></i>Belum ada pesanan Badal Umroh yang ditugaskan kepada Anda.</p>';
+            return;
+          }
+
+          var activeFilterDef = ORDER_FILTERS.filter(function (f) {
+            return f.key === currentOrderFilter;
+          })[0];
+          var filtered = orders
+            .filter(activeFilterDef ? activeFilterDef.match : function () {
+              return true;
+            })
+            .slice()
+            .sort(function (a, b) {
+              return orderSortWeight(a) - orderSortWeight(b);
+            });
+
+          hint.classList.toggle(
+            "d-none",
+            !(currentOrderFilter === "diproses" && filtered.length > 0),
+          );
+
+          if (!filtered.length) {
+            container.innerHTML =
+              '<p class="text-center lead-muted py-4 mb-0"><i class="bi bi-emoji-smile display-6 d-block mb-2"></i>Tidak ada pesanan berstatus "' +
+              (activeFilterDef ? activeFilterDef.label : "") +
+              '" saat ini.</p>';
+            return;
+          }
+
+          container.innerHTML = filtered
+            .map(function (o) {
+              var isActive =
+                activeOrderId === o.id && o.tracking_status === "berlangsung";
+              var canStart =
+                o.status === "diproses" &&
+                o.tracking_status !== "selesai" &&
+                o.tracking_status !== "menunggu_verifikasi" &&
+                !activeOrderId;
+              var canStop = isActive;
+              var tanggal = (o.tanggal_pelaksanaan_hijri || "").trim();
+              return (
+                '<div class="surface p-3 mb-3 badal-order-card' +
+                (isActive ? " is-live" : "") +
+                '">' +
+                '<div class="d-flex justify-content-between align-items-start gap-2 mb-2">' +
+                '<p class="fw-semibold mb-0">' +
+                orderLabel(o) +
+                "</p>" +
+                trackingBadge(o) +
+                "</div>" +
+                '<p class="small lead-muted mb-1"><i class="bi bi-person"></i> Pemesan: ' +
+                (o.nama_pemesan || "-") +
+                "</p>" +
+                (tanggal
+                  ? '<p class="small lead-muted mb-2"><i class="bi bi-calendar-event"></i> Rencana pelaksanaan: ' +
+                    tanggal +
+                    "</p>"
+                  : "") +
+                '<div class="d-flex gap-2 flex-wrap">' +
+                (canStart
+                  ? '<button type="button" class="btn btn-sm btn-danger btn-mulai-badal" data-order-id="' +
+                    o.id +
+                    '"><i class="bi bi-play-fill"></i> Mulai Badal</button>'
+                  : "") +
+                (canStop
+                  ? '<button type="button" class="btn btn-sm btn-outline-secondary btn-selesai-badal" data-order-id="' +
+                    o.id +
+                    '"><i class="bi bi-check2-circle"></i> Selesai</button>'
+                  : "") +
+                (o.tracking_status === "menunggu_verifikasi"
+                  ? '<span class="small text-warning-emphasis align-self-center"><i class="bi bi-hourglass-split"></i> Rute sudah dikirim, menunggu admin memverifikasi.</span>'
+                  : "") +
+                (o.tracking_status === "selesai"
+                  ? '<span class="small lead-muted align-self-center">Pelacakan sudah diverifikasi admin.</span>'
+                  : "") +
+                (activeOrderId &&
+                activeOrderId !== o.id &&
+                o.status === "diproses" &&
+                o.tracking_status !== "selesai" &&
+                o.tracking_status !== "menunggu_verifikasi"
+                  ? '<span class="small lead-muted align-self-center"><i class="bi bi-lock"></i> Selesaikan pesanan yang sedang live dulu sebelum memulai ini.</span>'
+                  : "") +
+                "</div></div>"
+              );
+            })
+            .join("");
+          container.querySelectorAll(".btn-mulai-badal").forEach(function (btn) {
+            btn.addEventListener("click", function () {
+              // Panggil PALING PERTAMA & sinkron, selagi event klik ini masih
+              // dianggap "user gesture" segar oleh browser -- lihat komentar
+              // di primeScreenLockGesture().
+              primeScreenLockGesture();
+              mulaiBadal(btn.dataset.orderId);
+            });
+          });
+          container
+            .querySelectorAll(".btn-selesai-badal")
+            .forEach(function (btn) {
+              btn.addEventListener("click", function () {
+                selesaiBadal(btn.dataset.orderId);
+              });
+            });
+        }
+
+        async function loadOrders() {
+          try {
+            orders = await window.HCApi.getMyBadalPesanan(token);
+            document
+              .getElementById("notConnectedAlert")
+              .classList.add("d-none");
+            renderOrders();
+          } catch (error) {
+            document.getElementById("ordersList").innerHTML =
+              '<p class="text-danger small text-center py-4 mb-0">' +
+              (error.message || "Gagal memuat pesanan.") +
+              "</p>";
+          }
+        }
+
+        document
+          .getElementById("refreshOrdersBtn")
+          .addEventListener("click", loadOrders);
+
+        function mulaiBadal(orderId) {
+          if (!navigator.geolocation) {
+            showToast(
+              "Perangkat/browser ini tidak mendukung layanan lokasi.",
+              "danger",
+            );
+            return;
+          }
+          setGpsStatus("Meminta izin lokasi...");
+          navigator.geolocation.getCurrentPosition(
+            function (position) {
+              var lat = position.coords.latitude;
+              var lng = position.coords.longitude;
+              window.HCApi
+                .startBadalTracking(orderId, lat, lng, token)
+                .then(function () {
+                  activeOrderId = orderId;
+                  lastSentAt = Date.now();
+                  updatePetugasMap(lat, lng);
+                  startGpsMetrics(lat, lng);
+                  setGpsStatus(
+                    "Live tracking aktif. Posisi dikirim otomatis setiap ~10 detik.",
+                    true,
+                  );
+                  startWatch(orderId);
+                  requestWakeLock();
+                  loadOrders();
+                  // Di layar sempit (mobile), kartu "Status GPS Anda" ada di
+                  // atas daftar pesanan. Begitu tracking berhasil dimulai,
+                  // scroll otomatis ke situ supaya petugas langsung lihat
+                  // konfirmasi "Live" tanpa perlu geser layar sendiri.
+                  if (window.innerWidth < 992) {
+                    var gpsCard = document.querySelector(".badal-gps-card");
+                    if (gpsCard) {
+                      gpsCard.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                      });
+                    }
+                  }
+                  if (!("wakeLock" in navigator)) {
+                    showToast(
+                      "Live tracking dimulai. Layar dipaksa tetap menyala lewat mode kompatibilitas -- jaga aplikasi ini tetap terbuka di layar depan (jangan pindah app lain), dan pastikan waktu tunggu layar di pengaturan HP sudah diatur paling lama agar titik rute tidak terputus.",
+                    );
+                  } else {
+                    showToast(
+                      "Live tracking dimulai. Layar akan tetap menyala -- jaga aplikasi ini tetap dibuka (jangan pindah app lain), dan pastikan waktu tunggu layar di pengaturan HP sudah diatur paling lama agar titik rute tidak terputus.",
+                    );
+                  }
+                })
+                .catch(function (error) {
+                  showToast(
+                    error.message || "Gagal memulai live tracking.",
+                    "danger",
+                  );
+                  cancelPrimedScreenLock();
+                });
+            },
+            function () {
+              setGpsStatus(
+                "Izin lokasi ditolak. Aktifkan izin lokasi di pengaturan browser untuk memulai.",
+              );
+              showToast(
+                "Izin lokasi diperlukan untuk memulai live tracking.",
+                "danger",
+              );
+              cancelPrimedScreenLock();
+            },
+            { enableHighAccuracy: true, timeout: 15000 },
+          );
+        }
+
+        function startWatch(orderId) {
+          if (watchId !== null) navigator.geolocation.clearWatch(watchId);
+          watchId = navigator.geolocation.watchPosition(
+            function (position) {
+              var lat = position.coords.latitude;
+              var lng = position.coords.longitude;
+              updatePetugasMap(lat, lng);
+              trackGpsMetrics(lat, lng);
+              var now = Date.now();
+              // Throttle: watchPosition bisa terpanggil sangat sering (tiap
+              // beberapa detik/meter), tapi kita cukup kirim ke server tiap
+              // SEND_INTERVAL_MS supaya tidak membebani Apps Script.
+              if (now - lastSentAt < SEND_INTERVAL_MS) return;
+              lastSentAt = now;
+              window.HCApi
+                .updateBadalTracking(orderId, lat, lng, token)
+                .catch(function (error) {
+                  console.warn("Gagal mengirim lokasi:", error.message);
+                });
+            },
+            function (error) {
+              console.warn("Geolocation error:", error.message);
+            },
+            { enableHighAccuracy: true, maximumAge: 5000, timeout: 20000 },
+          );
+        }
+
+        function selesaiBadal(orderId) {
+          if (
+            !confirm(
+              "Selesaikan live tracking untuk pesanan ini? Seluruh rute perjalanan akan dikirim ke pemesan & admin sebagai bukti, lalu menunggu verifikasi admin.",
+            )
+          )
+            return;
+          function finish(lat, lng) {
+            window.HCApi
+              .stopBadalTracking(orderId, lat, lng, token)
+              .then(function (result) {
+                if (watchId !== null) {
+                  navigator.geolocation.clearWatch(watchId);
+                  watchId = null;
+                }
+                activeOrderId = null;
+                releaseWakeLock();
+                stopGpsMetrics();
+                setGpsStatus(
+                  'Live tracking dihentikan. Tekan "Mulai Badal" lagi untuk pesanan berikutnya.',
+                );
+                loadOrders();
+                showToast(
+                  (result && result.message) ||
+                    "Rute tracking terkirim, menunggu verifikasi admin. Terima kasih!",
+                );
+              })
+              .catch(function (error) {
+                showToast(
+                  error.message || "Gagal menghentikan live tracking.",
+                  "danger",
+                );
+              });
+          }
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+              function (position) {
+                finish(position.coords.latitude, position.coords.longitude);
+              },
+              function () {
+                finish(null, null);
+              },
+              { timeout: 10000 },
+            );
+          } else {
+            finish(null, null);
+          }
+        }
+
+        window.addEventListener("beforeunload", function () {
+          if (watchId !== null) navigator.geolocation.clearWatch(watchId);
+          releaseWakeLock();
+        });
+
+        loadOrders();
+      });
+    </script>
+  </body>
+</html>

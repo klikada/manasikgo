@@ -1,0 +1,969 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("manasikgo-theme");
+          if (!t) {
+            t =
+              window.matchMedia &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light";
+          }
+          if (t === "dark") {
+            document.documentElement.classList.add("theme-dark-preload");
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sertifikat Badal Umroh | ManasikGo</title>
+    <meta
+      name="description"
+      content="Sertifikat resmi bukti pelaksanaan jasa Badal Umroh ManasikGo, lengkap dengan nama petugas pelaksana, tanda tangan, dan kode QR verifikasi."
+    />
+    <meta name="robots" content="noindex, follow" />
+    <link rel="canonical" href="https://klikada.github.io/manasikgo/sertifikat-badal.html" /><meta property="og:type" content="website"><meta property="og:title" content="Sertifikat Badal Umroh | ManasikGo"><meta property="og:description" content="Panduan Haji dan Umrah ManasikGo."><meta property="og:image" content="https://klikada.github.io/manasikgo/assets/images/logo.png"><meta property="og:url" content="https://klikada.github.io/manasikgo/sertifikat-badal.html"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Sertifikat Badal Umroh | ManasikGo"><meta name="twitter:description" content="Panduan Haji dan Umrah ManasikGo."><meta name="twitter:image" content="https://klikada.github.io/manasikgo/assets/images/logo.png">
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" href="assets/images/logo.png" type="image/png"><link rel="apple-touch-icon" href="assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/responsive.css" />
+    <link rel="stylesheet" href="assets/css/animation.css" />
+    <!-- Tombol "Unduh PDF" sekarang memakai dialog cetak bawaan browser
+         (window.print()), BUKAN lagi html2canvas+jsPDF. Alasannya: hasil
+         "foto" html2canvas kadang tidak 1:1 sama dengan tampilan preview
+         (font/timing render bisa beda), jadi ukurannya bisa terlihat beda
+         antara preview dan file unduhan. Dengan window.print() + CSS
+         @media print di bawah, yang diunduh dijamin identik dengan yang
+         terlihat di preview karena browser mencetak DOM & CSS yang sama
+         persis (WYSIWYG). Di browser modern (Chrome/Edge/Safari, termasuk
+         versi mobile), dialog cetak ini punya opsi "Simpan sebagai PDF".
+         -->
+
+    <style>
+      /* === Halaman Sertifikat Badal Umroh (khusus, tidak dipakai halaman lain) === */
+      .sertifikat-shell {
+        background: var(--bg);
+        padding: 2.5rem 1rem 4rem;
+      }
+      .sertifikat-toolbar {
+        max-width: 780px;
+        margin: 0 auto 1.5rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .sertifikat-toolbar .lead-muted {
+        margin: 0;
+      }
+
+      /* Lembar sertifikat: proporsi potret ala A4, TAPI tinggi mengikuti
+         konten sesungguhnya (bukan dipaksa aspect-ratio + overlay absolut).
+         Ini sengaja diubah dari versi sebelumnya: dulu .cert-inner
+         "mengambang" absolut di atas .cert-sheet yang tingginya dipatok
+         (aspect-ratio di desktop, min-height tetap di mobile) + overflow
+         hidden -- akibatnya begitu isi sertifikat butuh ruang lebih
+         (terutama di layar sempit/mobile, teks jadi lebih banyak baris),
+         bagian bawah (tanda tangan, QR, footer) KEPOTONG karena
+         "disembunyikan" overflow:hidden. Sekarang .cert-inner ikut alur
+         normal (bukan position:absolute) dengan padding sebagai pengganti
+         inset, sehingga tinggi .cert-sheet otomatis menyesuaikan isinya di
+         SEMUA ukuran layar -- hasilnya mobile & desktop selalu identik,
+         tidak pernah terpotong. */
+      .cert-sheet {
+        max-width: 780px;
+        margin: 0 auto;
+        background: #fdfaf3;
+        color: #2f3e34;
+        border-radius: 6px;
+        box-shadow: 0 30px 60px -25px rgba(47, 62, 52, 0.35);
+        position: relative;
+        overflow: hidden;
+        padding: 0;
+      }
+      .cert-frame {
+        position: absolute;
+        inset: 14px;
+        border: 2px solid #c9a86a;
+        border-radius: 4px;
+        pointer-events: none;
+      }
+      .cert-frame::before {
+        content: "";
+        position: absolute;
+        inset: 8px;
+        border: 1px solid #c9a86a;
+        border-radius: 2px;
+        opacity: 0.55;
+      }
+      /* Motif hiasan sudut, sekadar mengisi ruang kosong di pojok kertas
+         supaya terasa seperti sertifikat resmi (referensi umum desain
+         sertifikat: bingkai ganda + aksen sudut), tanpa mengganggu
+         keterbacaan konten di tengah. */
+      .cert-corner {
+        position: absolute;
+        width: 34px;
+        height: 34px;
+        border: 2px solid rgba(201, 168, 106, 0.75);
+        pointer-events: none;
+      }
+      .cert-corner--tl {
+        top: 22px;
+        left: 22px;
+        border-right: none;
+        border-bottom: none;
+      }
+      .cert-corner--tr {
+        top: 22px;
+        right: 22px;
+        border-left: none;
+        border-bottom: none;
+      }
+      .cert-corner--bl {
+        bottom: 22px;
+        left: 22px;
+        border-right: none;
+        border-top: none;
+      }
+      .cert-corner--br {
+        bottom: 22px;
+        right: 22px;
+        border-left: none;
+        border-top: none;
+      }
+      .cert-inner {
+        position: relative;
+        padding: 58px 34px 40px;
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+      /* Watermark halus di belakang konten: tekstur titik-titik ala kertas
+         berharga + lambang bulan-bintang raksasa transparan di tengah,
+         supaya sertifikat terasa "resmi" tanpa mengganggu keterbacaan. */
+      .cert-watermark {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        overflow: hidden;
+        background-image: radial-gradient(
+          rgba(201, 168, 106, 0.45) 1px,
+          transparent 1.6px
+        );
+        background-size: 22px 22px;
+        opacity: 0.6;
+      }
+      .cert-watermark::after {
+        content: "\\06DE";
+        position: absolute;
+        top: 52%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-family: "Amiri", serif;
+        font-size: 300px;
+        line-height: 1;
+        color: rgba(201, 168, 106, 0.12);
+      }
+      /* Wadah konten sesungguhnya, didudukkan di atas watermark (z-index 1)
+         dan tetap memakai flex column supaya trik "dorong baris tanda
+         tangan ke bawah" (.cert-spacer + margin-top:auto) tetap jalan. */
+      .cert-content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        height: 100%;
+      }
+      /* Garis hias di antara subjudul dan kode sertifikat, gaya umum pada
+         sertifikat resmi/ijazah -- motif tengahnya adalah bintang delapan
+         (khatam) hasil dua persegi bertumpuk yang diputar, motif geometris
+         islami klasik, dibuat murni dari CSS (tanpa bergantung pada font
+         ikon) supaya selalu tampil konsisten. */
+      .cert-divider {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.6rem;
+        max-width: 220px;
+        margin: 0 auto 0.85rem;
+      }
+      .cert-divider-line {
+        flex: 1 1 auto;
+        height: 1px;
+        background: linear-gradient(
+          to right,
+          transparent,
+          #c9a86a,
+          transparent
+        );
+      }
+      .cert-divider-motif {
+        width: 7px;
+        height: 7px;
+        flex: 0 0 auto;
+        background: #c9a86a;
+        transform: rotate(45deg);
+      }
+      .cert-bismillah {
+        font-family: "Amiri", serif;
+        font-size: 1.1rem;
+        color: #5e8f73;
+        letter-spacing: 0.03em;
+      }
+      .cert-brandmark {
+        width: 46px;
+        height: 46px;
+        margin: 0.35rem auto 0.4rem;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, #7fa58a, #5e8f73);
+        color: #fff;
+        font-size: 1.3rem;
+        box-shadow: 0 6px 16px -6px rgba(94, 143, 115, 0.6);
+      }
+      .cert-brand {
+        font-weight: 800;
+        letter-spacing: 0.16em;
+        font-size: 0.8rem;
+        color: #5e8f73;
+      }
+      .cert-title {
+        font-family: "Cormorant Garamond", serif;
+        font-weight: 700;
+        font-size: clamp(1.65rem, 4.4vw, 2.35rem);
+        margin: 0.55rem 0 0.15rem;
+        color: #2f3e34;
+      }
+      .cert-subtitle {
+        font-size: 0.82rem;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        color: #8a7a4f;
+        margin-bottom: 0.9rem;
+      }
+      .cert-kode {
+        display: inline-block;
+        margin: 0 auto 1rem;
+        padding: 0.28rem 0.9rem;
+        border: 1px dashed #c9a86a;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        color: #5e8f73;
+      }
+      .cert-body-text {
+        font-size: 0.92rem;
+        line-height: 1.75;
+        color: #3a463d;
+        max-width: 34rem;
+        margin: 0 auto;
+      }
+      .cert-nama-untuk {
+        font-family: "Cormorant Garamond", serif;
+        font-weight: 700;
+        font-style: italic;
+        font-size: clamp(1.35rem, 3.6vw, 1.75rem);
+        color: #5e8f73;
+        margin: 0.35rem 0 0.6rem;
+        border-bottom: 1px solid #e4d9b8;
+        display: inline-block;
+        padding: 0 0.5rem 0.25rem;
+      }
+      /* Baris meta (pemesan/tanggal/lokasi) dibingkai jadi satu panel,
+         bukan sekadar tiga teks lepas, supaya terbaca sebagai satu blok
+         data resmi -- dengan garis pemisah tipis di antar kolom. */
+      .cert-meta-row {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin: 0.9rem auto 1.1rem;
+        max-width: 34rem;
+        font-size: 0.82rem;
+        background: rgba(94, 143, 115, 0.06);
+        border: 1px solid rgba(201, 168, 106, 0.4);
+        border-radius: 10px;
+        padding: 0.8rem 0.5rem;
+      }
+      .cert-meta-row > div {
+        position: relative;
+        box-sizing: border-box;
+        flex: 1 1 150px;
+        min-width: 120px;
+        padding: 0 0.75rem;
+      }
+      .cert-meta-row > div:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        top: 8%;
+        bottom: 8%;
+        right: 0;
+        width: 1px;
+        background: rgba(201, 168, 106, 0.4);
+      }
+      .cert-meta-row .cert-meta-label {
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-size: 0.66rem;
+        color: #8a7a4f;
+        margin-bottom: 0.2rem;
+      }
+      .cert-meta-row .cert-meta-value {
+        font-weight: 700;
+        color: #2f3e34;
+      }
+      .cert-doa-box {
+        margin: 0.4rem auto 1.1rem;
+        max-width: 34rem;
+        background: rgba(201, 168, 106, 0.08);
+        border: 1px solid rgba(201, 168, 106, 0.4);
+        border-radius: 10px;
+        padding: 0.9rem 1.1rem;
+        overflow: hidden;
+      }
+      .cert-doa-arab {
+        font-family: "Amiri", serif;
+        font-size: 1.35rem;
+        line-height: 2.1;
+        direction: rtl;
+        color: #2f3e34;
+        margin-bottom: 0.35rem;
+      }
+      .cert-doa-latin {
+        font-style: italic;
+        font-size: 0.82rem;
+        color: #5e8f73;
+        margin-bottom: 0.25rem;
+      }
+      .cert-doa-arti {
+        font-size: 0.78rem;
+        color: #6b7a70;
+      }
+      /* Kotak dalil/hadits: landasan syar'i badal umroh, mengisi ruang
+         kosong di bawah kotak niat sekaligus menambah "elemen spiritual"
+         yang lazim ada pada sertifikat umroh/badal yang baik. */
+      .cert-dalil-box {
+        margin: 0.8rem -1.1rem -0.9rem;
+        text-align: left;
+        border-top: 1px solid rgba(201, 168, 106, 0.45);
+        background: rgba(94, 143, 115, 0.07);
+        padding: 0.75rem 1.1rem 0.9rem;
+      }
+      .cert-dalil-label {
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-size: 0.62rem;
+        font-weight: 700;
+        color: #8a7a4f;
+        margin-bottom: 0.35rem;
+        text-align: center;
+      }
+      .cert-dalil-arab {
+        font-family: "Amiri", serif;
+        font-size: 1.05rem;
+        line-height: 1.9;
+        direction: rtl;
+        text-align: center;
+        color: #2f3e34;
+        margin-bottom: 0.4rem;
+      }
+      .cert-dalil-terjemah {
+        font-size: 0.76rem;
+        line-height: 1.65;
+        color: #3a463d;
+        text-align: center;
+        font-style: italic;
+      }
+      .cert-dalil-ref {
+        display: block;
+        text-align: center;
+        font-size: 0.68rem;
+        font-weight: 700;
+        color: #5e8f73;
+        margin-top: 0.3rem;
+        font-style: normal;
+      }
+      .cert-spacer {
+        flex: 1 1 auto;
+        min-height: 1rem;
+      }
+      .cert-sign-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 1rem;
+        margin-top: auto;
+        padding-top: 0.75rem;
+      }
+      .cert-sign-col {
+        flex: 1;
+        text-align: center;
+      }
+      .cert-sign-caption {
+        font-size: 0.68rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #8a7a4f;
+        margin-bottom: 0.35rem;
+      }
+      .cert-sign-img-slot {
+        height: 52px;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        margin-bottom: 0.15rem;
+      }
+      .cert-sign-img-slot img {
+        max-height: 52px;
+        max-width: 130px;
+        object-fit: contain;
+      }
+      .cert-sign-name {
+        font-family: "Cormorant Garamond", serif;
+        font-weight: 700;
+        font-size: 1rem;
+        border-top: 1px solid #c9a86a;
+        padding-top: 0.3rem;
+        display: inline-block;
+        min-width: 150px;
+      }
+      .cert-qr-col {
+        flex: 0 0 auto;
+        text-align: center;
+      }
+      .cert-qr-box {
+        width: 64px;
+        height: 64px;
+        background: #fff;
+        border: 1px solid #e4d9b8;
+        border-radius: 6px;
+        padding: 4px;
+        margin: 0 auto 0.25rem;
+        box-shadow: 0 0 0 4px rgba(94, 143, 115, 0.08);
+      }
+      .cert-qr-box canvas,
+      .cert-qr-box img {
+        width: 100% !important;
+        height: 100% !important;
+      }
+      .cert-qr-caption {
+        font-size: 0.6rem;
+        color: #8a7a4f;
+        max-width: 90px;
+      }
+      .cert-footer-note {
+        font-size: 0.65rem;
+        color: #a89a6e;
+        margin-top: 0.7rem;
+        padding-top: 0.55rem;
+        border-top: 1px dashed #d9cd9f;
+        letter-spacing: 0.03em;
+      }
+      .cert-invalid {
+        max-width: 560px;
+        margin: 0 auto;
+      }
+
+      @media (max-width: 575.98px) {
+        .cert-inner {
+          padding: 46px 18px 30px;
+        }
+        .cert-corner {
+          width: 22px;
+          height: 22px;
+        }
+        .cert-corner--tl,
+        .cert-corner--tr {
+          top: 16px;
+        }
+        .cert-corner--bl,
+        .cert-corner--br {
+          bottom: 16px;
+        }
+        .cert-corner--tl,
+        .cert-corner--bl {
+          left: 16px;
+        }
+        .cert-corner--tr,
+        .cert-corner--br {
+          right: 16px;
+        }
+        .cert-meta-row {
+          gap: 1.2rem;
+        }
+        /* Baris tanda tangan (petugas / QR / pelaksana) dulu bisa meluber
+           ke luar layar di HP sempit karena setiap kolom nama punya
+           min-width:150px tetap (dirancang untuk lebar desktop). Di mobile
+           kita longgarkan supaya ketiga kolom pasti muat di dalam kertas,
+           bukan terpotong di tepi layar. */
+        .cert-sign-row {
+          gap: 0.4rem;
+        }
+        .cert-sign-name {
+          min-width: 0;
+          width: 100%;
+          font-size: 0.82rem;
+          padding-top: 0.2rem;
+        }
+        .cert-qr-box {
+          width: 52px;
+          height: 52px;
+        }
+        .cert-qr-caption {
+          font-size: 0.55rem;
+          max-width: 72px;
+        }
+        .cert-sign-caption {
+          font-size: 0.58rem;
+        }
+        .cert-watermark::after {
+          font-size: 200px;
+        }
+        .cert-meta-row {
+          padding: 0.7rem 0.4rem;
+        }
+        .cert-meta-row > div {
+          min-width: 100%;
+          padding: 0.3rem 0.5rem;
+        }
+        .cert-meta-row > div:not(:last-child)::after {
+          display: none;
+        }
+        .cert-meta-row > div:not(:last-child) {
+          border-bottom: 1px dashed rgba(201, 168, 106, 0.4);
+          padding-bottom: 0.5rem;
+          margin-bottom: 0.2rem;
+        }
+      }
+
+      @media print {
+        @page {
+          size: A4 portrait;
+          margin: 0;
+        }
+        body * {
+          visibility: hidden;
+        }
+        #certPrintArea,
+        #certPrintArea * {
+          visibility: visible;
+        }
+        #certPrintArea {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 210mm;
+          max-width: none;
+          height: 297mm;
+          margin: 0;
+          box-shadow: none;
+          border-radius: 0;
+        }
+        /* visibility:hidden TIDAK melepas elemen dari alur dokumen -
+           navbar, footer, toolbar, dan blok loading/invalid tetap makan
+           tempat walau tak kelihatan, sehingga tinggi total halaman jauh
+           melebihi satu lembar A4 dan browser menambah halaman kosong.
+           display:none benar-benar melepasnya dari alur. */
+        .site-header,
+        footer,
+        .toast-container,
+        .sertifikat-toolbar,
+        #certLoading,
+        #certInvalid,
+        #certValid > p {
+          display: none !important;
+        }
+        /* Konten sertifikat (kotak niat + kotak dalil + meta row, dll)
+           sedikit lebih tinggi dari satu lembar A4 (297mm) kalau memakai
+           padding/margin versi layar. Dipadatkan khusus saat cetak supaya
+           pasti muat 1 halaman, tanpa mengubah tampilan di layar. */
+        .cert-inner {
+          padding: 34px 34px 18px;
+        }
+        .cert-divider {
+          margin-bottom: 0.5rem;
+        }
+        .cert-meta-row {
+          margin: 0.55rem auto 0.65rem;
+          padding: 0.55rem 0.5rem;
+        }
+        .cert-nama-untuk {
+          margin: 0.2rem 0 0.35rem;
+        }
+        .cert-doa-box {
+          margin: 0.3rem auto 0.7rem;
+          padding: 0.6rem 1.1rem;
+        }
+        .cert-dalil-box {
+          margin: 0.4rem -1.1rem -0.6rem;
+          padding: 0.4rem 1.1rem 0.6rem;
+        }
+        .cert-spacer {
+          min-height: 0.25rem;
+        }
+        .cert-sign-row {
+          padding-top: 0.4rem;
+        }
+        .cert-footer-note {
+          margin-top: 0.4rem;
+          padding-top: 0.35rem;
+        }
+        /* Pastikan warna latar (watermark, panel meta, pita "resmi") ikut
+           tercetak, bukan cuma tampil di layar -- browser modern butuh ini
+           secara eksplisit karena "background graphics" di dialog cetak
+           kadang nonaktif secara default. */
+        .cert-sheet,
+        .cert-watermark,
+        .cert-meta-row,
+        .cert-doa-box,
+        .cert-dalil-box,
+        .cert-qr-box {
+          print-color-adjust: exact;
+          -webkit-print-color-adjust: exact;
+        }
+        /* #certPrintArea sekarang punya tinggi pasti (297mm). Supaya
+           .cert-content (flex column) benar-benar mengisi tinggi itu -
+           sehingga .cert-spacer & margin-top:auto pada baris tanda
+           tangan bisa mendorong ke bawah - .cert-content perlu tinggi
+           100% dari induknya. Tanpa ini kontennya cuma numpuk di atas dan
+           menyisakan ruang kosong besar di bawah. */
+        .cert-content {
+          height: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Lewati ke konten</a>
+    <div class="site-header fixed-top"><nav class="navbar navbar-expand-lg" aria-label="Navigasi utama"><div class="container"><a class="navbar-brand d-flex align-items-center" href="index.html"><img src="assets/images/logo.png" alt="ManasikGo" class="brand-logo" height="32" /><span class="brand-name">ManasikGo</span></a><a class="nav-clock d-none d-lg-block" data-nav-clock href="waktu.html" aria-label="Lihat jadwal shalat dan waktu lengkap"><strong>--:--</strong> WIB &middot; <span class="nav-clock-next">Memuat...</span></a><button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#mainNav" aria-controls="mainNav" aria-label="Buka navigasi"><span class="navbar-toggler-icon"></span></button><div class="offcanvas offcanvas-start" tabindex="-1" id="mainNav" aria-labelledby="mainNavLabel"><div class="offcanvas-header"><a class="navbar-brand d-flex align-items-center mb-0" id="mainNavLabel" href="index.html"><img src="assets/images/logo.png" alt="ManasikGo" class="brand-logo" height="32" /><span class="brand-name">ManasikGo</span></a><button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Tutup navigasi"></button></div><div class="offcanvas-body"><ul class="navbar-nav ms-lg-auto align-items-lg-center gap-lg-1"><li class="nav-item"><a class="nav-link" href="index.html">Beranda</a></li><li class="nav-item"><a class="nav-link" href="artikel.html">Artikel</a></li><li class="nav-item"><a class="nav-link" href="index.html#panduan">Panduan</a></li><li class="nav-item"><a class="nav-link" href="index.html#info-praktis">Info Praktis</a></li><li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="layananDropdown" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">Layanan</a><ul class="dropdown-menu" aria-labelledby="layananDropdown"><li><a class="dropdown-item" href="doa.html">Kumpulan Doa</a></li><li><a class="dropdown-item" href="badal.html">Badal Umroh</a></li><li><a class="dropdown-item" href="wakaf-quran.html">Wakaf Al-Qur'an</a></li><li><a class="dropdown-item" href="rekrutmen-petugas.html">Informasi Rekrutmen PPIH</a></li></ul></li><li class="nav-item"><a class="nav-link" href="pengalaman.html">Cerita Jamaah</a></li><li class="nav-item"><a class="nav-link" href="faq.html">FAQ</a></li></ul><ul class="navbar-nav navbar-actions ms-lg-2 align-items-lg-center gap-lg-2" id="navbarActions"><li class="nav-item nav-item-theme"><button class="btn btn-outline-light btn-sm" type="button" data-theme-toggle aria-label="Ganti tema"><i data-theme-icon class="bi bi-moon-stars"></i><span class="navbar-actions-label d-lg-none">Ganti Tema</span></button></li></ul></div></div></div></nav></div>
+    <script src="assets/js/navbar.js"></script>
+
+    <main id="main" class="sertifikat-shell">
+      <div class="container">
+        <!-- Loading -->
+        <div id="certLoading" class="text-center py-5">
+          <div class="spinner-border text-primary mb-3" role="status"></div>
+          <p class="lead-muted mb-0">Memuat sertifikat...</p>
+        </div>
+
+        <!-- Invalid -->
+        <div id="certInvalid" class="cert-invalid text-center py-5 d-none">
+          <i class="bi bi-x-circle-fill text-danger display-3 mb-3 d-block"></i>
+          <h1 class="h4 fw-bold mb-2">Sertifikat Tidak Ditemukan</h1>
+          <p class="lead-muted">
+            Kode sertifikat tidak valid, tidak lengkap, atau pesanan belum
+            berstatus &ldquo;Selesai&rdquo;. Jika Anda merasa ini keliru,
+            hubungi admin ManasikGo melalui halaman
+            <a href="kontak.html">Kontak</a>.
+          </p>
+          <a href="akun.html" class="btn btn-outline-primary mt-2"
+            ><i class="bi bi-arrow-left"></i> Kembali ke Akun Saya</a
+          >
+        </div>
+
+        <!-- Valid -->
+        <div id="certValid" class="d-none">
+          <div class="sertifikat-toolbar">
+            <p class="lead-muted small mb-0" id="certPdfStatus">
+              <i class="bi bi-shield-check text-primary"></i> Sertifikat resmi
+              ManasikGo — tampilan di bawah ini persis seperti hasil
+              cetak/unduhannya.
+            </p>
+            <div class="d-flex gap-2">
+              <a href="akun.html" class="btn btn-outline-secondary btn-sm"
+                ><i class="bi bi-arrow-left"></i> Kembali</a
+              >
+              <button
+                type="button"
+                id="certPrintBtn"
+                class="btn btn-primary btn-sm"
+              >
+                <i class="bi bi-printer"></i> Cetak / Unduh PDF
+              </button>
+            </div>
+          </div>
+
+          <div class="cert-sheet" id="certPrintArea">
+            <div class="cert-frame"></div>
+            <span class="cert-corner cert-corner--tl"></span>
+            <span class="cert-corner cert-corner--tr"></span>
+            <span class="cert-corner cert-corner--bl"></span>
+            <span class="cert-corner cert-corner--br"></span>
+            <div class="cert-inner">
+              <div class="cert-watermark" aria-hidden="true"></div>
+              <div class="cert-content">
+              <p class="cert-bismillah mb-0">
+                بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+              </p>
+              <span class="cert-brandmark"><i class="bi bi-compass"></i></span>
+              <p class="cert-brand mb-0">MANASIKGO</p>
+              <h1 class="cert-title">Sertifikat Badal Umroh</h1>
+              <p class="cert-subtitle">Bukti Pelaksanaan Ibadah Badal Umroh</p>
+              <div class="cert-divider" aria-hidden="true">
+                <span class="cert-divider-line"></span><span class="cert-divider-motif"></span><span class="cert-divider-line"></span>
+              </div>
+              <span class="cert-kode" id="certKode">HC-BDL-000000</span>
+
+              <p class="cert-body-text mb-0">
+                Dengan memohon rida dan pertolongan Allah Subhanahu wa
+                Ta&rsquo;ala, ibadah umrah telah dilaksanakan sebagai
+                <strong>badal (pengganti)</strong> atas nama:
+              </p>
+              <p class="cert-nama-untuk" id="certUntuk">-</p>
+
+              <div class="cert-meta-row">
+                <div>
+                  <div class="cert-meta-label">Atas Pesanan</div>
+                  <div class="cert-meta-value" id="certPemesan">-</div>
+                </div>
+                <div>
+                  <div class="cert-meta-label">Tanggal Pelaksanaan</div>
+                  <div class="cert-meta-value" id="certTanggalPelaksanaan">
+                    -
+                  </div>
+                </div>
+                <div>
+                  <div class="cert-meta-label">Lokasi Pelaksanaan</div>
+                  <div class="cert-meta-value">Makkah, Arab Saudi</div>
+                </div>
+              </div>
+
+              <div class="cert-doa-box">
+                <p class="cert-doa-arab mb-1" id="certDoaArab">
+                  لَبَّيْكَ اللَّهُمَّ عُمْرَةً عَنْ فُلَان
+                </p>
+                <p class="cert-doa-latin mb-1" id="certDoaLatin">
+                  Labbaikallāhumma &lsquo;umratan &lsquo;an (fulan)
+                </p>
+                <p class="cert-doa-arti mb-0">
+                  &ldquo;Aku penuhi panggilan-Mu ya Allah, untuk melaksanakan
+                  umrah atas nama (nama yang dibadalkan).&rdquo; &mdash;
+                  lafaz niat ihram umrah badal, diucapkan oleh petugas
+                  pelaksana pada saat miqat.
+                </p>
+
+                <div class="cert-dalil-box">
+                  <p class="cert-dalil-label mb-0">Landasan Syar&rsquo;i Badal Umroh</p>
+                  <p class="cert-dalil-arab mb-1">
+                    حُجَّ عَنْ أَبِيكَ وَاعْتَمِرْ
+                  </p>
+                  <p class="cert-dalil-terjemah mb-0">
+                    Dari Abu Razin Al-&rsquo;Uqaili radhiyallahu &lsquo;anhu,
+                    ia mengadu kepada Rasulullah &#65018; bahwa ayahnya sudah
+                    tua renta dan tak sanggup lagi menunaikan haji, umrah,
+                    maupun bepergian jauh. Rasulullah &#65018; bersabda,
+                    &ldquo;Berhajilah dan berumrahlah untuk ayahmu.&rdquo;
+                    <span class="cert-dalil-ref"
+                      >(H.R. Tirmidzi, No. 930 &mdash; hasan shahih)</span
+                    >
+                  </p>
+                </div>
+              </div>
+
+              <div class="cert-spacer"></div>
+
+              <div class="cert-sign-row">
+                <div class="cert-sign-col">
+                  <div class="cert-sign-caption">Petugas Pelaksana</div>
+                  <div class="cert-sign-img-slot" id="certTtdSlot"></div>
+                  <div class="cert-sign-name" id="certPetugasNama">-</div>
+                </div>
+                <div class="cert-qr-col">
+                  <div class="cert-sign-caption">Verifikasi Digital</div>
+                  <div class="cert-qr-box" id="certQrBox"></div>
+                  <p class="cert-qr-caption mb-0">Pindai untuk verifikasi</p>
+                </div>
+                <div class="cert-sign-col">
+                  <div class="cert-sign-caption">Pelaksana Badal</div>
+                  <div class="cert-sign-img-slot">
+                    <span class="cert-brandmark" style="margin: 0"
+                      ><i class="bi bi-compass"></i
+                    ></span>
+                  </div>
+                  <div class="cert-sign-name" id="certPelaksana">ManasikGo</div>
+                </div>
+              </div>
+              <p class="cert-footer-note mb-0">
+                Diterbitkan otomatis oleh sistem ManasikGo pada
+                <span id="certTanggalTerbit">-</span> &middot;
+                klikada.github.io/manasikgo/verifikasi-sertifikat.html
+              </p>
+              </div>
+            </div>
+          </div>
+
+          <p class="small lead-muted text-center mt-3" style="max-width: 780px; margin-inline: auto">
+            <i class="bi bi-info-circle text-primary"></i> Sertifikat ini
+            adalah catatan internal ManasikGo sebagai bukti pesanan Anda
+            telah ditandai selesai oleh admin. Untuk kepastian pelaksanaan
+            ibadah, tetap simpan bukti/laporan resmi dari penyelenggara Badal
+            Umroh Anda.
+          </p>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer"><div class="container"><div class="row g-4"><div class="col-lg-4"><div class="d-flex align-items-center mb-2 footer-brand-row"><img src="assets/images/logo.png" alt="ManasikGo" class="footer-logo" height="36" /><span class="footer-brand-name">ManasikGo</span></div><p>Portal edukasi Haji dan Umrah yang membantu jamaah Indonesia mempersiapkan ibadah dengan informasi yang rapi dan mudah dipahami.</p><div class="footer-social mt-3" aria-label="Ikuti ManasikGo di media sosial"><a href="https://www.facebook.com/manasikgo" target="_blank" rel="noopener" aria-label="Facebook ManasikGo"><i class="bi bi-facebook"></i></a><a href="https://www.tiktok.com/@manasikgo" target="_blank" rel="noopener" aria-label="TikTok ManasikGo"><i class="bi bi-tiktok"></i></a><a href="https://www.instagram.com/manasikgo" target="_blank" rel="noopener" aria-label="Instagram ManasikGo"><i class="bi bi-instagram"></i></a><a href="https://x.com/manasikgo" target="_blank" rel="noopener" aria-label="X (Twitter) ManasikGo"><i class="bi bi-twitter-x"></i></a></div></div><div class="col-6 col-lg-2"><h3 class="h6 text-white">Konten</h3><a class="d-block" href="artikel.html">Artikel</a><a class="d-block" href="pengalaman.html">Pengalaman</a><a class="d-block" href="faq.html">FAQ</a><a class="d-block" href="istilah.html">Kamus Istilah</a></div><div class="col-6 col-lg-2"><h3 class="h6 text-white">Panduan Ibadah</h3><a class="d-block" href="tata-cara-haji.html">Tata Cara Haji</a><a class="d-block" href="tata-cara-umrah.html">Tata Cara Umrah</a><a class="d-block" href="doa.html">Kumpulan Doa</a><a class="d-block" href="checklist-perlengkapan.html">Checklist Perlengkapan</a><a class="d-block" href="waktu.html#jadwal">Jadwal Shalat &amp; Waktu</a></div><div class="col-6 col-lg-2"><h3 class="h6 text-white">Info Jamaah</h3><a class="d-block" href="artikel.html?kategori=Transportasi">Transportasi</a><a class="d-block" href="artikel.html?kategori=Hotel">Hotel</a><a class="d-block" href="artikel.html?kategori=Kuliner">Kuliner</a><a class="d-block" href="artikel.html?kategori=Belanja">Belanja</a><a class="d-block" href="budget.html">Budget Planner</a><a class="d-block" href="peta.html">Peta</a><a class="d-block" href="download.html">Download Center</a></div><div class="col-6 col-lg-2"><h3 class="h6 text-white">Layanan</h3><a class="d-block" href="doa.html">Kumpulan Doa</a><a class="d-block" href="badal.html">Badal Umroh</a><a class="d-block" href="wakaf-quran.html">Wakaf Al-Qur'an</a><a class="d-block" href="rekrutmen-petugas.html">Informasi Rekrutmen PPIH</a></div><div class="col-6 col-lg-2"><h3 class="h6 text-white">Lainnya</h3><a class="d-block" href="kirim.html">Kirim Pengalaman</a><a class="d-block" href="kontak.html">Kontak</a><a class="d-block" href="tentang.html">Tentang</a></div></div><hr class="border-secondary my-4"><div class="d-flex flex-wrap justify-content-between gap-2"><p class="small mb-0">&copy; 2026 ManasikGo. Semua hak dilindungi.</p></div></div></footer>
+    <script src="assets/js/footer.js"></script>
+    <div class="toast-container position-fixed top-0 end-0 p-3"></div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      defer
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/davidshimjs-qrcodejs@0.0.2/qrcode.min.js"
+      defer
+    ></script>
+    <script src="assets/js/api.js" defer></script>
+    <script src="assets/js/auth.js" defer></script>
+    <script src="assets/js/seo-routes.js" defer></script><script src="assets/js/app.js" defer></script>
+    <script src="assets/js/darkmode.js" defer></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var id = new URLSearchParams(window.location.search).get("id");
+        var loadingEl = document.getElementById("certLoading");
+        var invalidEl = document.getElementById("certInvalid");
+        var validEl = document.getElementById("certValid");
+
+        function showInvalid() {
+          loadingEl.classList.add("d-none");
+          invalidEl.classList.remove("d-none");
+        }
+
+        function formatTanggalId(value) {
+          if (!value) return "-";
+          try {
+            return new Intl.DateTimeFormat("id-ID", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            }).format(new Date(value));
+          } catch (e) {
+            return String(value).split("T")[0] || "-";
+          }
+        }
+
+        // Susun lafaz niat badal umrah, menyisipkan nama yang dibadalkan
+        // (jika ada) ke dalam teks Arab/Latin secara sederhana.
+        function fillDoa(untuk) {
+          var nama = untuk && untuk.trim() ? untuk.trim() : "Fulan";
+          document.getElementById("certDoaLatin").textContent =
+            "Labbaikallāhumma \u2018umratan \u2018an " + nama;
+        }
+
+        function render(data) {
+          loadingEl.classList.add("d-none");
+          if (!data) {
+            showInvalid();
+            return;
+          }
+          document.getElementById("certKode").textContent = data.kode || "-";
+          document.getElementById("certUntuk").textContent =
+            data.untuk || "(tidak dicantumkan)";
+          document.getElementById("certPemesan").textContent =
+            data.nama_pemesan || "-";
+          document.getElementById("certTanggalPelaksanaan").textContent =
+            data.tanggal_pelaksanaan_hijri &&
+            String(data.tanggal_pelaksanaan_hijri).trim()
+              ? data.tanggal_pelaksanaan_hijri
+              : formatTanggalId(data.tanggal_pesan) + " (estimasi)";
+          document.getElementById("certPetugasNama").textContent =
+            data.petugas_nama && data.petugas_nama.trim()
+              ? data.petugas_nama
+              : "Belum ditugaskan";
+          document.getElementById("certPelaksana").textContent =
+            data.pelaksana_badal || "ManasikGo";
+          document.getElementById("certTanggalTerbit").textContent =
+            formatTanggalId(new Date().toISOString());
+          fillDoa(data.untuk);
+
+          // Supaya nama file yang disarankan browser saat "Simpan sebagai
+          // PDF" (dialog cetak) langsung rapi, bukan cuma judul halaman
+          // generik.
+          document.title =
+            "Sertifikat-BadalUmroh-" + (data.kode || "manasikgo");
+
+          var ttdSlot = document.getElementById("certTtdSlot");
+          if (data.petugas_ttd && data.petugas_ttd.trim()) {
+            ttdSlot.innerHTML =
+              '<img src="' +
+              data.petugas_ttd +
+              '" alt="Tanda tangan ' +
+              (data.petugas_nama || "petugas") +
+              '" onerror="this.parentElement.innerHTML=\'\'">';
+          }
+
+          var qrBox = document.getElementById("certQrBox");
+          qrBox.innerHTML = "";
+          if (typeof QRCode !== "undefined") {
+            // Dibangun relatif terhadap URL halaman ini (bukan digabung
+            // manual dengan HC_CONFIG.siteUrl) supaya tetap benar di
+            // hosting apa pun, termasuk saat file ini berada di subpath
+            // seperti https://klikada.github.io/manasikgo/.
+            var verifyUrl = new URL(
+              "verifikasi-sertifikat.html?id=" +
+                encodeURIComponent(data.id || id),
+              window.location.href,
+            ).href;
+            new QRCode(qrBox, {
+              text: verifyUrl,
+              width: 56,
+              height: 56,
+              colorDark: "#2f3e34",
+              colorLight: "#ffffff",
+            });
+          }
+
+          validEl.classList.remove("d-none");
+        }
+
+        if (!id) {
+          showInvalid();
+          return;
+        }
+
+        window.HCApi
+          .verifySertifikat(id)
+          .then(render)
+          .catch(function () {
+            showInvalid();
+          });
+
+        // Tombol "Cetak / Unduh PDF" cukup memicu dialog cetak bawaan
+        // browser (window.print()). CSS @media print di atas memastikan
+        // hanya #certPrintArea yang dicetak, ukurannya A4 portrait penuh.
+        // Karena ini mencetak DOM & CSS yang sama persis dengan preview
+        // (bukan hasil "foto" html2canvas), tampilan yang diunduh dijamin
+        // identik dengan yang terlihat di layar -- di HP maupun desktop.
+        // Di dialog cetak, pemesan tinggal memilih tujuan "Simpan sebagai
+        // PDF" untuk mengunduhnya.
+        var printBtn = document.getElementById("certPrintBtn");
+        if (printBtn) {
+          printBtn.addEventListener("click", function () {
+            window.print();
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

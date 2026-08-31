@@ -1,0 +1,846 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("manasikgo-theme");
+          if (!t) {
+            t =
+              window.matchMedia &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light";
+          }
+          if (t === "dark") {
+            document.documentElement.classList.add("theme-dark-preload");
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Panduan Haji dan Umrah Terlengkap Indonesia | ManasikGo</title>
+    <meta
+      name="description"
+      content="Panduan Haji dan Umrah lengkap untuk jamaah Indonesia: checklist persiapan, biaya, doa, jadwal shalat, hingga tata cara ibadah dalam satu portal terpercaya."
+    />
+    <meta
+      name="keywords"
+      content="panduan haji dan umrah, biaya haji, biaya umroh, checklist haji, doa haji dan umrah, tata cara haji, tata cara umrah, jamaah indonesia"
+    />
+    <link rel="canonical" href="https://klikada.github.io/manasikgo/" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="Panduan Haji dan Umrah Terlengkap Indonesia | ManasikGo"
+    />
+    <meta
+      property="og:description"
+      content="Checklist persiapan, biaya, doa, jadwal shalat, hingga tata cara ibadah Haji dan Umrah untuk jamaah Indonesia, dirangkum dalam satu portal."
+    />
+    <meta
+      property="og:image"
+      content="https://klikada.github.io/manasikgo/assets/images/logo.png"
+    />
+    <meta property="og:image:width" content="2000" />
+    <meta property="og:image:height" content="847" />
+    <meta property="og:url" content="https://klikada.github.io/manasikgo/" />
+    <meta property="og:locale" content="id_ID" />
+    <meta property="og:site_name" content="ManasikGo" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Panduan Haji dan Umrah Terlengkap Indonesia | ManasikGo"
+    />
+    <meta
+      name="twitter:description"
+      content="Checklist persiapan, biaya, doa, jadwal shalat, hingga tata cara ibadah Haji dan Umrah untuk jamaah Indonesia."
+    />
+    <meta
+      name="twitter:image"
+      content="https://klikada.github.io/manasikgo/assets/images/logo.png"
+    />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" href="assets/images/logo.png" type="image/png"><link rel="apple-touch-icon" href="assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/responsive.css" />
+    <link rel="stylesheet" href="assets/css/animation.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "ManasikGo",
+        "url": "https://klikada.github.io/manasikgo",
+        "logo": "https://klikada.github.io/manasikgo/assets/images/logo.png",
+        "sameAs": []
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "ManasikGo",
+        "url": "https://klikada.github.io/manasikgo/",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://klikada.github.io/manasikgo/artikel.html?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"
+    />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Lewati ke konten</a>
+    <script src="assets/js/navbar.js"></script>
+    <script src="assets/js/hero-parallax.js" defer></script>
+
+    <!-- Foto background hero sekarang diatur dari assets/css/style.css
+         (variabel --hero-bg-image di :root). Mau ganti foto? Cukup edit
+         file CSS-nya, tidak perlu ubah baris ini. -->
+    <header class="hero hero-compact">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-9 col-xl-8 text-center">
+            <p class="eyebrow justify-content-center mb-3">
+              Panduan Haji &amp; Umrah Indonesia
+            </p>
+            <h1 class="mb-3">
+              Satu tempat <span class="hl">tenang</span> untuk menyiapkan<br
+                class="d-none d-lg-block"
+              />
+              <span class="hl">Haji dan Umrah</span> Anda
+            </h1>
+            <p class="hero-subtitle mb-4">
+              Dapatkan panduan lengkap mulai dari checklist, doa, estimasi biaya, hingga tips manasik yang dirangkum dari sumber resmi terverifikasi.
+            </p>
+            <form
+              class="hero-search"
+              action="artikel.html"
+              role="search"
+              aria-label="Cari artikel"
+              autocomplete="off"
+            >
+              <div class="row g-2 align-items-center">
+                <div class="col-lg">
+                  <div class="search-field-wrap">
+                    <span class="search-field-icon"
+                      ><i class="bi bi-search"></i
+                    ></span>
+                    <input
+                      class="form-control"
+                      name="q"
+                      type="search"
+                      placeholder="Cari informasi seputar haji &amp; umrah..."
+                      aria-label="Kata kunci pencarian"
+                      aria-controls="searchSuggestionsHero"
+                      data-hero-search-input
+                      spellcheck="false"
+                      enterkeyhint="search"
+                    />
+                    <div
+                      class="search-suggest-box"
+                      data-hero-search-suggestions
+                      id="searchSuggestionsHero"
+                      role="listbox"
+                      aria-label="Saran pencarian hero"
+                      aria-live="polite"
+                    ></div>
+                  </div>
+                </div>
+                <div class="col-lg-auto">
+                  <button
+                    class="btn btn-primary"
+                    type="submit"
+                    aria-label="Cari"
+                  >
+                    <i class="bi bi-search" aria-hidden="true"></i>
+                    <span class="hero-search-btn-label">Cari</span>
+                  </button>
+                </div>
+              </div>
+            </form>
+            <div class="hero-quick-terms">
+              <a href="doa.html">Doa</a>
+              <a href="badal.html">Badal Umrah</a>
+              <a href="wakaf-quran.html">Wakaf Al-Qur'an</a>
+              <a href="rekrutmen-petugas.html">Informasi Rekrutmen PPIH</a>
+            </div>
+            <div
+              class="hero-trust mt-4 d-flex flex-wrap justify-content-center gap-2 gap-lg-3"
+            >
+              <span class="hero-trust-item"
+                ><i class="bi bi-patch-check-fill"></i> Merujuk Sumber Resmi Terverifikasi</span
+              >
+              <span class="hero-trust-item"
+                ><i class="bi bi-journal-richtext"></i> 100+ Artikel
+                Manasik</span
+              >
+              <span class="hero-trust-item"
+                ><i class="bi bi-patch-check-fill"></i> Amanah Melayani Badal Umrah & Wakaf Qur'an</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <a
+        href="#layanan"
+        class="hero-scroll-cue"
+        aria-label="Gulir ke bawah untuk melihat lebih lanjut"
+      >
+        <span class="hero-scroll-cue-text">Gulir</span>
+        <span class="hero-scroll-cue-arrow">
+          <i class="bi bi-chevron-down"></i>
+        </span>
+      </a>
+    </header>
+    <div class="hero-pin-spacer" aria-hidden="true"></div>
+
+    <main id="main">
+      <section class="section services-section" id="layanan">
+        <div class="container">
+          <div class="services-section-header text-center mx-auto">
+            <span class="eyebrow">Seputar Haji & Umrah</span>
+            <h2 class="section-title">
+              Layanan yang Paling Banyak Dicari Jamaah
+            </h2>
+            <p class="lead-muted mb-0">
+              Topik yang sering dicari tapi jarang dibahas dengan lengkap dari
+              berbagai sumber resmi.
+            </p>
+          </div>
+          <div
+            class="hc-carousel-wrap services-carousel-wrap mt-2"
+            data-carousel-wrap
+          >
+            <button
+              class="hc-carousel-nav hc-carousel-nav-prev d-sm-none"
+              type="button"
+              data-carousel-prev
+              aria-label="Topik sebelumnya"
+            >
+              <i class="bi bi-chevron-left"></i>
+            </button>
+            <div class="services-cards-row" data-carousel-track>
+              <div class="service-card-col">
+                <a class="service-card" href="doa.html">
+                  <span class="service-card-icon"
+                    ><i class="bi bi-moon-stars"></i
+                  ></span>
+                  <span class="service-card-label">Kumpulan Doa</span>
+                  <span class="service-card-desc"
+                    >Kumpulan doa dan dzikir ibadah haji & umrah: Tawaf, Sa'i, dan Wukuf Arafah. Lengkap dengan lafal Arab, latin, dan terjemahan Indonesia.</span
+                  >
+                  <span class="service-card-cta"
+                    ><span class="service-card-cta-text d-none d-sm-inline"
+                      >Pelajari</span
+                    >
+                    <i class="bi bi-chevron-right"></i
+                  ></span>
+                </a>
+              </div>
+              <div class="service-card-col">
+                <a class="service-card" href="badal.html">
+                  <span class="service-card-icon"
+                    ><i class="bi bi-person-check"></i
+                  ></span>
+                  <span class="service-card-label">Badal Umroh</span>
+                  <span class="service-card-desc"
+                    >Wakilkan ibadah haji atau umrah untuk keluarga yang telah
+                    wafat atau uzur, sesuai tuntunan syar'i.</span
+                  >
+                  <span class="service-card-cta"
+                    ><span class="service-card-cta-text d-none d-sm-inline"
+                      >Pelajari</span
+                    >
+                    <i class="bi bi-chevron-right"></i
+                  ></span>
+                </a>
+              </div>
+              <div class="service-card-col">
+                <a class="service-card" href="wakaf-quran.html">
+                  <span class="service-card-icon"
+                    ><i class="bi bi-book-half"></i
+                  ></span>
+                  <span class="service-card-label"
+                    >Wakaf Al-Qur'an Masjidil Haram</span
+                  >
+                  <span class="service-card-desc"
+                    >Salurkan wakaf Al-Qur'an untuk jamaah yang beribadah di
+                    Masjidil Haram secara amanah dan transparan.</span
+                  >
+                  <span class="service-card-cta"
+                    ><span class="service-card-cta-text d-none d-sm-inline"
+                      >Pelajari</span
+                    >
+                    <i class="bi bi-chevron-right"></i
+                  ></span>
+                </a>
+              </div>
+              <div class="service-card-col">
+                <a class="service-card" href="rekrutmen-petugas.html">
+                  <span class="service-card-icon"
+                    ><i class="bi bi-briefcase"></i
+                  ></span>
+                  <span class="service-card-label"
+                    >Informasi Rekrutmen PPIH</span
+                  >
+                  <span class="service-card-desc"
+                    >Info terbaru jalur pendaftaran dan syarat menjadi Petugas
+                    Penyelenggara Ibadah Haji.</span
+                  >
+                  <span class="service-card-cta"
+                    ><span class="service-card-cta-text d-none d-sm-inline"
+                      >Pelajari</span
+                    >
+                    <i class="bi bi-chevron-right"></i
+                  ></span>
+                </a>
+              </div>
+            </div>
+            <button
+              class="hc-carousel-nav hc-carousel-nav-next d-sm-none"
+              type="button"
+              data-carousel-next
+              aria-label="Topik berikutnya"
+            >
+              <i class="bi bi-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="section bg-white pt-4" id="artikel-terbaru">
+        <div class="container">
+          <div class="row g-4 align-items-start">
+            <div class="col-lg-7">
+              <div
+                class="d-flex flex-wrap justify-content-between align-items-start gap-2 gap-sm-3 mb-3 mt-1 section-header-row"
+              >
+                <div class="section-heading">
+                  <span class="eyebrow">Artikel Terbaru</span>
+                  <h2 class="section-title">
+                    Bacaan Terbaru Seputar Haji dan Umrah
+                  </h2>
+                </div>
+              </div>
+              <div data-featured-article class="h-100">
+                <div class="skeleton" style="min-height: 420px"></div>
+              </div>
+            </div>
+            <div class="col-lg-5">
+              <div class="mb-4">
+                <div class="section-heading mb-3">
+                  <span class="eyebrow">Artikel Terpopuler</span>
+                  <h2 class="section-title">Paling Banyak Dibaca Jamaah</h2>
+                </div>
+                <div class="article-list" data-article-list>
+                  <div class="skeleton mb-2" style="min-height: 72px"></div>
+                  <div class="skeleton mb-2" style="min-height: 72px"></div>
+                  <div class="skeleton mb-2" style="min-height: 72px"></div>
+                  <div class="skeleton" style="min-height: 72px"></div>
+                </div>
+                <a
+                  class="btn btn-outline-primary btn-sm w-100 mt-3"
+                  href="artikel.html?urutan=populer"
+                  >Lihat Artikel Lainnya <i class="bi bi-chevron-right"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="panduan">
+        <div class="container">
+          <div class="panduan-grid">
+            <div class="panduan-header section-heading">
+              <span class="eyebrow">Panduan Ibadah</span>
+              <h2 class="section-title">Panduan Ibadah Haji dan Umrah</h2>
+              <p class="lead-muted mb-0">
+                Kumpulan panduan lengkap untuk mempersiapkan dan menjalankan
+                ibadah haji dan umrah, dari doa, persiapan, sampai istilah
+                penting yang perlu diketahui jemaah.
+              </p>
+            </div>
+            <div class="panduan-cards">
+              <div class="row g-3 h-100">
+                <div class="col-sm-6">
+                  <a
+                    class="panduan-feature-card panduan-feature-card--haji fade-up"
+                    href="tata-cara-haji.html"
+                  >
+                    <span class="panduan-feature-badge">Rukun Islam ke-5</span>
+                    <span class="panduan-feature-icon">
+                      <img
+                        src="assets/images/kaabah2.png"
+                        alt=""
+                        loading="lazy"
+                      />
+                    </span>
+                    <span class="panduan-feature-content">
+                      <h2 class="panduan-feature-title">Ibadah Haji</h2>
+                      <p class="panduan-feature-desc">
+                        Urutan ibadah haji dari ihram, wukuf, mabit, jumrah,
+                        tawaf, sa'i, sampai tahallul.
+                      </p>
+                      <span class="panduan-feature-link"
+                        >Tata Cara Haji
+                        <i class="bi bi-chevron-right ms-auto"></i
+                      ></span>
+                    </span>
+                  </a>
+                </div>
+                <div class="col-sm-6">
+                  <a
+                    class="panduan-feature-card panduan-feature-card--umrah fade-up"
+                    href="tata-cara-umrah.html"
+                  >
+                    <span class="panduan-feature-badge"
+                      >Dapat dilakukan kapan saja</span
+                    >
+                    <span class="panduan-feature-icon">
+                      <img
+                        src="assets/images/kaabah.png"
+                        alt=""
+                        loading="lazy"
+                      />
+                    </span>
+                    <span class="panduan-feature-content">
+                      <h2 class="panduan-feature-title">Ibadah Umrah</h2>
+                      <p class="panduan-feature-desc">
+                        Panduan ihram, tawaf, sa'i, tahallul, dan doa penting
+                        untuk perjalanan umrah.
+                      </p>
+                      <span class="panduan-feature-link"
+                        >Tata Cara Umrah
+                        <i class="bi bi-chevron-right ms-auto"></i
+                      ></span>
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="panduan-list">
+              <div class="d-flex flex-column gap-3">
+                <a class="panduan-list-item fade-up" href="checklist-perlengkapan.html">
+                  <i class="bi bi-suitcase2"></i>
+                  <span>Checklist Perlengkapan</span>
+                  <i class="bi bi-chevron-right ms-auto"></i>
+                </a>
+                <a class="panduan-list-item fade-up" href="fikih.html">
+                  <i class="bi bi-book"></i>
+                  <span>Fikih Haji &amp; Umrah</span>
+                  <i class="bi bi-chevron-right ms-auto"></i>
+                </a>
+                <a class="panduan-list-item fade-up" href="doa.html">
+                  <i class="bi bi-moon-stars"></i>
+                  <span>Kumpulan Doa</span>
+                  <i class="bi bi-chevron-right ms-auto"></i>
+                </a>
+                <a class="panduan-list-item fade-up" href="pengetahuan.html">
+                  <i class="bi bi-mortarboard"></i>
+                  <span>Pengetahuan &amp; Istilah</span>
+                  <i class="bi bi-chevron-right ms-auto"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section bg-white" id="infografis">
+        <div class="container">
+          <div
+            class="d-flex flex-wrap justify-content-between align-items-start gap-2 gap-sm-3 mb-4 section-header-row"
+          >
+            <div class="section-heading">
+              <span class="eyebrow">Infografis</span>
+              <h2 class="section-title">
+                Ringkasan Visual yang Mudah Dipahami
+              </h2>
+              <p class="lead-muted mb-0">
+                Infografis dan dokumen visual untuk memahami tahapan ibadah
+                secara singkat dan jelas.
+              </p>
+            </div>
+            <a
+              class="btn btn-outline-primary btn-sm flex-shrink-0"
+              href="download.html"
+              >Lihat Semua <i class="bi bi-chevron-right"></i
+            ></a>
+          </div>
+          <div class="hc-carousel-wrap" data-carousel-wrap>
+            <button
+              class="hc-carousel-nav hc-carousel-nav-prev"
+              type="button"
+              data-carousel-prev
+              aria-label="Dokumen sebelumnya"
+            >
+              <i class="bi bi-chevron-left"></i>
+            </button>
+            <div
+              class="hc-carousel-track"
+              data-carousel-track
+              data-download-preview
+            >
+              <div
+                class="hc-carousel-slide skeleton"
+                style="width: 235px; min-height: 210px"
+              ></div>
+              <div
+                class="hc-carousel-slide skeleton"
+                style="width: 235px; min-height: 210px"
+              ></div>
+              <div
+                class="hc-carousel-slide skeleton"
+                style="width: 235px; min-height: 210px"
+              ></div>
+              <div
+                class="hc-carousel-slide skeleton"
+                style="width: 235px; min-height: 210px"
+              ></div>
+            </div>
+            <button
+              class="hc-carousel-nav hc-carousel-nav-next"
+              type="button"
+              data-carousel-next
+              aria-label="Dokumen berikutnya"
+            >
+              <i class="bi bi-chevron-right"></i>
+            </button>
+          </div>
+          <a
+            class="btn btn-outline-primary btn-sm section-view-all-mobile"
+            href="download.html"
+            >Lihat Semua <i class="bi bi-chevron-right"></i
+          ></a>
+        </div>
+      </section>
+
+      <section class="section" id="video-edukasi">
+        <div class="container">
+          <div
+            class="d-flex flex-wrap justify-content-between align-items-start gap-2 gap-sm-3 mb-4 section-header-row"
+          >
+            <div class="section-heading">
+              <span class="eyebrow">Video Edukasi</span>
+              <h2 class="section-title">Belajar Lewat Video Panduan</h2>
+              <p class="lead-muted mb-0">
+                Video edukasi yang menjelaskan tata cara dan persiapan ibadah
+                secara visual dan mudah diikuti.
+              </p>
+            </div>
+            <a
+              class="btn btn-outline-primary btn-sm flex-shrink-0"
+              href="video.html"
+              >Lihat Semua <i class="bi bi-chevron-right"></i
+            ></a>
+          </div>
+          <div class="hc-carousel-wrap" data-carousel-wrap>
+            <button
+              class="hc-carousel-nav hc-carousel-nav-prev"
+              type="button"
+              data-carousel-prev
+              aria-label="Video sebelumnya"
+            >
+              <i class="bi bi-chevron-left"></i>
+            </button>
+            <div
+              class="hc-carousel-track"
+              data-carousel-track
+              data-video-preview
+            >
+              <div
+                class="hc-carousel-slide video-preview-slide skeleton"
+                style="min-height: 220px"
+              ></div>
+              <div
+                class="hc-carousel-slide video-preview-slide skeleton"
+                style="min-height: 220px"
+              ></div>
+              <div
+                class="hc-carousel-slide video-preview-slide skeleton"
+                style="min-height: 220px"
+              ></div>
+            </div>
+            <button
+              class="hc-carousel-nav hc-carousel-nav-next"
+              type="button"
+              data-carousel-next
+              aria-label="Video berikutnya"
+            >
+              <i class="bi bi-chevron-right"></i>
+            </button>
+          </div>
+          <a
+            class="btn btn-outline-primary btn-sm section-view-all-mobile"
+            href="video.html"
+            >Lihat Semua <i class="bi bi-chevron-right"></i
+          ></a>
+        </div>
+      </section>
+
+      <section class="section bg-white" id="short-edukasi">
+        <div class="container">
+          <div
+            class="d-flex flex-wrap justify-content-between align-items-start gap-2 gap-sm-3 mb-4 section-header-row"
+          >
+            <div class="section-heading">
+              <span class="eyebrow">Short Edukasi</span>
+              <h2 class="section-title">Info Singkat, Padat, dan Praktis</h2>
+              <p class="lead-muted mb-0">
+                Konten singkat seputar tips dan pengetahuan haji-umrah yang
+                bisa ditonton kapan saja.
+              </p>
+            </div>
+            <a
+              class="btn btn-outline-primary btn-sm flex-shrink-0"
+              href="video.html"
+              >Lihat Semua <i class="bi bi-chevron-right"></i
+            ></a>
+          </div>
+          <div class="hc-carousel-wrap" data-carousel-wrap>
+            <button
+              class="hc-carousel-nav hc-carousel-nav-prev"
+              type="button"
+              data-carousel-prev
+              aria-label="Short sebelumnya"
+            >
+              <i class="bi bi-chevron-left"></i>
+            </button>
+            <div
+              class="hc-carousel-track"
+              data-carousel-track
+              data-short-preview
+            >
+              <div
+                class="hc-carousel-slide skeleton"
+                style="width: 190px; min-height: 320px"
+              ></div>
+              <div
+                class="hc-carousel-slide skeleton"
+                style="width: 190px; min-height: 320px"
+              ></div>
+              <div
+                class="hc-carousel-slide skeleton"
+                style="width: 190px; min-height: 320px"
+              ></div>
+              <div
+                class="hc-carousel-slide skeleton"
+                style="width: 190px; min-height: 320px"
+              ></div>
+            </div>
+            <button
+              class="hc-carousel-nav hc-carousel-nav-next"
+              type="button"
+              data-carousel-next
+              aria-label="Short berikutnya"
+            >
+              <i class="bi bi-chevron-right"></i>
+            </button>
+          </div>
+          <a
+            class="btn btn-outline-primary btn-sm section-view-all-mobile"
+            href="video.html"
+            >Lihat Semua <i class="bi bi-chevron-right"></i
+          ></a>
+        </div>
+      </section>
+
+      <section class="section" id="info-praktis">
+        <div class="container">
+          <div class="mb-4 section-heading">
+            <span class="eyebrow">Info Praktis</span>
+            <h2 class="section-title mb-2">Info Praktis Jamaah</h2>
+            <p class="lead-muted col-lg-8 mb-0">
+              Kebutuhan teknis di luar ibadah: biaya, kurs, transportasi,
+              akomodasi, kuliner, belanja, lokasi, dan istilah. Untuk jadwal
+              shalat dan jam realtime, lihat widget di atas atau
+              <a href="waktu.html">buka halaman Waktu</a>.
+            </p>
+          </div>
+          <div class="row g-3">
+            <div class="col-6 col-lg-3">
+              <a class="hub-card fade-up" href="budget.html"
+                ><span class="hub-icon"><i class="bi bi-calculator"></i></span
+                ><span
+                  ><span class="hub-title d-block">Budget Planner</span
+                  ><span class="hub-desc">Estimasi biaya perjalanan</span></span
+                ><i class="bi bi-chevron-right"></i
+              ></a>
+            </div>
+            <div class="col-6 col-lg-3">
+              <a class="hub-card fade-up" href="kurs.html"
+                ><span class="hub-icon"
+                  ><i class="bi bi-currency-exchange"></i></span
+                ><span
+                  ><span class="hub-title d-block">Konverter Kurs</span
+                  ><span class="hub-desc">Rupiah, Riyal, Dollar</span></span
+                ><i class="bi bi-chevron-right"></i
+              ></a>
+            </div>
+            <div class="col-6 col-lg-3">
+              <a
+                class="hub-card fade-up"
+                href="download.html?kategori=Transportasi"
+                ><span class="hub-icon"><i class="bi bi-bus-front"></i></span
+                ><span
+                  ><span class="hub-title d-block">Transportasi</span
+                  ><span class="hub-desc"
+                    >Panduan &amp; dokumen unduhan transportasi</span
+                  ></span
+                ><i class="bi bi-chevron-right"></i
+              ></a>
+            </div>
+            <div class="col-6 col-lg-3">
+              <a class="hub-card fade-up" href="artikel.html?kategori=Hotel"
+                ><span class="hub-icon"><i class="bi bi-building"></i></span
+                ><span
+                  ><span class="hub-title d-block">Hotel</span
+                  ><span class="hub-desc"
+                    >Dekat Masjidil Haram &amp; Nabawi</span
+                  ></span
+                ><i class="bi bi-chevron-right"></i
+              ></a>
+            </div>
+            <div class="col-6 col-lg-3">
+              <a class="hub-card fade-up" href="artikel.html?kategori=Kuliner"
+                ><span class="hub-icon"><i class="bi bi-cup-hot"></i></span
+                ><span
+                  ><span class="hub-title d-block">Kuliner</span
+                  ><span class="hub-desc"
+                    >Restoran &amp; makanan hemat</span
+                  ></span
+                ><i class="bi bi-chevron-right"></i
+              ></a>
+            </div>
+            <div class="col-6 col-lg-3">
+              <a class="hub-card fade-up" href="artikel.html?kategori=Belanja"
+                ><span class="hub-icon"><i class="bi bi-bag-check"></i></span
+                ><span
+                  ><span class="hub-title d-block">Belanja</span
+                  ><span class="hub-desc"
+                    >Kurma, oleh-oleh, tips menawar</span
+                  ></span
+                ><i class="bi bi-chevron-right"></i
+              ></a>
+            </div>
+            <div class="col-6 col-lg-3">
+              <a class="hub-card fade-up" href="peta.html"
+                ><span class="hub-icon"><i class="bi bi-map"></i></span
+                ><span
+                  ><span class="hub-title d-block">Peta Lokasi</span
+                  ><span class="hub-desc">Masjid, RS, ATM, apotek</span></span
+                ><i class="bi bi-chevron-right"></i
+              ></a>
+            </div>
+            <div class="col-6 col-lg-3">
+              <a class="hub-card fade-up" href="istilah.html"
+                ><span class="hub-icon"><i class="bi bi-journal-text"></i></span
+                ><span
+                  ><span class="hub-title d-block">Kamus Istilah</span
+                  ><span class="hub-desc">Daftar istilah alfabetis</span></span
+                ><i class="bi bi-chevron-right"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section bg-white" id="cerita-jemaah">
+        <div class="container">
+          <div class="row g-4 align-items-start">
+            <div class="col-lg-4">
+              <span class="eyebrow">Cerita jamaah</span>
+              <h2 class="section-title">
+                Pengalaman nyata sebagai bekal perjalanan
+              </h2>
+              <p class="lead-muted">
+                Kirim cerita Anda agar jamaah lain bisa belajar dari pengalaman
+                di lapangan.
+              </p>
+            </div>
+            <div class="col-lg-8">
+              <div class="story-slider-wrap" data-story-slider-wrap>
+                <button
+                  class="story-slider-nav story-slider-nav-prev"
+                  type="button"
+                  data-story-prev
+                  aria-label="Cerita sebelumnya"
+                >
+                  <i class="bi bi-chevron-left"></i>
+                </button>
+                <div class="story-slider">
+                  <div class="story-slider-track" data-stories></div>
+                </div>
+                <button
+                  class="story-slider-nav story-slider-nav-next"
+                  type="button"
+                  data-story-next
+                  aria-label="Cerita berikutnya"
+                >
+                  <i class="bi bi-chevron-right"></i>
+                </button>
+              </div>
+            </div>
+            <div class="col-12 cerita-jemaah-actions">
+              <div class="d-flex flex-wrap gap-2 justify-content-center">
+                <a class="btn btn-primary" href="kirim.html"
+                  ><i class="bi bi-send"></i> Bagikan Cerita</a
+                >
+                <a class="btn btn-outline-primary" href="pengalaman.html"
+                  >Lihat Semua <i class="bi bi-chevron-right"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="assets/js/footer.js"></script>
+    <button
+      id="backToTop"
+      class="back-to-top"
+      type="button"
+      aria-label="Kembali ke atas"
+    >
+      <i class="bi bi-arrow-up"></i>
+    </button>
+    <div class="toast-container position-fixed top-0 end-0 p-3"></div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      defer
+    ></script>
+    <script src="assets/js/api.js" defer></script>
+    <script src="assets/js/auth.js" defer></script>
+    <script src="assets/js/seo-routes.js" defer></script><script src="assets/js/app.js" defer></script>
+    <script src="assets/js/darkmode.js" defer></script>
+    <script src="assets/js/article.js" defer></script>
+    <script src="assets/js/content-data.js" defer></script>
+    <script src="assets/js/short-feed.js" defer></script>
+    <script src="assets/js/knowledge.js" defer></script>
+    <script src="assets/js/tools.js" defer></script>
+  </body>
+</html>

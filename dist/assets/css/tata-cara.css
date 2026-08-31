@@ -1,0 +1,1074 @@
+/* ==========================================================================
+   Tata Cara Ibadah Haji & Umrah — halaman khusus
+   Dibangun di atas variabel warna assets/css/style.css (var(--primary),
+   var(--accent), var(--surface), dst) supaya mode gelap otomatis mengikuti,
+   tanpa perlu duplikasi definisi tema.
+   ========================================================================== */
+
+:root {
+  --tc-emerald-deep: var(--primary-strong);
+  --tc-emerald: var(--primary);
+  --tc-emerald-tint: color-mix(in srgb, var(--primary) 16%, var(--surface));
+  --tc-gold-soft: color-mix(in srgb, var(--accent) 24%, var(--surface));
+  --tc-gold-deep: var(--accent-strong);
+}
+
+/* ---------- Tab bar utama ---------- */
+.tabbar-wrap {
+  position: sticky;
+  top: 64px;
+  z-index: 20;
+  background: var(--bg);
+  padding: 6px 0 14px;
+  margin-bottom: 8px;
+}
+
+.tabbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 6px;
+  box-shadow: var(--shadow);
+}
+
+.tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font-weight: 600;
+  font-size: 0.92rem;
+  padding: 10px 16px;
+  border-radius: calc(var(--radius-lg) - 4px);
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+  white-space: nowrap;
+}
+
+.tab-btn:hover {
+  background: var(--tc-emerald-tint);
+}
+
+.tab-btn.active {
+  background: var(--tc-emerald);
+  color: #fff;
+}
+
+.tab-btn .ic {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.tab-btn .chev {
+  font-size: 10px;
+  margin-left: 2px;
+  transition: transform 0.15s ease;
+}
+
+/* Label tombol "Jenis Haji" yang ikut berubah sesuai pilihan dropdown */
+.tab-btn .jenis-label {
+  white-space: normal;
+  text-align: left;
+  line-height: 1.25;
+}
+
+.tab-btn.open .chev {
+  transform: rotate(180deg);
+}
+
+.dropdown-wrap {
+  position: relative;
+}
+
+.dropdown-wrap .dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 240px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  padding: 6px;
+  display: none;
+  margin: 0;
+}
+
+.dropdown-wrap .dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-wrap .dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.dropdown-wrap .dropdown-item:hover {
+  background: var(--tc-emerald-tint);
+}
+
+.dropdown-wrap .dropdown-item.selected {
+  background: var(--tc-emerald-tint);
+  font-weight: 700;
+  color: var(--tc-emerald-deep);
+}
+
+.dropdown-wrap .dropdown-item .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border);
+  flex-shrink: 0;
+}
+
+.dropdown-wrap .dropdown-item.selected .dot {
+  background: var(--tc-emerald);
+}
+
+.dropdown-wrap .dropdown-item .tag {
+  margin-left: auto;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--tc-gold-soft);
+  color: var(--tc-gold-deep);
+}
+
+/* ---------- Panels ---------- */
+.panel {
+  display: none;
+}
+
+.panel.active {
+  display: block;
+  animation: tcFadeIn 0.25s ease;
+}
+
+/* ---------- Type panels (Tamattu' / Ifrad / Qiran di dalam panel "Jenis
+   Haji") ----------
+   BUGFIX: sebelumnya class ".type-panel" tidak punya aturan CSS sama
+   sekali, jadi ketiga sub-panel (tamattu, ifrad, qiran) selalu tampil
+   bertumpuk bersamaan (default browser: display block) meskipun hanya
+   salah satu yang diberi class "active" oleh assets/js/tata-cara.js. Efek
+   yang terlihat: judul & sub-judul di atas berganti sesuai jenis yang
+   dipilih, tapi isi penjelasan di bawahnya tetap terlihat sama seperti
+   Tamattu' karena panel itu tampil paling atas dan menutupi urutan
+   panel lain. Aturan di bawah ini menyembunyikan panel yang tidak aktif,
+   sama seperti pola ".panel/.panel.active" di atas. */
+.type-panel {
+  display: none;
+}
+
+.type-panel.active {
+  display: block;
+  animation: tcFadeIn 0.25s ease;
+}
+
+@keyframes tcFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.panel-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.panel-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.panel-head h2 {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.panel-head .sub {
+  color: var(--muted);
+  font-size: 0.92rem;
+  margin-top: 2px;
+}
+
+.change-type-btn {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--tc-emerald-deep);
+  font-weight: 600;
+  font-size: 0.82rem;
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.change-type-btn:hover {
+  background: var(--tc-emerald-tint);
+}
+
+/* ---------- Card generik ---------- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  box-shadow: var(--shadow);
+}
+
+.card p {
+  margin: 0;
+  color: var(--text);
+}
+
+.card p + p {
+  margin-top: 14px;
+}
+
+.type-intro {
+  margin-bottom: 20px;
+}
+
+.pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--tc-emerald-tint);
+  color: var(--tc-emerald-deep);
+}
+
+.pill.gold {
+  background: var(--tc-gold-soft);
+  color: var(--tc-gold-deep);
+}
+
+.kv-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.kv {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.kv .lbl {
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.kv .val {
+  font-weight: 700;
+  color: var(--text);
+  margin-top: 2px;
+}
+
+/* ---------- Comparison (Haji vs Umrah) ---------- */
+.compare-grid {
+  display: grid;
+  grid-template-columns: 140px 1fr 1fr;
+  gap: 0;
+  margin-top: 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.compare-grid > div {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.88rem;
+}
+
+.compare-grid > div:nth-child(3n + 1) {
+  background: var(--bg);
+  font-weight: 700;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.compare-grid .ch-haji {
+  background: var(--tc-emerald-tint);
+  font-weight: 700;
+  color: var(--tc-emerald-deep);
+}
+
+.compare-grid .ch-umrah {
+  background: var(--tc-gold-soft);
+  font-weight: 700;
+  color: var(--tc-gold-deep);
+}
+
+.compare-grid > div:last-child,
+.compare-grid > div:nth-last-child(2),
+.compare-grid > div:nth-last-child(3) {
+  border-bottom: none;
+}
+
+/* ---------- Journey timeline ---------- */
+.journey {
+  position: relative;
+  margin-top: 4px;
+  padding-left: 34px;
+}
+
+.journey::before {
+  content: "";
+  position: absolute;
+  left: 15px;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  background: var(--border);
+}
+
+.jstep {
+  position: relative;
+  padding-bottom: 22px;
+}
+
+.jstep:last-child {
+  padding-bottom: 0;
+}
+
+.jnode {
+  position: absolute;
+  left: -34px;
+  top: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--tc-emerald);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  z-index: 1;
+}
+
+.jstep.milestone .jnode {
+  background: var(--tc-emerald);
+  border-color: var(--tc-emerald);
+  color: #fff;
+}
+
+.jcard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  box-shadow: var(--shadow);
+}
+
+.jstep.milestone .jcard {
+  border-color: var(--tc-emerald);
+}
+
+.jcard .date {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--tc-emerald-deep);
+  background: var(--tc-emerald-tint);
+  padding: 3px 10px;
+  border-radius: 999px;
+  margin-bottom: 8px;
+}
+
+.jcard h4 {
+  margin: 0 0 6px;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.jcard p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.jcard p + p {
+  margin-top: 8px;
+}
+
+.info-box {
+  margin-top: 12px;
+  background: var(--tc-gold-soft);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 0.86rem;
+  color: var(--text);
+}
+
+.info-box b {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--tc-gold-deep);
+  font-size: 0.82rem;
+}
+
+/* ---------- Doa box (niat / talbiyah / doa) ---------- */
+.doa-box {
+  margin-top: 12px;
+  background: var(--bg);
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+
+.doa-box + .doa-box {
+  margin-top: 8px;
+}
+
+.doa-box .doa-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--tc-emerald-deep);
+  margin-bottom: 6px;
+}
+
+.doa-box .doa-arab {
+  direction: rtl;
+  font-family: "Fraunces", "Traditional Arabic", "Scheherazade New", serif;
+  font-size: 1.15rem;
+  line-height: 2.1;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.doa-box .doa-latin {
+  font-style: italic;
+  color: var(--text);
+  font-size: 0.88rem;
+}
+
+.doa-box .doa-arti {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+/* ---------- Stepper (pendaftaran) ---------- */
+.stepper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 4px;
+}
+
+.step {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 18px;
+  box-shadow: var(--shadow);
+  position: relative;
+}
+
+.step .num {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--tc-emerald);
+  color: #fff;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.step h4 {
+  margin: 0 0 6px;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.step p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.reg-note {
+  margin-top: 18px;
+  background: var(--tc-gold-soft);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+/* ---------- Segmented control (ketentuan) ---------- */
+.segmented {
+  display: flex;
+  gap: 6px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 4px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.seg-btn {
+  flex: 1;
+  min-width: 100px;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font-weight: 600;
+  font-size: 0.88rem;
+  padding: 9px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.seg-btn:hover {
+  background: var(--surface);
+}
+
+.seg-btn.active {
+  background: var(--tc-emerald);
+  color: #fff;
+}
+
+.seg-panel {
+  display: none;
+}
+
+.seg-panel.active {
+  display: block;
+  animation: tcFadeIn 0.25s ease;
+}
+
+.rule-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.rule-item {
+  display: flex;
+  gap: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  box-shadow: var(--shadow);
+}
+
+.rule-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--tc-emerald-tint);
+  color: var(--tc-emerald-deep);
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.rule-item h4 {
+  margin: 0 0 4px;
+  font-size: 0.96rem;
+  font-weight: 700;
+}
+
+.rule-item p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.consequence-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  background: var(--tc-gold-soft);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.seg-panel[data-theme="rukun"] .consequence-banner {
+  background: color-mix(in srgb, #d9534f 14%, var(--surface));
+}
+
+.seg-panel[data-theme="wajib"] .consequence-banner {
+  background: var(--tc-gold-soft);
+}
+
+.seg-panel[data-theme="sunnah"] .consequence-banner {
+  background: var(--tc-emerald-tint);
+}
+
+.footnote {
+  margin-top: 28px;
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 767.98px) {
+  /* Di mobile tab bar sudah tidak sticky (position: relative), jadi
+     "top: 56px" peninggalan dari mode sticky (offset dari navbar) TIDAK
+     boleh ikut terbawa -- kalau ikut, kotak tab jadi kegeser turun 56px
+     dari posisi normalnya, meninggalkan ruang kosong lebar persis di
+     atasnya (celah besar antara header halaman & kartu tab). */
+  .tabbar-wrap {
+    position: relative;
+    top: 0;
+  }
+
+  /* Redesain tab bar mobile: sebelumnya satu baris yang digeser
+     horizontal, membuat sebagian tab (mis. "Cara Pendaftaran") selalu
+     terpotong di tepi layar tanpa terasa bisa digeser. Sekarang jadi
+     grid yang membungkus rapi (wrap) - semua tab langsung terlihat
+     tanpa perlu digeser sama sekali. */
+  .tabbar {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .tab-btn {
+    flex-shrink: 0;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    white-space: normal;
+    line-height: 1.25;
+    padding: 10px 8px;
+  }
+
+  /* Selektor "Jenis Haji" berperilaku seperti dropdown/select, bukan tab
+     biasa, jadi diberi baris penuh sendiri supaya nama jenis terpilih
+     (mis. "Haji Tamattu'") + panah tetap nyaman dibaca dan tombolnya
+     tidak berebut tempat dengan tab lain di grid 2 kolom. */
+  /* Tab "Pengertian" dilebarkan jadi satu baris penuh (bukan cuma
+     setengah kolom grid) supaya sejajar dengan lebar baris "Jenis Haji"
+     di bawahnya - dengan begitu teksnya yang sudah center terlihat
+     benar-benar di tengah kartu, bukan menempel ke kiri. */
+  .tabbar > .tab-btn[data-tab="pengertian"] {
+    grid-column: 1 / -1;
+  }
+
+  .dropdown-wrap {
+    grid-column: 1 / -1;
+  }
+  .dropdown-wrap .tab-btn {
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  /* "Cara Pendaftaran" & "Teknis Pelaksanaan" (tombol yang membuka halaman
+     terpisah) sengaja dipasangkan satu baris penuh berdua saja - baris ini
+     genap 2 kolom jadi otomatis rapi tanpa perlu aturan tambahan. Supaya
+     pasangannya konsisten walau urutan HTML berubah, keduanya dikunci
+     tampil berurutan lewat "order" alih-alih mengandalkan urutan markup. */
+  .tab-btn.tab-btn-link[href="pendaftaran-haji.html"] {
+    order: 3;
+  }
+  .tab-btn.tab-btn-link[href="teknis-pelaksanaan-haji.html"] {
+    order: 4;
+  }
+
+  /* "Ketentuan Haji" adalah tab kelima (ganjil) - kalau dibiarkan default,
+     dia sendirian di baris terakhir dan cuma mengisi setengah lebar,
+     menyisakan kotak kosong di sebelahnya yang terlihat seperti bug.
+     Jadi tab ini dilebarkan penuh satu baris, sama seperti "Pengertian"
+     dan "Jenis Haji" di atasnya, supaya terlihat rapi/disengaja. */
+  .tabbar > .tab-btn[data-tab="ketentuan"] {
+    grid-column: 1 / -1;
+    order: 5;
+  }
+
+  /* Teks nama jenis haji terpilih (mis. "Haji Tamattu'") dipusatkan di
+     tampilan mobile, sejajar dengan tab "Pengertian" yang juga rata
+     tengah. Ikon tetap di kiri & panah tetap di kanan sebagai penanda
+     dropdown, hanya teksnya yang dipusatkan pada ruang yang tersisa. */
+  .tab-btn .jenis-label {
+    text-align: center;
+  }
+
+  /* Label "Jenis Haji" / nama jenis terpilih dipaksa satu baris supaya
+     tinggi pil tab ini tetap sama dengan tab lain di sebelahnya -
+     sebelumnya bikin baris tab jadi jomplang/tidak nyaman dilihat
+     maupun disentuh saat menumpuk 2 baris. */
+  .tab-btn .jenis-label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  /* Menu dropdown "Jenis Haji" melebar penuh mengikuti lebar tabbar
+     (bukan mepet ke tepi layar seperti sebelumnya) supaya pilihannya
+     nyaman disentuh jari. */
+  .dropdown-wrap .dropdown-menu {
+    left: 0;
+    right: 0;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+  }
+
+  .kv-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stepper {
+    grid-template-columns: 1fr;
+  }
+
+  .compare-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .compare-grid > div:nth-child(3n + 1) {
+    border-bottom: none;
+    padding-bottom: 2px;
+  }
+
+  .panel-head {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .panel-head h2 {
+    font-size: 1.15rem;
+  }
+
+  /* "Ganti jenis" turun ke baris sendiri biar tidak memaksa judul
+     mengecil/terpotong saat layar sempit. */
+  .change-type-btn {
+    margin-top: 4px;
+    margin-left: 0 !important;
+  }
+
+  /* Beri sedikit jarak bawah supaya dropdown "Jenis Haji" yang terbuka
+     tidak menabrak konten di bawahnya. */
+  .tabbar-wrap {
+    padding-bottom: 18px;
+  }
+
+  /* Journey timeline: kurangi lekukan kiri agar lebih lega di layar kecil */
+  .journey {
+    padding-left: 30px;
+  }
+
+  .jnode {
+    left: -30px;
+    width: 28px;
+    height: 28px;
+    font-size: 0.85rem;
+  }
+
+  .jcard {
+    padding: 14px 14px;
+  }
+
+  .jcard h4 {
+    font-size: 0.95rem;
+  }
+
+  /* Doa Arab otomatis lebih kecil di layar sempit supaya tidak meluber */
+  .doa-box .doa-arab {
+    font-size: 1rem;
+    line-height: 1.9;
+  }
+
+  /* Segmented control: tombol tetap sebaris penuh tapi tidak terlalu
+     sempit; biarkan wrap bila perlu. */
+  .segmented {
+    flex-wrap: wrap;
+  }
+
+  .seg-btn {
+    min-width: 0;
+    flex: 1 1 auto;
+    padding: 9px 10px;
+    font-size: 0.82rem;
+  }
+
+  /* Kartu & panel menyusutkan padding agar konten lebih lega */
+  .card {
+    padding: 16px 16px;
+  }
+
+  .type-intro {
+    margin-bottom: 16px;
+  }
+
+  .rule-item {
+    padding: 12px 14px;
+  }
+
+  .consequence-banner {
+    padding: 12px 14px;
+  }
+}
+
+/* Layar sangat kecil (mis. 360px ke bawah) */
+@media (max-width: 399.98px) {
+  .tab-btn {
+    padding: 9px 12px;
+    font-size: 0.85rem;
+  }
+
+  .panel-icon {
+    width: 42px;
+    height: 42px;
+    font-size: 1.2rem;
+  }
+
+  .seg-btn {
+    font-size: 0.78rem;
+    padding: 8px 8px;
+  }
+}
+
+/* ---------- Ikon Bootstrap Icons (pengganti emoji) ---------- */
+.tab-btn .ic i,
+.tab-btn .chev i {
+  font-size: 0.95em;
+  vertical-align: -0.08em;
+}
+
+.panel-icon i {
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+.jnode i {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.ch-haji i,
+.ch-umrah i {
+  font-size: 0.95em;
+  vertical-align: -0.05em;
+}
+
+.info-box b i,
+.reg-note i,
+.footnote i {
+  font-size: 0.95em;
+  vertical-align: -0.06em;
+  margin-right: 2px;
+}
+
+.seg-btn i {
+  font-size: 0.95em;
+  vertical-align: -0.06em;
+  margin-right: 2px;
+}
+
+.consequence-banner i {
+  font-size: 1.05rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.change-type-btn i {
+  font-size: 0.7em;
+  vertical-align: 0.02em;
+}
+
+/* Ikon Ka'bah kustom (SVG) — ukuran menyesuaikan konteks tempatnya dipakai */
+.icon-kaaba {
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.tab-btn .ic .icon-kaaba {
+  width: 0.95em;
+  height: 0.95em;
+  vertical-align: -0.12em;
+}
+
+.panel-icon .icon-kaaba {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.jnode .icon-kaaba {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.ch-haji .icon-kaaba {
+  width: 0.95em;
+  height: 0.95em;
+  vertical-align: -0.12em;
+}
+
+/* ---------- Tombol "Doa Selengkapnya" pada langkah Tawaf/Sa'i/Wukuf ---------- */
+.doa-more-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  margin-right: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--tc-emerald-deep);
+  text-decoration: none;
+  padding: 6px 12px;
+  border: 1px solid var(--tc-emerald);
+  border-radius: 999px;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.doa-more-btn i {
+  font-size: 0.9em;
+}
+
+.doa-more-btn:hover {
+  background: var(--tc-emerald);
+  color: #fff;
+}
+
+/* ---------- Tab bar: tombol yang menuju halaman terpisah (mis. "Cara
+   Pendaftaran" -> pendaftaran-haji.html, "Teknis Pelaksanaan" ->
+   teknis-pelaksanaan-haji.html). Tampilannya sama seperti tab-btn biasa
+   supaya menyatu di tabbar, tapi diberi ikon panah kecil di kanan supaya
+   pengguna sadar tombol ini akan berpindah halaman, bukan membuka panel
+   di tempat seperti tab lain. ---------- */
+.tab-btn.tab-btn-link {
+  text-decoration: none;
+}
+
+.tab-btn.tab-btn-link .ext {
+  margin-left: 2px;
+  font-size: 0.72rem;
+  opacity: 0.55;
+}
+
+.tab-btn.tab-btn-link:hover .ext,
+.tab-btn.tab-btn-link:focus-visible .ext {
+  opacity: 0.9;
+}
+
+/* ---------- Kartu tautan "Pelajari Lebih Lanjut" (dipakai di
+   tata-cara-haji.html untuk mengarah ke halaman Cara Pendaftaran &
+   Teknis Pelaksanaan) — dibangun dari komponen .card yang sudah ada
+   supaya otomatis ikut tema terang/gelap. ---------- */
+.subpage-links {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 4px;
+}
+
+.subpage-link-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  text-decoration: none;
+  color: var(--text);
+  transition:
+    transform 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.subpage-link-card:hover,
+.subpage-link-card:focus-visible {
+  transform: translateY(-2px);
+  border-color: var(--tc-emerald);
+  box-shadow: var(--shadow-md);
+  color: var(--text);
+}
+
+.subpage-link-card .panel-icon {
+  flex-shrink: 0;
+}
+
+.subpage-link-card h3 {
+  margin: 0 0 4px;
+  font-size: 1.02rem;
+  font-weight: 700;
+}
+
+.subpage-link-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.subpage-link-card .go {
+  margin-top: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--tc-emerald-deep);
+}
+
+@media (max-width: 767.98px) {
+  .subpage-links {
+    grid-template-columns: 1fr;
+  }
+}

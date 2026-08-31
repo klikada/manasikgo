@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("manasikgo-theme");
+          if (!t) t = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+          if (t === "dark") document.documentElement.classList.add("theme-dark-preload");
+        } catch (e) {}
+      })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Perlengkapan Umrah Lengkap & Ringkas | ManasikGo</title>
+    <meta name="description" content="Panduan perlengkapan Umrah yang ringkas untuk perjalanan 9-12 hari, lengkap dengan kategori barang serta penempatan tas kecil dan koper besar." />
+    <link rel="canonical" href="https://klikada.github.io/manasikgo/perlengkapan-umroh.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Perlengkapan Umrah Lengkap | ManasikGo" />
+    <meta property="og:description" content="Checklist perlengkapan Umrah berdasarkan kategori barang dan tas bawaan." />
+    <meta property="og:image" content="https://klikada.github.io/manasikgo/assets/images/logo.png" />
+    <meta property="og:url" content="https://klikada.github.io/manasikgo/perlengkapan-umroh.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="assets/images/logo.png" type="image/png" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/style.css?v=20260828-1" />
+    <link rel="stylesheet" href="assets/css/responsive.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="assets/css/animation.css" />
+    <!-- CSS khusus 3 halaman checklist: layout + responsive; tidak mengubah alur JavaScript. -->
+    <link rel="stylesheet" href="assets/css/checklist.css?v=20260829-1" />
+  </head>
+  <body>
+    <script src="assets/js/navbar.js"></script>
+
+    <header class="page-header">
+      <div class="container">
+         <nav aria-label="Breadcrumb" class="mb-3">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Beranda</a></li>
+            <li class="breadcrumb-item"><a href="checklist-perlengkapan.html">Checklist Perlengkapan</a></li>
+            <li class="breadcrumb-item active">Checklist Perlengkapan Umroh</li>
+          </ol>
+        </nav>
+        <span class="eyebrow">Persiapan Umrah</span>
+        <h1 class="display-5 fw-bold">Perlengkapan Umrah</h1>
+        <p class="lead lead-muted">Temukan barang yang perlu disiapkan berdasarkan jenis jamaah dan kategori kebutuhan.</p>
+      </div>
+      <div class="container">
+        <div class="checklist-back-wrap mb-4">
+          <a class="btn btn-outline-primary checklist-switch-btn" href="perlengkapan-haji.html"><i class="bi-clipboard-check-fill"></i> Perlengkapan Haji</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="section checklist-page hc-pack-page">
+        <section class="hc-filter-panel" aria-label="Filter perlengkapan umrah">
+          <div class="hc-filter-head">
+            <div>
+              <h2 class="h4 fw-bold mb-1">Pilih kebutuhan jamaah</h2>
+              <p class="small lead-muted mb-0">Daftar barang akan menyesuaikan pilihan di bawah.</p>
+            </div>
+            <div class="hc-current-badge"><i class="bi bi-check2-circle"></i> <span data-current-label>Wanita</span></div>
+          </div>
+
+          <div class="hc-filter-grid hc-filter-grid--two">
+            <div class="hc-filter-field">
+              <label>Jenis Jamaah</label>
+              <div class="hc-segment" role="tablist" aria-label="Jenis jamaah">
+                <button type="button" class="active" data-gender-btn="wanita"><i class="bi bi-person-standing-dress"></i> Wanita</button>
+                <button type="button" data-gender-btn="pria"><i class="bi bi-person-standing"></i> Pria</button>
+              </div>
+            </div>
+            <div class="hc-filter-field">
+              <label id="bag-filter-label">Penempatan Barang</label>
+              <div class="hc-custom-select" data-bag-select>
+                <button type="button" class="hc-select-trigger" data-bag-filter-button aria-haspopup="listbox" aria-expanded="false" aria-labelledby="bag-filter-label">
+                  <span class="hc-select-value" data-bag-filter-value>Semua tas &amp; koper</span>
+                  <i class="bi bi-chevron-down" aria-hidden="true"></i>
+                </button>
+                <div class="hc-select-menu" data-bag-filter-menu role="listbox" aria-labelledby="bag-filter-label">
+                  <button type="button" class="hc-select-option active" data-bag-option="semua" role="option" aria-selected="true">
+                    <i class="bi bi-bag-check" aria-hidden="true"></i>
+                    <span>Semua tas &amp; koper</span>
+                  </button>
+                  <button type="button" class="hc-select-option" data-bag-option="kecil" role="option" aria-selected="false">
+                    <i class="bi bi-bag-fill" aria-hidden="true"></i>
+                    <span>Tas kecil / kabin</span>
+                  </button>
+                  <button type="button" class="hc-select-option" data-bag-option="besar" role="option" aria-selected="false">
+                    <i class="bi bi-suitcase2-fill" aria-hidden="true"></i>
+                    <span>Koper besar / bagasi</span>
+                  </button>
+                </div>
+                <select id="bag-filter" class="hc-select-native" data-bag-filter tabindex="-1" aria-hidden="true">
+                  <option value="semua">Semua tas &amp; koper</option>
+                  <option value="kecil">Tas kecil / kabin</option>
+                  <option value="besar">Koper besar / bagasi</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="hc-luggage-info" role="note" aria-label="Informasi penempatan cairan">
+            <i class="bi bi-droplet-half" aria-hidden="true"></i>
+            <div>
+              <strong>Informasi cairan:</strong>
+              cairan dengan isi <strong>di atas 100 ml</strong> sebaiknya ditempatkan di <strong>koper besar / bagasi</strong>.
+            </div>
+          </div>
+
+        </section>
+
+        <div class="hc-category-toolbar">
+          <div>
+            <span class="eyebrow">Daftar perlengkapan</span>
+            <h2 class="h4 fw-bold mb-0">Pilih kategori untuk melihat barang</h2>
+          </div>
+          <button type="button" class="btn btn-sm btn-outline-primary" data-expand-all aria-label="Buka semua kategori"><i class="bi bi-arrows-expand"></i><span class="hc-expand-label">Buka semua</span></button>
+        </div>
+
+        <div class="hc-category-grid" data-checklist></div>
+
+        <div class="surface p-4 mt-4 fade-up hc-note-card">
+          <div class="d-flex gap-3 align-items-start">
+            <span class="hc-note-icon"><i class="bi bi-info-lg"></i></span>
+            <div>
+              <h2 class="h6 fw-bold mb-1">Catatan</h2>
+              <p class="small lead-muted mb-0">Daftar ini rekomendasi umum untuk perjalanan Umrah yang lebih singkat. Sesuaikan dengan kebutuhan pribadi, ketentuan penerbangan, dan arahan pembimbing. Perhatikan ikon tas kecil untuk barang yang sebaiknya berada di tas kecil/kabin dan ikon koper untuk koper besar/bagasi.</p>
+            </div>
+          </div>
+        </div>
+    </main>
+
+    <script src="assets/js/footer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="assets/js/auth.js" defer></script>
+    <script src="assets/js/seo-routes.js" defer></script>
+    <script src="assets/js/content-data.js" defer></script>
+    <script src="assets/js/checklist-data.js?v=20260827-3" defer></script>
+    <script src="assets/js/checklist.js?v=20260827-3" defer></script>
+    <script src="assets/js/app.js" defer></script>
+    <script src="assets/js/darkmode.js" defer></script>
+    <script>document.addEventListener("DOMContentLoaded", function () { renderChecklist("umrah"); });</script>
+  </body>
+</html>

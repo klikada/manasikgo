@@ -1,0 +1,975 @@
+/* ==========================================================================
+   Halaman Kumpulan Doa (doa.html)
+   Mengikuti token warna & komponen yang sudah ada di style.css
+   (var(--primary), .surface, .badge-soft, dst) supaya konsisten dengan
+   halaman lain, ditambah komponen baru khusus mode "putaran" (Tawaf) dan
+   mode "list" (Sa'i, Arafah, dst).
+   ========================================================================== */
+
+/* --- Tab jenis ibadah (Tawaf / Sa'i / Arafah / ...), digeser horizontal --- */
+.doa-tabs-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  margin: 0 -0.25rem 1.25rem;
+  padding: 0 0.25rem;
+}
+.doa-tabs-wrap::-webkit-scrollbar {
+  display: none;
+}
+.doa-tabs {
+  display: flex;
+  gap: 0.5rem;
+  min-width: max-content;
+}
+.doa-tab-btn {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 0.55rem 1.25rem;
+  font-weight: 600;
+  font-size: 0.92rem;
+  white-space: nowrap;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+.doa-tab-btn:hover {
+  border-color: var(--primary);
+}
+.doa-tab-btn.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+/* --- Indikator putaran: sticky tepat di bawah navbar (bukan top:0,
+   supaya tidak tertutup/terpotong oleh .site-header yang fixed-top —
+   tinggi navbar sebenarnya diukur oleh JS lewat --hc-header-h). --- */
+.doa-putaran-indicator {
+  position: sticky;
+  top: var(--hc-header-h, 4.25rem);
+  z-index: 20;
+  background: var(--bg);
+  padding: 0.65rem 0 0.85rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+.doa-putaran-indicator-inner {
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 2px 0.75rem 2px 0.1rem;
+}
+.doa-putaran-indicator-inner::-webkit-scrollbar {
+  display: none;
+}
+.doa-putaran-indicator-label {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-bottom: 0.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.doa-putaran-indicator-label > span {
+  font-weight: 600;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+/* Wadah untuk dropdown kategori + dropdown "Lompat ke Putaran" (dan/atau
+   tombol "Ulangi dari awal") supaya keduanya rapi berdampingan di desktop
+   dan tersusun rapi (wrap) di layar sempit tanpa saling menimpa. */
+.doa-putaran-indicator-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  flex: 0 1 auto;
+  justify-content: flex-end;
+}
+/* Dropdown "Lompat ke Putaran" — pengganti chip filter kategori yang dulu
+   ada di mode list, dipertahankan fungsinya sebagai navigasi cepat dan
+   ikut sticky karena berada di dalam .doa-putaran-indicator. */
+.doa-putaran-jump {
+  width: auto;
+  max-width: 9.5rem;
+  flex: 0 0 auto;
+  font-size: 0.82rem;
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
+}
+/* Dropdown pemilihan kategori (mis. "Alur Putaran" vs "Doa Tambahan") —
+   dipakai untuk ibadah "putaran" (Tawaf, Sa'i) yang juga punya kategori
+   doa tambahan di luar alur putaran bernomor, supaya kategori tambahan
+   itu TIDAK dihitung sebagai putaran ekstra (mis. Sa'i tetap 7 putaran). */
+.doa-kategori-select {
+  width: auto;
+  max-width: 11.5rem;
+  flex: 0 0 auto;
+  font-size: 0.82rem;
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
+  font-weight: 600;
+}
+/* Setiap langkah = 1 lingkaran nomor + garis penghubung ke nomor
+   berikutnya, supaya alur urutan putaran kelihatan jelas. */
+.doa-putaran-step {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+}
+.doa-putaran-line {
+  width: 1.1rem;
+  height: 2px;
+  flex: 0 0 auto;
+  background: var(--border);
+  transition: background 0.2s ease;
+}
+.doa-putaran-line.is-done {
+  background: var(--primary);
+}
+.doa-putaran-dot {
+  flex: 0 0 auto;
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: 2px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  cursor: default;
+  user-select: none;
+  /* Sengaja bukan <button>/<a> — ini murni indikator, tidak bisa diklik. */
+}
+.doa-putaran-dot.is-current {
+  border-color: var(--primary);
+  color: var(--primary-strong);
+  box-shadow: 0 0 0 3px rgba(127, 165, 138, 0.18);
+}
+.doa-putaran-dot.is-done {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+.doa-putaran-dot.is-done .doa-putaran-dot-num {
+  display: none;
+}
+.doa-putaran-dot .doa-putaran-dot-check {
+  display: none;
+}
+.doa-putaran-dot.is-done .doa-putaran-dot-check {
+  display: block;
+}
+
+/* --- Kartu bacaan (dipakai mode putaran & mode list) --- */
+.doa-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+.doa-card-label {
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+.doa-card-note {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px dashed var(--border);
+}
+.doa-card-arab {
+  font-size: 1.6rem;
+  line-height: 2.35;
+  text-align: right;
+  margin-bottom: 0.9rem;
+}
+.doa-card-latin {
+  font-style: italic;
+  color: var(--muted);
+  margin-bottom: 0.6rem;
+}
+.doa-card-arti {
+  margin-bottom: 0;
+}
+.doa-card-arti::before {
+  content: "Artinya: ";
+  font-weight: 600;
+  font-style: normal;
+  color: var(--text);
+}
+
+/* --- Baris rujukan sumber (mis. QS. Al-Baqarah: 201 / HR. Bukhari) ---
+   Dipisah dari teks arti dengan garis tipis, mengikuti pola pemisah pada
+   .doa-card-note supaya konsisten secara visual. */
+.doa-card-source {
+  margin-top: 1rem;
+  padding-top: 0.85rem;
+  border-top: 1px dashed var(--border);
+  font-size: 0.85rem;
+  color: var(--muted);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+}
+.doa-card-source i {
+  color: var(--accent-strong);
+  margin-top: 0.15rem;
+}
+
+/* --- Varian kartu "Doa Sunnah" (aksen kuning) — dipakai mis. untuk
+   bacaan sunnah tambahan di akhir putaran ke-7 Tawaf. Warna kuning
+   dibuat lokal di sini (bukan menimpa --primary/--accent global) supaya
+   tidak memengaruhi kartu doa lain. --- */
+.doa-card-sunnah {
+  --doa-sunnah-bg: #fff9e6;
+  --doa-sunnah-border: #f2d675;
+  --doa-sunnah-text: #7a5b00;
+  background: var(--doa-sunnah-bg);
+  border-color: var(--doa-sunnah-border);
+}
+.doa-card-sunnah .doa-card-note,
+.doa-card-sunnah .doa-card-source {
+  border-color: var(--doa-sunnah-border);
+}
+.doa-card-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: #f7c948;
+  color: #4a3600;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 0.28rem 0.7rem;
+  border-radius: 999px;
+  margin-bottom: 0.85rem;
+}
+
+.theme-dark-preload .doa-card-sunnah {
+  --doa-sunnah-bg: #362c0f;
+  --doa-sunnah-border: #6b551c;
+  --doa-sunnah-text: #f2d675;
+}
+.theme-dark-preload .doa-card-badge {
+  background: #6b551c;
+  color: #f9e9b0;
+}
+
+/* --- Tombol Lanjut: sengaja TIDAK sticky, diletakkan di akhir konten per
+   putaran supaya orang harus scroll melewati bacaan dulu sebelum bisa
+   menekannya (menghindari klik tidak sengaja). --- */
+.doa-lanjut-wrap {
+  text-align: center;
+  padding: 1.25rem 0 2rem;
+}
+.doa-lanjut-btn {
+  min-width: 220px;
+}
+.doa-lanjut-hint {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 0.6rem;
+}
+.doa-selesai-banner {
+  text-align: center;
+  padding: 2rem 1.5rem;
+}
+.doa-selesai-banner i {
+  font-size: 2.4rem;
+  color: var(--primary);
+}
+
+/* --- Kartu kategori tambahan (mis. "Doa Tambahan" pada Sa'i/Tawaf),
+   dipilih lewat .doa-kategori-select — pakai spasi yang sama seperti
+   kartu putaran biasa supaya konsisten. --- */
+.doa-extra-cards {
+  margin-bottom: 0.25rem;
+}
+
+/* --- Mode list (Sa'i, Arafah, dst): dropdown + chip filter kategori ---
+   Dropdown dibuat sticky tepat di bawah navbar (sama seperti indikator
+   putaran) supaya tetap bisa diakses kapan saja saat scroll ke bawah. --- */
+.doa-list-filter {
+  position: sticky;
+  top: var(--hc-header-h, 4.25rem);
+  z-index: 20;
+  background: var(--bg);
+  padding: 0.65rem 0 0.85rem;
+  margin: 0 0 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+/* Dropdown kategori kustom (bukan <select> asli) supaya bisa ditata
+   multi-kolom di mobile — <select> bawaan browser tidak bisa distyle
+   jadi grid lewat CSS. */
+.doa-filter-dropdown {
+  position: relative;
+  max-width: 420px;
+}
+.doa-filter-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  border-radius: var(--radius);
+  padding: 0.55rem 0.9rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-align: left;
+}
+.doa-filter-toggle span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.doa-filter-toggle i {
+  flex: 0 0 auto;
+  transition: transform 0.2s ease;
+  color: var(--muted);
+}
+.doa-filter-dropdown.open .doa-filter-toggle {
+  border-color: var(--primary);
+}
+.doa-filter-dropdown.open .doa-filter-toggle i {
+  transform: rotate(180deg);
+}
+.doa-filter-menu {
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  left: 0;
+  right: 0;
+  z-index: 30;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: 0.5rem;
+  max-height: min(60vh, 26rem);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.doa-filter-menu[hidden] {
+  display: none;
+}
+.doa-filter-option {
+  text-align: left;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  padding: 0.55rem 0.65rem;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1.3;
+}
+.doa-filter-option:hover {
+  background: var(--bg);
+}
+.doa-filter-option.active {
+  background: var(--primary);
+  color: #fff;
+  font-weight: 600;
+}
+.doa-filter-option-all {
+  font-weight: 700;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0.5rem 0.5rem 0 0;
+  margin-bottom: 0.25rem;
+  padding-bottom: 0.65rem;
+}
+.doa-list-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+.doa-list-chip {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 0.4rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.doa-list-chip.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.doa-empty {
+  padding: 2rem;
+  text-align: center;
+  color: var(--muted);
+}
+
+/* --- Tablet: sedikit longgarkan lebar dropdown supaya masih nyaman
+   dipilih dengan jari, sebelum masuk breakpoint mobile penuh --- */
+@media (min-width: 576px) and (max-width: 991.98px) {
+  .doa-putaran-jump,
+  .doa-kategori-select {
+    max-width: 10rem;
+  }
+  .doa-card-arab {
+    font-size: 1.45rem;
+  }
+}
+
+/* --- Mobile: rapikan indikator putaran & sembunyikan chip kategori,
+   sisakan dropdown saja supaya tidak berjejal --- */
+@media (max-width: 575.98px) {
+  .doa-putaran-dot {
+    width: 1.95rem;
+    height: 1.95rem;
+    font-size: 0.82rem;
+    border-width: 1.5px;
+  }
+  .doa-putaran-line {
+    width: 0.7rem;
+  }
+  .doa-putaran-indicator-inner {
+    /* Padding kanan cukup besar supaya nomor terakhir tidak mepet/terpotong
+       di ujung layar saat digeser sampai habis. */
+    padding: 2px 1.25rem 6px 0.1rem;
+  }
+  /* Label teks & wadah dropdown/tombol ditumpuk vertikal (bukan
+     berdampingan) di layar sempit supaya dropdown kategori + dropdown
+     putaran tidak berjejal/terpotong di satu baris. */
+  .doa-putaran-indicator-label {
+    font-size: 0.78rem;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .doa-putaran-indicator-controls {
+    justify-content: flex-start;
+    width: 100%;
+  }
+  .doa-putaran-jump,
+  .doa-kategori-select {
+    flex: 1 1 auto;
+    max-width: none;
+    font-size: 0.78rem;
+  }
+
+  .doa-list-chips {
+    display: none;
+  }
+
+  .doa-card {
+    padding: 1.1rem;
+  }
+  .doa-card-arab {
+    font-size: 1.3rem;
+    line-height: 2.1;
+  }
+  .doa-card-source {
+    font-size: 0.8rem;
+    margin-top: 0.85rem;
+    padding-top: 0.7rem;
+  }
+  .doa-card-badge {
+    font-size: 0.7rem;
+    padding: 0.24rem 0.6rem;
+  }
+
+  /* Dropdown kategori (mode list, mis. Arafah) dibagi jadi 2 kolom di
+     mobile supaya daftar kategori yang panjang tidak jadi satu kolom
+     tinggi yang bikin scroll berlebihan. Opsi "Semua kategori doa" tetap
+     melebar penuh di baris paling atas supaya tetap menonjol. */
+  .doa-filter-dropdown {
+    max-width: none;
+  }
+  .doa-filter-menu {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.3rem 0.5rem;
+    max-height: min(65vh, 24rem);
+  }
+  .doa-filter-option {
+    font-size: 0.82rem;
+    padding: 0.5rem 0.5rem;
+  }
+  .doa-filter-option-all {
+    grid-column: 1 / -1;
+  }
+}
+
+/* --- Dark mode --- */
+.theme-dark-preload body .doa-putaran-indicator,
+.theme-dark-preload body .doa-list-filter {
+  background: var(--bg);
+}
+.theme-dark-preload body .doa-tab-btn,
+.theme-dark-preload body .doa-putaran-dot,
+.theme-dark-preload body .doa-list-chip {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text);
+}
+.theme-dark-preload body .doa-tab-btn.active,
+.theme-dark-preload body .doa-putaran-dot.is-done,
+.theme-dark-preload body .doa-list-chip.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #16231d;
+}
+
+/* ==========================================================================
+   Card Pilihan Doa (Hub doa.html) — Gaya Panduan Ibadah Haji & Umrah
+   ========================================================================== */
+.doa-hub-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+@media (max-width: 991.98px) {
+  .doa-hub-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 575.98px) {
+  .doa-hub-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+.doa-feature-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 350px;
+  padding: 1.65rem;
+  border-radius: var(--radius-lg, 1.25rem);
+  box-shadow: var(--shadow-md);
+  color: #fff;
+  text-align: left;
+  text-decoration: none;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.doa-card-slider {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding: 0.25rem 0.15rem 1rem;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) var(--border);
+}
+.doa-card-slider > [class*="col-"] {
+  flex: 0 0 calc(25% - 1.125rem);
+  max-width: calc(25% - 1.125rem);
+  scroll-snap-align: start;
+}
+.doa-card-slider > [class*="col-"] > .doa-feature-card {
+  height: 100%;
+}
+@media (max-width: 991.98px) {
+  .doa-card-slider > [class*="col-"] {
+    flex-basis: calc(50% - 0.75rem);
+    max-width: calc(50% - 0.75rem);
+  }
+}
+@media (max-width: 575.98px) {
+  .doa-card-slider {
+    margin-right: -0.75rem;
+    margin-left: -0.75rem;
+    padding-right: 0.75rem;
+    padding-left: 0.75rem;
+  }
+  .doa-card-slider > [class*="col-"] {
+    flex-basis: min(86vw, 21rem);
+    max-width: min(86vw, 21rem);
+  }
+}
+.doa-feature-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    120% 90% at 88% 0%,
+    rgba(200, 169, 107, 0.28),
+    transparent 60%
+  );
+  pointer-events: none;
+}
+.doa-feature-card:hover,
+.doa-feature-card:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 48px -20px rgba(22, 35, 29, 0.55);
+  color: #fff;
+  text-decoration: none;
+}
+
+.doa-feature-card--tawaf {
+  background-image:
+    linear-gradient(
+      195deg,
+      rgba(10, 20, 15, 0.35) 0%,
+      rgba(10, 20, 15, 0.55) 55%,
+      rgba(10, 20, 15, 0.82) 100%
+    ),
+    url("../images/doa-tawaf.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.doa-feature-card--sai {
+  background-image:
+    linear-gradient(
+      195deg,
+      rgba(10, 20, 15, 0.35) 0%,
+      rgba(10, 20, 15, 0.55) 55%,
+      rgba(10, 20, 15, 0.82) 100%
+    ),
+    url("../images/doa-sai.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.doa-feature-card--arafah {
+  background-image:
+    linear-gradient(
+      195deg,
+      rgba(15, 25, 20, 0.35) 0%,
+      rgba(15, 25, 20, 0.55) 55%,
+      rgba(15, 25, 20, 0.82) 100%
+    ),
+    url("../images/doa-arafah.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.doa-feature-card--umum {
+  background-image:
+    linear-gradient(
+      195deg,
+      rgba(10, 20, 15, 0.35) 0%,
+      rgba(10, 20, 15, 0.55) 55%,
+      rgba(10, 20, 15, 0.82) 100%
+    ),
+    url("../images/doa-umum.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.doa-feature-badge {
+  position: relative;
+  z-index: 1;
+  align-self: flex-start;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  color: #fff;
+  margin-bottom: auto;
+}
+.doa-feature-icon {
+  position: absolute;
+  right: -20px;
+  bottom: -14px;
+  width: 190px;
+  max-width: 55%;
+  aspect-ratio: 1 / 1;
+  opacity: 0.14;
+  filter: brightness(0) invert(1);
+  pointer-events: none;
+}
+.doa-feature-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.doa-feature-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin-top: 1.75rem;
+}
+.doa-feature-title {
+  font-size: 1.45rem;
+  font-weight: 700;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+.doa-feature-desc {
+  margin-bottom: 1.25rem;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.88rem;
+  line-height: 1.5;
+  text-align: left;
+}
+.doa-feature-link {
+  display: inline-flex;
+  margin-top: auto;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: #fff;
+  transition: transform 0.15s ease;
+}
+.doa-feature-card:hover .doa-feature-link {
+  transform: translateX(3px);
+}
+
+
+
+/* ==========================================================================
+   Doa Umum — alur kategori utama -> subkategori -> daftar doa
+   ========================================================================== */
+.doa-umum-category-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.doa-umum-category-card {
+  width: 100%;
+  min-height: 96px;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  text-align: left;
+  padding: 1rem 1.05rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.doa-umum-category-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--primary);
+}
+
+.doa-umum-category-icon {
+  flex: 0 0 2.7rem;
+  width: 2.7rem;
+  height: 2.7rem;
+  display: grid;
+  place-items: center;
+  border-radius: 0.85rem;
+  background: var(--bg);
+  color: var(--primary);
+  font-size: 1.25rem;
+}
+
+.doa-umum-category-icon i {
+  line-height: 1;
+}
+
+.doa-umum-category-body {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.doa-umum-category-body strong {
+  font-size: 1rem;
+}
+
+.doa-umum-category-body small {
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.doa-umum-category-count {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.doa-umum-category-card > i {
+  flex: 0 0 auto;
+  color: var(--muted);
+}
+
+.doa-umum-detail-head {
+  margin-bottom: 1.1rem;
+}
+
+.doa-umum-back {
+  margin-bottom: 1rem;
+}
+
+.doa-umum-title {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.doa-umum-title-icon {
+  flex: 0 0 2.9rem;
+  width: 2.9rem;
+  height: 2.9rem;
+  display: grid;
+  place-items: center;
+  border-radius: 0.85rem;
+  background: var(--bg);
+  color: var(--primary);
+  font-size: 1.35rem;
+}
+
+.doa-umum-title-icon i {
+  line-height: 1;
+}
+
+.doa-umum-search-wrap {
+  margin: 1.15rem 0 0.85rem;
+}
+
+.doa-umum-search {
+  position: relative;
+}
+
+.doa-umum-search > i {
+  position: absolute;
+  left: 0.9rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  z-index: 2;
+}
+
+.doa-umum-search .form-control {
+  min-height: 46px;
+  padding-left: 2.65rem;
+  border-radius: var(--radius);
+}
+
+.doa-umum-subcategories {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding: 0.15rem 0 0.9rem;
+  margin-bottom: 0.25rem;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.doa-umum-subcategories::-webkit-scrollbar {
+  display: none;
+}
+
+.doa-umum-subcategory {
+  flex: 0 0 auto;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 0.48rem 1rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.doa-umum-subcategory:hover {
+  border-color: var(--primary);
+}
+
+.doa-umum-subcategory.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.doa-card-status {
+  margin-top: 1rem;
+  padding-top: 0.85rem;
+  border-top: 1px dashed var(--border);
+  font-size: 0.85rem;
+  color: var(--muted);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+}
+
+.doa-card-status i {
+  color: var(--primary);
+  margin-top: 0.15rem;
+}
+
+@media (max-width: 767.98px) {
+  .doa-umum-category-grid {
+    grid-template-columns: 1fr;
+    gap: 0.7rem;
+  }
+
+  .doa-umum-category-card {
+    min-height: 88px;
+    padding: 0.9rem 1rem;
+  }
+
+  .doa-umum-title {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .doa-umum-category-card {
+    min-height: auto;
+    gap: 0.75rem;
+    padding: 0.85rem 0.9rem;
+  }
+
+  .doa-umum-category-icon {
+    flex-basis: 2.4rem;
+    width: 2.4rem;
+    height: 2.4rem;
+    font-size: 1.1rem;
+  }
+
+  .doa-umum-category-body strong {
+    font-size: 0.95rem;
+  }
+
+  .doa-umum-category-body small {
+    font-size: 0.82rem;
+  }
+
+  .doa-umum-title-icon {
+    flex-basis: 2.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.2rem;
+  }
+
+  .doa-umum-subcategory {
+    padding: 0.42rem 0.85rem;
+    font-size: 0.82rem;
+  }
+}

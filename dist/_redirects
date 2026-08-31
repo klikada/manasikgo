@@ -1,0 +1,51 @@
+# === ManasikGo — Netlify redirects & rewrites ===
+# Taruh file ini di root project (sudah di sini). Netlify otomatis membacanya
+# saat deploy, tidak perlu setting tambahan di dashboard.
+
+# 1) Redirect 301 dari URL lama (?slug=/?id=) ke URL bersih yang baru,
+#    supaya sinyal SEO dari link/index lama tidak pecah dua.
+/detail.html            slug=:slug    /artikel/:slug                 301
+/istilah-detail.html    slug=:slug    /istilah/:slug                 301
+/detail-pengalaman.html id=:id        /cerita/:id                    301
+
+# 2) Rewrite diam-diam (200 = rewrite, bukan redirect, address bar tidak
+#    berubah) dari URL bersih ke file asli yang sudah ada.
+/artikel/*      /detail.html               200
+/istilah/*      /istilah-detail.html       200
+/cerita/*       /detail-pengalaman.html    200
+
+# 3) Opsional: akses tanpa akhiran .html untuk semua halaman statis lain.
+#    Link internal di HTML masih memakai .html (tetap berfungsi normal),
+#    baris ini hanya menyediakan alias bersih tanpa perlu ubah semua link.
+/artikel        /artikel.html               200
+/kategori       /kategori.html              200
+/pengalaman     /pengalaman.html            200
+/faq            /faq.html                   200
+/tentang        /tentang.html               200
+/kontak         /kontak.html                200
+/kirim          /kirim.html                 200
+/pengetahuan    /pengetahuan.html           200
+/istilah        /istilah.html               200
+/tata-cara-haji   /tata-cara-haji.html      200
+/tata-cara-umrah  /tata-cara-umrah.html     200
+/waktu          /waktu.html                 200
+/panduan-waktu  /waktu.html                 200
+/download       /download.html              200
+/checklist-perlengkapan      /checklist-perlengkapan.html  200
+/perlengkapan-haji            /perlengkapan-haji.html       200
+/perlengkapan-umroh           /perlengkapan-umroh.html      200
+/budget         /budget.html                200
+/kurs           /kurs.html                  200
+/peta           /peta.html                  200
+/video          /video.html                 200
+/doa            /doa.html                   200
+/doa-tawaf      /doa-tawaf.html             200
+/doa-sai        /doa-sai.html               200
+/doa-arafah     /doa-arafah.html            200
+/fikih          /fikih.html                 200
+/badal          /badal.html                 200
+/wakaf-quran    /wakaf-quran.html           200
+/rekrutmen-petugas /rekrutmen-petugas.html  200
+
+# 4) Fallback 404 kustom
+/*    /404.html   404

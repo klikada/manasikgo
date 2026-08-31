@@ -1,0 +1,2688 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("manasikgo-theme");
+          if (!t) {
+            t =
+              window.matchMedia &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light";
+          }
+          if (t === "dark") {
+            document.documentElement.classList.add("theme-dark-preload");
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kelola Pesanan | ManasikGo</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" href="assets/images/logo.png" type="image/png"><link rel="apple-touch-icon" href="assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/responsive.css" />
+    <link rel="stylesheet" href="assets/css/animation.css" />
+    <script
+      src="https://cdn.jsdelivr.net/npm/davidshimjs-qrcodejs@0.0.2/qrcode.min.js"
+      defer
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"
+    />
+    <!-- Leaflet: dipakai widget "Lacak Live" (peta realtime posisi petugas Badal Umroh) -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+    <!-- leaflet-image: render peta Leaflet (tile + garis rute) jadi <canvas>,
+         dipakai tombol "Unduh Gambar Rute" (bukti dokumentasi ala Strava) -->
+    <script
+      src="https://unpkg.com/leaflet-image@0.4.0/leaflet-image.js"
+      defer
+    ></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Lewati ke konten</a>
+    <div class="site-header fixed-top"><nav class="navbar navbar-expand-lg" aria-label="Navigasi utama"><div class="container"><a class="navbar-brand d-flex align-items-center" href="index.html"><img src="assets/images/logo.png" alt="ManasikGo" class="brand-logo" height="32" /><span class="brand-name">ManasikGo</span></a><a class="nav-clock d-none d-lg-block" data-nav-clock href="waktu.html" aria-label="Lihat jadwal shalat dan waktu lengkap"><strong>--:--</strong> WIB &middot; <span class="nav-clock-next">Memuat...</span></a><button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#mainNav" aria-controls="mainNav" aria-label="Buka navigasi"><span class="navbar-toggler-icon"></span></button><div class="offcanvas offcanvas-start" tabindex="-1" id="mainNav" aria-labelledby="mainNavLabel"><div class="offcanvas-header"><a class="navbar-brand d-flex align-items-center mb-0" id="mainNavLabel" href="index.html"><img src="assets/images/logo.png" alt="ManasikGo" class="brand-logo" height="32" /><span class="brand-name">ManasikGo</span></a><button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Tutup navigasi"></button></div><div class="offcanvas-body"><ul class="navbar-nav ms-lg-auto align-items-lg-center gap-lg-1"><li class="nav-item"><a class="nav-link" href="index.html">Beranda</a></li><li class="nav-item"><a class="nav-link" href="artikel.html">Artikel</a></li><li class="nav-item"><a class="nav-link" href="index.html#panduan">Panduan</a></li><li class="nav-item"><a class="nav-link" href="index.html#info-praktis">Info Praktis</a></li><li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="layananDropdown" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">Layanan</a><ul class="dropdown-menu" aria-labelledby="layananDropdown"><li><a class="dropdown-item" href="doa.html">Kumpulan Doa</a></li><li><a class="dropdown-item" href="badal.html">Badal Umroh</a></li><li><a class="dropdown-item" href="wakaf-quran.html">Wakaf Al-Qur'an</a></li><li><a class="dropdown-item" href="rekrutmen-petugas.html">Informasi Rekrutmen PPIH</a></li></ul></li><li class="nav-item"><a class="nav-link" href="pengalaman.html">Cerita Jamaah</a></li><li class="nav-item"><a class="nav-link" href="faq.html">FAQ</a></li></ul><ul class="navbar-nav navbar-actions ms-lg-2 align-items-lg-center gap-lg-2" id="navbarActions"><li class="nav-item nav-item-theme"><button class="btn btn-outline-light btn-sm" type="button" data-theme-toggle aria-label="Ganti tema"><i data-theme-icon class="bi bi-moon-stars"></i><span class="navbar-actions-label d-lg-none">Ganti Tema</span></button></li></ul></div></div></div></nav></div>
+    <script src="assets/js/navbar.js"></script>
+    <header class="page-header">
+      <div class="container">
+        <nav aria-label="Breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Beranda</a></li>
+            <li class="breadcrumb-item active">Kelola Pesanan</li>
+          </ol>
+        </nav>
+        <span class="eyebrow">Member ManasikGo</span>
+        <h1 class="display-5 fw-bold" id="akunSapaan">Halo!</h1>
+        <p class="lead lead-muted col-lg-8">
+          Kelola profil, pesan layanan, dan pantau status pesanan Anda.
+        </p>
+      </div>
+    </header>
+    <main id="main" class="section">
+      <div class="container">
+        <!-- Kartu info profil: selalu tampil di atas, terlepas dari menu/tab
+             mana yang sedang aktif di bawahnya (sebelumnya cuma muncul saat
+             tab "Profil Saya" aktif). -->
+        <div class="row justify-content-center mb-4">
+          <div class="col-lg-6">
+            <div class="surface p-4">
+              <div class="text-center mb-4">
+                <div class="display-4 mb-2">
+                  <i class="bi bi-person-circle text-primary"></i>
+                </div>
+                <h2 class="h5 fw-bold mb-0" id="profilNama">-</h2>
+                <span class="badge-soft mt-2" id="profilRole">Member</span>
+              </div>
+              <hr />
+              <p class="mb-2">
+                <i class="bi bi-envelope text-primary"></i>
+                <span id="profilEmail">-</span>
+              </p>
+              <p class="mb-2">
+                <i class="bi bi-whatsapp text-primary"></i>
+                <span id="profilWhatsapp">-</span>
+              </p>
+              <p class="mb-3">
+                <i class="bi bi-calendar-check text-primary"></i> Member
+                sejak <span id="profilTanggal">-</span>
+              </p>
+              <button
+                class="btn btn-outline-primary w-100 mb-2"
+                id="editProfileBtn"
+                type="button"
+              >
+                <i class="bi bi-pencil"></i> Edit Profil
+              </button>
+              <button
+                id="logoutBtn"
+                class="btn btn-outline-danger w-100"
+                type="button"
+              >
+                <i class="bi bi-box-arrow-right"></i> Keluar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dashboard Navigation -->
+        <ul
+          class="nav nav-pills dashboard-tabs mb-4 gap-2"
+          id="dashboardTabs"
+          role="tablist"
+        >
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link active"
+              id="tab-profile"
+              data-bs-toggle="pill"
+              data-bs-target="#panel-profile"
+              type="button"
+              role="tab"
+              aria-selected="true"
+            >
+              <i class="bi bi-person-circle"></i> Profil Saya
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="tab-pesan"
+              data-bs-toggle="pill"
+              data-bs-target="#panel-pesan"
+              type="button"
+              role="tab"
+              aria-selected="false"
+            >
+              <i class="bi bi-plus-circle"></i> Pesan Layanan
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="tab-status"
+              data-bs-toggle="pill"
+              data-bs-target="#panel-status"
+              type="button"
+              role="tab"
+              aria-selected="false"
+            >
+              <i class="bi bi-clock-history"></i> Status Pesanan
+              <span class="badge bg-primary ms-1" id="orderCountBadge">0</span>
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="tab-sertifikat"
+              data-bs-toggle="pill"
+              data-bs-target="#panel-sertifikat"
+              type="button"
+              role="tab"
+              aria-selected="false"
+            >
+              <i class="bi bi-qr-code"></i> Sertifikat Badal
+              <span
+                class="badge bg-success ms-1"
+                id="sertifikatCountBadge"
+                >0</span
+              >
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="tab-bantuan"
+              data-bs-toggle="pill"
+              data-bs-target="#panel-bantuan"
+              type="button"
+              role="tab"
+              aria-selected="false"
+            >
+              <i class="bi bi-headset"></i> Bantuan
+            </button>
+          </li>
+        </ul>
+
+        <div class="tab-content">
+          <!-- Panel Profil (sekarang isinya cuma ringkasan "Pesanan Saya";
+               kartu info profil sudah dipindah ke atas supaya selalu
+               tampil, lihat komentar di atas). -->
+          <div
+            class="tab-pane fade show active"
+            id="panel-profile"
+            role="tabpanel"
+          >
+            <div class="surface p-4">
+              <div
+                class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3"
+              >
+                <h2 class="h5 fw-bold mb-0">
+                  Pesanan Saya
+                  <span class="badge bg-primary ms-1" id="orderCountBadge2"
+                    >0</span
+                  >
+                </h2>
+                <button
+                  class="btn btn-success btn-sm"
+                  onclick="document.getElementById('tab-pesan').click()"
+                >
+                  <i class="bi bi-plus-circle"></i> Pesan Layanan Baru
+                </button>
+              </div>
+              <div
+                class="d-flex flex-wrap gap-2 small lead-muted mb-3"
+                id="orderMiniSummary"
+              >
+                <span
+                  >Pending: <strong id="countPending">0</strong></span
+                >
+                <span class="opacity-50">·</span>
+                <span
+                  >Diproses: <strong id="countDiproses">0</strong></span
+                >
+                <span class="opacity-50">·</span>
+                <span
+                  >Selesai: <strong id="countSelesai">0</strong></span
+                >
+                <span class="opacity-50">·</span>
+                <span
+                  >Ditolak: <strong id="countDitolak">0</strong></span
+                >
+              </div>
+              <div class="row g-3" id="pesananCardList">
+                <div class="col-12 text-center py-5 lead-muted">
+                  <i class="bi bi-inbox display-6 d-block mb-2"></i>
+                  Belum ada pesanan. Klik "Pesan Layanan Baru" untuk
+                  memulai.
+                </div>
+              </div>
+              <p class="lead-muted small mt-3 mb-0">
+                Pembayaran dilakukan secara manual melalui WhatsApp. Admin
+                akan mengirimkan informasi pembayaran setelah pesanan
+                diproses.
+              </p>
+            </div>
+          </div>
+
+          <!-- Panel Pesan Layanan -->
+          <div class="tab-pane fade" id="panel-pesan" role="tabpanel">
+            <div class="surface p-4">
+              <h2 class="h5 fw-bold mb-3">Pilih Layanan</h2>
+              <p class="lead-muted mb-4">
+                Pilih layanan yang ingin Anda pesan. Data akan dikirim ke admin
+                ManasikGo melalui WhatsApp dan tersimpan di akun Anda.
+              </p>
+              <div class="row g-4">
+                <!-- Badal Umroh -->
+                <div class="col-md-6 col-lg-4">
+                  <div class="card h-100 border-0 surface">
+                    <div class="card-body text-center p-4">
+                      <i class="bi bi-book display-4 text-primary"></i>
+                      <h3 class="h5 fw-bold mt-3 mb-2">Badal Umroh</h3>
+                      <p class="small lead-muted mb-3">
+                        Ajukan jasa badal umroh untuk keluarga yang sudah wafat
+                        atau uzur.
+                      </p>
+                      <button
+                        class="btn btn-primary w-100 open-order-form"
+                        data-layanan="badal_umroh"
+                        data-label="Badal Umroh"
+                      >
+                        <i class="bi bi-whatsapp"></i> Pesan Sekarang
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <!-- Wakaf Quran -->
+                <div class="col-md-6 col-lg-4">
+                  <div class="card h-100 border-0 surface">
+                    <div class="card-body text-center p-4">
+                      <i class="bi bi-heart display-4 text-primary"></i>
+                      <h3 class="h5 fw-bold mt-3 mb-2">Wakaf Al-Qur'an</h3>
+                      <p class="small lead-muted mb-3">
+                        Salurkan wakaf mushaf Al-Qur'an untuk Masjidil Haram dan
+                        Nabawi.
+                      </p>
+                      <button
+                        class="btn btn-primary w-100 open-order-form"
+                        data-layanan="wakaf_quran"
+                        data-label="Wakaf Al-Qur'an"
+                      >
+                        <i class="bi bi-whatsapp"></i> Pesan Sekarang
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <!-- Panitia Haji -->
+                <div class="col-md-6 col-lg-4">
+                  <div class="card h-100 border-0 surface">
+                    <div class="card-body text-center p-4">
+                      <i class="bi bi-person-badge display-4 text-primary"></i>
+                      <h3 class="h5 fw-bold mt-3 mb-2">Panitia Haji</h3>
+                      <p class="small lead-muted mb-3">
+                        Daftar rekrutmen petugas haji (PPIH) untuk musim haji
+                        mendatang.
+                      </p>
+                      <button
+                        class="btn btn-primary w-100 open-order-form"
+                        data-layanan="panitia_haji"
+                        data-label="Panitia Haji"
+                      >
+                        <i class="bi bi-whatsapp"></i> Daftar Sekarang
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Panel Status Pesanan -->
+          <div class="tab-pane fade" id="panel-status" role="tabpanel">
+            <div class="surface p-4">
+              <div
+                class="d-flex flex-wrap justify-content-between align-items-center mb-3"
+              >
+                <h2 class="h5 fw-bold mb-0">Riwayat Pesanan</h2>
+                <div class="d-flex gap-2">
+                  <select
+                    class="form-select form-select-sm"
+                    id="orderFilter"
+                    style="max-width: 150px"
+                  >
+                    <option value="all">Semua</option>
+                    <option value="pending">Pending</option>
+                    <option value="diproses">Diproses</option>
+                    <option value="selesai">Selesai</option>
+                    <option value="ditolak">Ditolak</option>
+                  </select>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                  <thead>
+                    <tr>
+                      <th>Layanan</th>
+                      <th>Tanggal</th>
+                      <th>Status</th>
+                      <th>Catatan</th>
+                      <th class="text-end">Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="ordersTableBody">
+                    <tr>
+                      <td colspan="5" class="text-center py-5 lead-muted">
+                        <i class="bi bi-inbox display-6 d-block mb-2"></i>
+                        Belum ada pesanan. Klik "Pesan Layanan" untuk memulai.
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Panel Sertifikat Badal -->
+          <div class="tab-pane fade" id="panel-sertifikat" role="tabpanel">
+            <div class="surface p-4">
+              <div
+                class="d-flex flex-wrap justify-content-between align-items-center mb-3"
+              >
+                <div>
+                  <h2 class="h5 fw-bold mb-1">Sertifikat Badal Umroh</h2>
+                  <p class="small lead-muted mb-0">
+                    Sertifikat bukti pelaksanaan tersedia otomatis untuk
+                    pesanan Badal Umroh yang berstatus <strong>Selesai</strong
+                    >. Setiap sertifikat dilengkapi kode QR yang bisa dipindai
+                    untuk verifikasi keaslian.
+                  </p>
+                </div>
+              </div>
+              <div class="row g-3" id="sertifikatListContainer">
+                <div class="col-12 text-center py-5 lead-muted">
+                  <i class="bi bi-qr-code display-6 d-block mb-2"></i>
+                  Belum ada sertifikat. Sertifikat akan muncul di sini setelah
+                  pesanan Badal Umroh Anda berstatus "Selesai".
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Panel Bantuan -->
+          <div class="tab-pane fade" id="panel-bantuan" role="tabpanel">
+            <div class="row g-4">
+              <div class="col-lg-6">
+                <div class="surface p-4 h-100">
+                  <h2 class="h5 fw-bold mb-3">
+                    <i class="bi bi-whatsapp text-success"></i> Tanya Admin
+                    ManasikGo
+                  </h2>
+                  <p class="lead-muted">
+                    Hubungi admin kami melalui WhatsApp untuk konsultasi jasa
+                    Haji & Umroh, info paket, atau bantuan teknis seputar akun
+                    Anda.
+                  </p>
+                  <a
+                    href="#"
+                    target="_blank"
+                    class="btn btn-success w-100 mb-3"
+                    id="tanyaAdminBtn"
+                  >
+                    <i class="bi bi-whatsapp"></i> Chat Admin via WhatsApp
+                  </a>
+                  <div class="alert alert-info small py-2 mb-0">
+                    <i class="bi bi-info-circle"></i> Jam operasional:
+                    Senin-Jumat, 08.00-17.00 WIB. Pesan di luar jam akan dijawab
+                    pada hari kerja berikutnya.
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="surface p-4 h-100">
+                  <h2 class="h5 fw-bold mb-3">
+                    <i class="bi bi-question-circle text-primary"></i>
+                    Pertanyaan Umum
+                  </h2>
+                  <div class="accordion" id="bantuanFaq">
+                    <div class="accordion-item">
+                      <h3 class="accordion-header">
+                        <button
+                          class="accordion-button collapsed"
+                          type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target="#bfaq1"
+                        >
+                          Bagaimana cara pembayaran?
+                        </button>
+                      </h3>
+                      <div
+                        id="bfaq1"
+                        class="accordion-collapse collapse"
+                        data-bs-parent="#bantuanFaq"
+                      >
+                        <div class="accordion-body small lead-muted">
+                          Pembayaran dilakukan secara manual melalui transfer
+                          bank ke rekening resmi yang akan diinformasikan admin
+                          setelah pesanan diproses. Bukti transfer dikirim ke
+                          WhatsApp admin.
+                        </div>
+                      </div>
+                    </div>
+                    <div class="accordion-item">
+                      <h3 class="accordion-header">
+                        <button
+                          class="accordion-button collapsed"
+                          type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target="#bfaq2"
+                        >
+                          Berapa lama proses pesanan?
+                        </button>
+                      </h3>
+                      <div
+                        id="bfaq2"
+                        class="accordion-collapse collapse"
+                        data-bs-parent="#bantuanFaq"
+                      >
+                        <div class="accordion-body small lead-muted">
+                          Setelah Anda memesan, admin akan merespon dalam 1x24
+                          jam melalui WhatsApp untuk konfirmasi dan informasi
+                          lebih lanjut.
+                        </div>
+                      </div>
+                    </div>
+                    <div class="accordion-item">
+                      <h3 class="accordion-header">
+                        <button
+                          class="accordion-button collapsed"
+                          type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target="#bfaq3"
+                        >
+                          Bisa pesan lebih dari satu layanan?
+                        </button>
+                      </h3>
+                      <div
+                        id="bfaq3"
+                        class="accordion-collapse collapse"
+                        data-bs-parent="#bantuanFaq"
+                      >
+                        <div class="accordion-body small lead-muted">
+                          Tentu. Anda bisa memesan beberapa layanan sekaligus.
+                          Setiap layanan akan memiliki status pesanan
+                          masing-masing.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Modal Edit Profil -->
+    <div
+      class="modal fade"
+      id="editProfileModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title h5">Edit Profil</h2>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Tutup"
+            ></button>
+          </div>
+          <form id="editProfileForm">
+            <div class="modal-body">
+              <div
+                id="editProfileAlert"
+                class="alert alert-danger py-2 small d-none"
+              ></div>
+              <div class="mb-3">
+                <label class="form-label" for="editNama">Nama Lengkap</label>
+                <input class="form-control" id="editNama" required />
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="editWhatsapp"
+                  >Nomor WhatsApp</label
+                >
+                <input
+                  class="form-control"
+                  id="editWhatsapp"
+                  type="tel"
+                  placeholder="08xxxxxxxxxx"
+                  required
+                />
+              </div>
+              <hr />
+              <p class="small fw-bold mb-2">Ubah Password (opsional)</p>
+              <div class="mb-3">
+                <label class="form-label" for="editPassword"
+                  >Password Baru</label
+                >
+                <input
+                  class="form-control"
+                  id="editPassword"
+                  type="password"
+                  minlength="8"
+                />
+                <div class="form-text">
+                  Kosongkan jika tidak ingin mengubah password.
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="editPasswordConfirm"
+                  >Ulangi Password Baru</label
+                >
+                <input
+                  class="form-control"
+                  id="editPasswordConfirm"
+                  type="password"
+                  minlength="8"
+                />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-outline-secondary"
+                data-bs-dismiss="modal"
+              >
+                Batal
+              </button>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                id="editProfileSubmit"
+              >
+                <i class="bi bi-check2"></i> Simpan
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Order Form -->
+    <div
+      class="modal fade"
+      id="orderFormModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title h5" id="orderFormModalTitle">
+              Pesan Layanan
+            </h2>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Tutup"
+            ></button>
+          </div>
+          <form id="orderForm">
+            <div class="modal-body">
+              <div
+                id="orderFormAlert"
+                class="alert alert-danger py-2 small d-none"
+              ></div>
+              <input type="hidden" id="orderLayanan" />
+              <input type="hidden" id="orderLabel" />
+              <div class="mb-3">
+                <label class="form-label" for="orderNama">Nama Lengkap</label>
+                <input class="form-control" id="orderNama" required />
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="orderWa">No. WhatsApp</label>
+                <input
+                  class="form-control"
+                  id="orderWa"
+                  type="tel"
+                  placeholder="08xxxxxxxxxx"
+                  required
+                />
+              </div>
+              <div class="mb-3" id="orderExtraFieldTarget">
+                <!-- Field tambahan dinamis per layanan -->
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="orderCatatan"
+                  >Catatan Tambahan (opsional)</label
+                >
+                <textarea
+                  class="form-control"
+                  id="orderCatatan"
+                  rows="2"
+                  placeholder="Sampaikan informasi tambahan jika ada..."
+                ></textarea>
+              </div>
+              <div class="alert alert-info small py-2 mb-0">
+                <i class="bi bi-info-circle"></i> Setelah memesan, Anda akan
+                diarahkan ke WhatsApp admin untuk konfirmasi. Pesanan juga
+                tersimpan di akun Anda.
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-outline-secondary"
+                data-bs-dismiss="modal"
+              >
+                Batal
+              </button>
+              <button type="submit" class="btn btn-success" id="orderSubmitBtn">
+                <i class="bi bi-whatsapp"></i> Kirim & Lanjut ke WA
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Sertifikat Badal -->
+    <div
+      class="modal fade"
+      id="sertifikatModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title h5">
+              <i class="bi bi-patch-check-fill text-success"></i> Sertifikat
+              Badal Umroh
+            </h2>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Tutup"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="certificate-card" id="certificateCard">
+              <div class="certificate-border">
+                <div class="text-center mb-3">
+                  <span class="brand-mark d-inline-grid mb-2"
+                    ><i class="bi bi-compass"></i
+                  ></span>
+                  <p class="fw-bold mb-0" style="letter-spacing: 0.05em">
+                    MANASIKGO
+                  </p>
+                  <p class="small lead-muted mb-0">
+                    Sertifikat Bukti Pelaksanaan Badal Umroh
+                  </p>
+                </div>
+                <hr />
+                <div class="row g-2 small">
+                  <div class="col-5 lead-muted">Kode Sertifikat</div>
+                  <div class="col-7 fw-semibold" id="certKode">-</div>
+                  <div class="col-5 lead-muted">Atas Nama Pemesan</div>
+                  <div class="col-7 fw-semibold" id="certNama">-</div>
+                  <div class="col-5 lead-muted">Badal Umroh Untuk</div>
+                  <div class="col-7 fw-semibold" id="certUntuk">-</div>
+                  <div class="col-5 lead-muted">Tanggal Pesan</div>
+                  <div class="col-7 fw-semibold" id="certTanggal">-</div>
+                  <div class="col-5 lead-muted">Status</div>
+                  <div class="col-7">
+                    <span class="badge bg-success">Selesai</span>
+                  </div>
+                </div>
+                <hr />
+                <div class="text-center">
+                  <div id="certQrContainer" class="d-inline-block p-2 bg-white rounded"></div>
+                  <p class="small lead-muted mt-2 mb-0">
+                    Pindai kode QR ini untuk memverifikasi keaslian sertifikat
+                  </p>
+                </div>
+              </div>
+            </div>
+            <p class="small lead-muted mt-3 mb-0">
+              <i class="bi bi-info-circle text-primary"></i> Sertifikat ini
+              adalah catatan internal ManasikGo sebagai bukti pesanan Anda
+              telah ditandai selesai oleh admin. Untuk kepastian ibadah,
+              tetap simpan bukti/laporan pelaksanaan dari penyelenggara badal
+              umroh Anda.
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              data-bs-dismiss="modal"
+            >
+              Tutup
+            </button>
+            <a
+              href="#"
+              class="btn btn-success"
+              id="certOpenFullBtn"
+              target="_blank"
+              rel="noopener"
+            >
+              <i class="bi bi-file-earmark-text"></i> Buka Sertifikat Lengkap
+            </a>
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="certPrintBtn"
+            >
+              <i class="bi bi-printer"></i> Cetak / Simpan PDF
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Lacak Live (dokumentasi realtime maps posisi petugas Badal Umroh) -->
+    <div class="modal fade" id="trackingModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title h5" id="trackingModalTitle">
+              <i class="bi bi-broadcast text-danger"></i> Lacak Live Petugas
+              Badal Umroh
+            </h2>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Tutup"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <!-- Stepper: sekali lihat, pemesan langsung tahu pesanan ini
+                 sudah sampai tahap mana (bukan cuma baca teks status). -->
+            <div class="tracking-steps" id="trackingSteps">
+              <div class="tstep" data-step="menunggu">
+                <span class="tstep-dot"></span>
+                <span class="tstep-label">Menunggu</span>
+              </div>
+              <div class="tstep" data-step="berlangsung">
+                <span class="tstep-dot"></span>
+                <span class="tstep-label">Live</span>
+              </div>
+              <div class="tstep" data-step="menunggu_verifikasi">
+                <span class="tstep-dot"></span>
+                <span class="tstep-label">Verifikasi</span>
+              </div>
+              <div class="tstep" data-step="selesai">
+                <span class="tstep-dot"></span>
+                <span class="tstep-label">Selesai</span>
+              </div>
+            </div>
+            <div
+              id="trackingStatusBox"
+              class="d-flex align-items-center gap-2 mb-3 small flex-wrap"
+            >
+              <span
+                class="tracking-dot"
+                id="trackingDot"
+                aria-hidden="true"
+              ></span>
+              <span id="trackingStatusText" class="fw-semibold"
+                >Memuat status...</span
+              >
+              <span class="lead-muted ms-auto" id="trackingUpdatedAt"></span>
+            </div>
+            <div class="tracking-map-card strava-card">
+              <div class="strava-card-header">
+                <div class="strava-card-avatar">
+                  <i class="bi bi-person-walking"></i>
+                </div>
+                <div class="strava-card-headtext">
+                  <div class="strava-card-title">
+                    Rute Perjalanan Petugas Badal Umroh
+                  </div>
+                  <div class="strava-card-sub" id="trackingCardSub">-</div>
+                </div>
+              </div>
+              <div
+                class="strava-card-stats d-none"
+                id="trackingStats"
+                aria-live="polite"
+              >
+                <div class="strava-stat">
+                  <i class="bi bi-signpost-split"></i>
+                  <span id="trackingStatDistance">-</span>
+                </div>
+                <span class="strava-stat-sep" aria-hidden="true"></span>
+                <div class="strava-stat">
+                  <i class="bi bi-stopwatch"></i>
+                  <span id="trackingStatDuration">-</span>
+                </div>
+              </div>
+              <div class="tracking-map-wrap">
+                <div id="trackingMap" class="tracking-map"></div>
+                <div class="tracking-map-loading d-none" id="trackingMapLoading">
+                  <span class="spinner-border spinner-border-sm"></span>
+                  <span>Menyesuaikan rute ke jalan...</span>
+                </div>
+                <div class="tracking-map-error d-none" id="trackingMapError">
+                  <i class="bi bi-wifi-off"></i>
+                  <span>Gagal memuat riwayat rute. Periksa koneksi internet Anda lalu coba lagi.</span>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-danger"
+                    id="btnRetryTrackingRoute"
+                  >
+                    <i class="bi bi-arrow-clockwise"></i> Coba Lagi
+                  </button>
+                </div>
+                <button
+                  type="button"
+                  class="strava-fab d-none"
+                  id="btnUnduhRuteGambar"
+                  title="Unduh Gambar Rute"
+                  aria-label="Unduh Gambar Rute"
+                >
+                  <i class="bi bi-download"></i>
+                </button>
+              </div>
+              <div
+                class="tracking-legend d-none"
+                id="trackingLegend"
+                aria-live="polite"
+              >
+                <span class="tracking-legend-item">
+                  <span class="tracking-legend-swatch" id="trackingLegendSwatch"></span>
+                  <span id="trackingLegendRouteText">Rute mengikuti jalan</span>
+                </span>
+                <span class="tracking-legend-item">
+                  <span class="tracking-legend-dot tracking-legend-dot-start"></span>
+                  <span>Titik mulai</span>
+                </span>
+                <span class="tracking-legend-item">
+                  <span class="tracking-legend-dot tracking-legend-dot-finish"></span>
+                  <span>Titik selesai</span>
+                </span>
+              </div>
+            </div>
+            <p class="small lead-muted mt-3 mb-0" id="trackingHelpText">
+              <i class="bi bi-info-circle text-primary"></i> Peta ini
+              menampilkan posisi petugas pelaksana Badal Umroh Anda secara
+              berkala (diperbarui otomatis setiap beberapa detik) selama
+              petugas menekan "Mulai Badal" di perangkatnya. Posisi berhenti
+              diperbarui setelah petugas menandai pelaksanaan selesai.
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              data-bs-dismiss="modal"
+            >
+              Tutup
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer"><div class="container"><div class="row g-4"><div class="col-lg-4"><div class="d-flex align-items-center mb-2 footer-brand-row"><img src="assets/images/logo.png" alt="ManasikGo" class="footer-logo" height="36" /><span class="footer-brand-name">ManasikGo</span></div><p>Portal edukasi Haji dan Umrah yang membantu jamaah Indonesia mempersiapkan ibadah dengan informasi yang rapi dan mudah dipahami.</p><div class="footer-social mt-3" aria-label="Ikuti ManasikGo di media sosial"><a href="https://www.facebook.com/manasikgo" target="_blank" rel="noopener" aria-label="Facebook ManasikGo"><i class="bi bi-facebook"></i></a><a href="https://www.tiktok.com/@manasikgo" target="_blank" rel="noopener" aria-label="TikTok ManasikGo"><i class="bi bi-tiktok"></i></a><a href="https://www.instagram.com/manasikgo" target="_blank" rel="noopener" aria-label="Instagram ManasikGo"><i class="bi bi-instagram"></i></a><a href="https://x.com/manasikgo" target="_blank" rel="noopener" aria-label="X (Twitter) ManasikGo"><i class="bi bi-twitter-x"></i></a></div></div><div class="col-6 col-lg-2"><h3 class="h6 text-white">Konten</h3><a class="d-block" href="artikel.html">Artikel</a><a class="d-block" href="pengalaman.html">Pengalaman</a><a class="d-block" href="faq.html">FAQ</a><a class="d-block" href="istilah.html">Kamus Istilah</a></div><div class="col-6 col-lg-2"><h3 class="h6 text-white">Panduan Ibadah</h3><a class="d-block" href="tata-cara-haji.html">Tata Cara Haji</a><a class="d-block" href="tata-cara-umrah.html">Tata Cara Umrah</a><a class="d-block" href="doa.html">Kumpulan Doa</a><a class="d-block" href="checklist-perlengkapan.html">Checklist Perlengkapan</a><a class="d-block" href="waktu.html#jadwal">Jadwal Shalat &amp; Waktu</a></div><div class="col-6 col-lg-2"><h3 class="h6 text-white">Info Jamaah</h3><a class="d-block" href="artikel.html?kategori=Transportasi">Transportasi</a><a class="d-block" href="artikel.html?kategori=Hotel">Hotel</a><a class="d-block" href="artikel.html?kategori=Kuliner">Kuliner</a><a class="d-block" href="artikel.html?kategori=Belanja">Belanja</a><a class="d-block" href="budget.html">Budget Planner</a><a class="d-block" href="peta.html">Peta</a><a class="d-block" href="download.html">Download Center</a></div><div class="col-6 col-lg-2"><h3 class="h6 text-white">Layanan</h3><a class="d-block" href="doa.html">Kumpulan Doa</a><a class="d-block" href="badal.html">Badal Umroh</a><a class="d-block" href="wakaf-quran.html">Wakaf Al-Qur'an</a><a class="d-block" href="rekrutmen-petugas.html">Informasi Rekrutmen PPIH</a></div><div class="col-6 col-lg-2"><h3 class="h6 text-white">Lainnya</h3><a class="d-block" href="kirim.html">Kirim Pengalaman</a><a class="d-block" href="kontak.html">Kontak</a><a class="d-block" href="tentang.html">Tentang</a></div></div><hr class="border-secondary my-4"><div class="d-flex flex-wrap justify-content-between gap-2"><p class="small mb-0">&copy; 2026 ManasikGo. Semua hak dilindungi.</p></div></div></footer>
+    <script src="assets/js/footer.js"></script>
+    <button
+      id="backToTop"
+      class="back-to-top"
+      type="button"
+      aria-label="Kembali ke atas"
+    >
+      <i class="bi bi-arrow-up"></i>
+    </button>
+    <div class="toast-container position-fixed top-0 end-0 p-3"></div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      defer
+    ></script>
+    <script src="assets/js/api.js" defer></script>
+    <script src="assets/js/auth.js" defer></script>
+    <script src="assets/js/seo-routes.js" defer></script><script src="assets/js/app.js" defer></script>
+    <script src="assets/js/darkmode.js" defer></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async function () {
+        await window.HCAuth.me(); // sinkronkan sesi ke server (ambil role terbaru, tolak sesi basi/nonaktif)
+        var user = window.HCAuth.requireRole(
+          ["member"],
+          "login.html?redirect=akun.html",
+        );
+        if (!user) return;
+
+        var WA_NUMBER =
+          (window.HC_CONFIG && window.HC_CONFIG.waNumber) ||
+          "6285732674201"; // diatur di assets/js/api.js -> HC_CONFIG.waNumber
+        var orders = [];
+
+        // === Render Profil ===
+        function renderProfile() {
+          document.getElementById("akunSapaan").textContent =
+            "Halo, " + String(user.nama || "").split(" ")[0] + "!";
+          document.getElementById("profilNama").textContent = user.nama || "-";
+          document.getElementById("profilEmail").textContent =
+            user.email || "-";
+          document.getElementById("profilWhatsapp").textContent =
+            user.whatsapp || "-";
+          document.getElementById("profilTanggal").textContent =
+            user.tanggal_daftar || "-";
+          document.getElementById("profilRole").textContent = "Member";
+        }
+
+        var tanyaAdminBtn = document.getElementById("tanyaAdminBtn");
+        if (tanyaAdminBtn) {
+          tanyaAdminBtn.href =
+            "https://wa.me/" +
+            WA_NUMBER +
+            "?text=" +
+            encodeURIComponent(
+              "Assalamu'alaikum saya ingin bertanya mengenai layanan ManasikGo",
+            );
+        }
+
+        // === Load Orders ===
+        async function loadOrders() {
+          try {
+            var token = window.HCAuth.getToken();
+            orders = await window.HCApi.getMyOrders(token, user.id);
+            renderOrders();
+            renderOrderSummary();
+            renderPesananCards();
+            renderSertifikat();
+          } catch (e) {
+            console.warn("Gagal memuat pesanan:", e.message);
+          }
+        }
+
+        function getStatusBadge(status) {
+          // Tiap status dikasih ikon berbeda (bukan cuma warna) supaya
+          // tetap gampang dibedakan sekilas di layar kecil / oleh pengguna
+          // yang buta warna -- warna saja kadang kurang cukup di mobile.
+          var map = {
+            pending:
+              '<span class="badge bg-warning text-dark"><i class="bi bi-hourglass-split"></i> Pending</span>',
+            diproses:
+              '<span class="badge bg-primary"><i class="bi bi-arrow-repeat"></i> Diproses</span>',
+            selesai:
+              '<span class="badge bg-success"><i class="bi bi-check-circle-fill"></i> Selesai</span>',
+            ditolak:
+              '<span class="badge bg-danger"><i class="bi bi-x-circle-fill"></i> Ditolak</span>',
+          };
+          return (
+            map[status] ||
+            '<span class="badge bg-secondary">' + status + "</span>"
+          );
+        }
+
+        function getLayananLabel(layanan) {
+          var map = {
+            badal_umroh: "Badal Umroh",
+            wakaf_quran: "Wakaf Al-Qur'an",
+            panitia_haji: "Panitia Haji",
+          };
+          return map[layanan] || layanan;
+        }
+
+        function renderOrders() {
+          var filter = document.getElementById("orderFilter").value;
+          var filtered =
+            filter === "all"
+              ? orders
+              : orders.filter(function (o) {
+                  return o.status === filter;
+                });
+          var tbody = document.getElementById("ordersTableBody");
+          if (!filtered.length) {
+            tbody.innerHTML =
+              '<tr><td colspan="5" class="text-center py-5 lead-muted"><i class="bi bi-inbox display-6 d-block mb-2"></i>Belum ada pesanan.</td></tr>';
+            return;
+          }
+          tbody.innerHTML = filtered
+            .map(function (o) {
+              var tanggal = o.tanggal_pesan
+                ? o.tanggal_pesan.split("T")[0]
+                : "-";
+              // Format tanggal
+              if (o.tanggal_pesan) {
+                try {
+                  tanggal = new Intl.DateTimeFormat("id-ID", {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
+                  }).format(new Date(o.tanggal_pesan));
+                } catch (e) {}
+              }
+              return (
+                "<tr>" +
+                "<td><strong>" +
+                getLayananLabel(o.layanan) +
+                "</strong></td>" +
+                '<td class="small">' +
+                tanggal +
+                "</td>" +
+                "<td>" +
+                getStatusBadge(o.status) +
+                "</td>" +
+                '<td class="small lead-muted">' +
+                (o.catatan_admin || "-") +
+                "</td>" +
+                '<td class="text-end">' +
+                (o.layanan === "badal_umroh" &&
+                (o.status === "diproses" || o.status === "selesai")
+                  ? '<button type="button" class="btn btn-sm ' +
+                    (o.status === "selesai"
+                      ? "btn-track-history"
+                      : "btn-track-live") +
+                    ' btn-lacak-live" data-order-id="' +
+                    o.id +
+                    '">' +
+                    (o.status === "selesai"
+                      ? '<i class="bi bi-signpost-split"></i> Riwayat Rute'
+                      : '<span class="btn-track-live-dot" aria-hidden="true"></span><i class="bi bi-broadcast"></i> Lacak Live') +
+                    "</button>"
+                  : "") +
+                "</td>" +
+                "</tr>"
+              );
+            })
+            .join("");
+          tbody.querySelectorAll(".btn-lacak-live").forEach(function (btn) {
+            btn.addEventListener("click", function () {
+              openTrackingModal(btn.dataset.orderId);
+            });
+          });
+          document.getElementById("orderCountBadge").textContent =
+            filtered.length;
+        }
+
+        function renderOrderSummary() {
+          var counts = { pending: 0, diproses: 0, selesai: 0, ditolak: 0 };
+          orders.forEach(function (o) {
+            if (counts[o.status] !== undefined) counts[o.status]++;
+          });
+          document.getElementById("countPending").textContent = counts.pending;
+          document.getElementById("countDiproses").textContent =
+            counts.diproses;
+          document.getElementById("countSelesai").textContent = counts.selesai;
+          document.getElementById("countDitolak").textContent = counts.ditolak;
+          document.getElementById("orderCountBadge").textContent =
+            orders.length;
+          var badge2 = document.getElementById("orderCountBadge2");
+          if (badge2) badge2.textContent = orders.length;
+        }
+
+        // Nama pesanan yang ditampilkan di card: label layanan + tujuan
+        // (kalau ada), mis. "Badal Umroh — untuk Ayah" / "Wakaf Al-Qur'an — 5 Mushaf".
+        function getPesananNama(o) {
+          var label = getLayananLabel(o.layanan);
+          var extra = o.data_pesanan || {};
+          if (o.layanan === "badal_umroh" && extra.untuk) {
+            return label + " — untuk " + extra.untuk;
+          }
+          if (o.layanan === "wakaf_quran" && extra.jumlah) {
+            return label + " — " + extra.jumlah + " Mushaf";
+          }
+          if (o.layanan === "panitia_haji" && extra.posisi) {
+            return label + " — " + extra.posisi;
+          }
+          return label;
+        }
+
+        // === Kartu Pesanan (kiri profil, kanan pesanan) ===
+        function renderPesananCards() {
+          var container = document.getElementById("pesananCardList");
+          if (!container) return;
+          if (!orders.length) {
+            container.innerHTML =
+              '<div class="col-12 text-center py-5 lead-muted">' +
+              '<i class="bi bi-inbox display-6 d-block mb-2"></i>' +
+              'Belum ada pesanan. Klik "Pesan Layanan Baru" untuk memulai.' +
+              "</div>";
+            return;
+          }
+          // Terbaru dulu
+          var sorted = orders.slice().sort(function (a, b) {
+            return new Date(b.tanggal_pesan) - new Date(a.tanggal_pesan);
+          });
+          container.innerHTML = sorted
+            .map(function (o) {
+              var tanggal = formatTanggalId(o.tanggal_pesan);
+              var canSertifikat =
+                o.layanan === "badal_umroh" && o.status === "selesai";
+              var canLacak =
+                o.layanan === "badal_umroh" &&
+                (o.status === "diproses" || o.status === "selesai");
+              return (
+                '<div class="col-md-6">' +
+                '<div class="surface p-3 h-100 pesanan-card" data-order-id="' +
+                o.id +
+                '" style="cursor:pointer">' +
+                '<div class="d-flex justify-content-between align-items-start gap-2 mb-2">' +
+                '<p class="fw-semibold mb-0">' +
+                getPesananNama(o) +
+                "</p>" +
+                getStatusBadge(o.status) +
+                "</div>" +
+                '<p class="small lead-muted mb-0">' +
+                '<i class="bi bi-calendar-event"></i> Dipesan ' +
+                tanggal +
+                "</p>" +
+                (canLacak
+                  ? '<button type="button" class="btn btn-sm w-100 mt-2 btn-lacak-live ' +
+                    (o.status === "selesai"
+                      ? "btn-track-history"
+                      : "btn-track-live") +
+                    '" data-order-id="' +
+                    o.id +
+                    '">' +
+                    (o.status === "selesai"
+                      ? '<i class="bi bi-signpost-split"></i> Riwayat Rute Petugas'
+                      : '<span class="btn-track-live-dot" aria-hidden="true"></span><i class="bi bi-broadcast"></i> Lacak Live Petugas') +
+                    "</button>"
+                  : "") +
+                (canSertifikat
+                  ? '<button type="button" class="btn btn-sm w-100 mt-2 btn-lihat-sertifikat-card btn-lihat-sertifikat-inline" data-order-id="' +
+                    o.id +
+                    '"><i class="bi bi-qr-code"></i> Lihat Sertifikat</button>'
+                  : "") +
+                "</div></div>"
+              );
+            })
+            .join("");
+          container.querySelectorAll(".btn-lacak-live").forEach(function (btn) {
+            btn.addEventListener("click", function (event) {
+              event.stopPropagation();
+              openTrackingModal(btn.dataset.orderId);
+            });
+          });
+          container
+            .querySelectorAll(".btn-lihat-sertifikat-inline")
+            .forEach(function (btn) {
+              btn.addEventListener("click", function (event) {
+                event.stopPropagation();
+                openSertifikatLengkap(btn.dataset.orderId);
+              });
+            });
+          container.querySelectorAll(".pesanan-card").forEach(function (card) {
+            card.addEventListener("click", function () {
+              var order = orders.find(function (o) {
+                return String(o.id) === String(card.dataset.orderId);
+              });
+              if (!order) return;
+              if (order.layanan === "badal_umroh" && order.status === "selesai") {
+                openSertifikatLengkap(order.id);
+              } else {
+                document.getElementById("tab-status").click();
+              }
+            });
+          });
+        }
+
+        // Klik "Lihat Sertifikat" langsung membuka halaman sertifikat LENGKAP
+        // (bukan cuma pratinjau ringkas di modal) di tab baru -- halaman
+        // tersebut otomatis menyiapkan & mengunduh versi PDF-nya begitu
+        // sertifikat selesai dirender (lihat sertifikat-badal.html), jadi
+        // pemesan tidak perlu klik "Buka Sertifikat Lengkap" lalu
+        // "Cetak/Simpan PDF" lagi secara terpisah.
+        function openSertifikatLengkap(orderId) {
+          window.open(
+            "sertifikat-badal.html?id=" + encodeURIComponent(orderId),
+            "_blank",
+          );
+        }
+
+        // === Sertifikat Badal Umroh ===
+        function sertifikatKode(order) {
+          return "HC-BDL-" + String(order.id || "").replace(/^psn-/, "");
+        }
+
+        function formatTanggalId(value) {
+          if (!value) return "-";
+          try {
+            return new Intl.DateTimeFormat("id-ID", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            }).format(new Date(value));
+          } catch (e) {
+            return String(value).split("T")[0] || "-";
+          }
+        }
+
+        function renderSertifikat() {
+          var container = document.getElementById("sertifikatListContainer");
+          var badge = document.getElementById("sertifikatCountBadge");
+          var eligible = orders.filter(function (o) {
+            return o.layanan === "badal_umroh" && o.status === "selesai";
+          });
+          badge.textContent = eligible.length;
+
+          if (!eligible.length) {
+            container.innerHTML =
+              '<div class="col-12 text-center py-5 lead-muted">' +
+              '<i class="bi bi-qr-code display-6 d-block mb-2"></i>' +
+              "Belum ada sertifikat. Sertifikat akan muncul di sini setelah " +
+              'pesanan Badal Umroh Anda berstatus "Selesai".' +
+              "</div>";
+            return;
+          }
+
+          container.innerHTML = eligible
+            .map(function (o) {
+              var untuk =
+                (o.data_pesanan && o.data_pesanan.untuk) || "-";
+              return (
+                '<div class="col-md-6 col-lg-4">' +
+                '<div class="certificate-item">' +
+                '<div class="d-flex align-items-start gap-2 mb-2">' +
+                '<i class="bi bi-patch-check-fill text-success fs-4"></i>' +
+                '<div><p class="fw-bold mb-0">Badal Umroh</p>' +
+                '<p class="small lead-muted mb-0">Untuk: ' +
+                untuk +
+                "</p></div></div>" +
+                '<p class="small lead-muted mb-3">Kode: ' +
+                sertifikatKode(o) +
+                "</p>" +
+                '<button class="btn btn-success btn-sm w-100 btn-lihat-sertifikat" data-order-id="' +
+                o.id +
+                '"><i class="bi bi-qr-code"></i> Lihat Sertifikat</button>' +
+                "</div></div>"
+              );
+            })
+            .join("");
+
+          container
+            .querySelectorAll(".btn-lihat-sertifikat")
+            .forEach(function (btn) {
+              btn.addEventListener("click", function () {
+                openSertifikatLengkap(this.dataset.orderId);
+              });
+            });
+        }
+
+        function openSertifikatModal(order) {
+          var kode = sertifikatKode(order);
+          document.getElementById("certKode").textContent = kode;
+          document.getElementById("certNama").textContent =
+            order.nama_pemesan || user.nama || "-";
+          document.getElementById("certUntuk").textContent =
+            (order.data_pesanan && order.data_pesanan.untuk) || "-";
+          document.getElementById("certTanggal").textContent =
+            formatTanggalId(order.tanggal_pesan);
+
+          var openFullBtn = document.getElementById("certOpenFullBtn");
+          if (openFullBtn) {
+            openFullBtn.href =
+              "sertifikat-badal.html?id=" + encodeURIComponent(order.id);
+          }
+
+          var qrContainer = document.getElementById("certQrContainer");
+          qrContainer.innerHTML = "";
+          if (typeof QRCode !== "undefined") {
+            // Dibangun relatif terhadap URL halaman ini supaya tetap benar
+            // di hosting apa pun, termasuk saat berada di subpath seperti
+            // https://klikada.github.io/manasikgo/.
+            var verifyUrl = new URL(
+              "verifikasi-sertifikat.html?id=" + encodeURIComponent(order.id),
+              window.location.href,
+            ).href;
+            new QRCode(qrContainer, {
+              text: verifyUrl,
+              width: 160,
+              height: 160,
+              colorDark: "#1f2937",
+              colorLight: "#ffffff",
+            });
+          } else {
+            qrContainer.innerHTML =
+              '<p class="small text-danger mb-0">QR tidak dapat dimuat.</p>';
+          }
+
+          new bootstrap.Modal(document.getElementById("sertifikatModal")).show();
+        }
+
+        var certPrintBtn = document.getElementById("certPrintBtn");
+        if (certPrintBtn) {
+          certPrintBtn.addEventListener("click", function () {
+            window.print();
+          });
+        }
+
+        // === Lacak Live & Riwayat Tracking (dokumentasi realtime maps posisi
+        // petugas Badal Umroh, ala Strava) ===
+        // Polling sederhana (bukan WebSocket/push) tiap beberapa detik ke
+        // action "badal_track_get" -- cukup untuk kebutuhan "posisi terkini"
+        // dan sesuai dengan arsitektur backend Google Apps Script yang
+        // dipakai situs ini (lihat README, tidak mendukung koneksi realtime
+        // dua arah). Rute lengkap (semua titik) diambil sekali lewat
+        // "badal_track_points" untuk digambar sebagai polyline (garis rute
+        // yang dilalui, ala Strava) sebagai bukti dokumentasi.
+        var trackingPollMs = 5000;
+        var trackingTimer = null;
+        var trackingMap = null;
+        var trackingMarker = null;
+        var trackingPolyline = null;
+        var trackingRouteSinglePoint = null;
+        var trackingStartMarker = null;
+        var trackingFinishMarker = null;
+        var trackingRouteBounds = null;
+        var trackingModalEl = document.getElementById("trackingModal");
+        var currentTrackingOrderId = null;
+        var currentTrackingPoints = [];
+        var pointsLoadedForOrderId = null;
+
+        function formatWaktu(iso) {
+          if (!iso) return "-";
+          try {
+            return new Intl.DateTimeFormat("id-ID", {
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: false, // paksa format 24 jam (00-23), jangan andalkan
+              // default locale browser -- beberapa browser tetap
+              // menampilkan AM/PM untuk id-ID kalau ini tidak diset eksplisit.
+            }).format(new Date(iso));
+          } catch (e) {
+            return iso;
+          }
+        }
+
+        // Format tanggal panjang ala kartu aktivitas Strava (mis. "Sabtu,
+        // 29 Agustus 2026") untuk sub-judul kartu rute.
+        function formatTanggalPanjang(iso) {
+          if (!iso) return "-";
+          try {
+            return new Intl.DateTimeFormat("id-ID", {
+              weekday: "long",
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            }).format(new Date(iso));
+          } catch (e) {
+            return "-";
+          }
+        }
+
+        // Susun teks "Mulai pukul .. · Selesai pukul .." dari data asli
+        // (started_at & finished_at) -- bukan updated_at, karena updated_at
+        // bisa berubah lagi saat admin memverifikasi (beda waktu dengan saat
+        // petugas benar-benar menekan "Selesai"). finished_at dipakai sebagai
+        // waktu selesai yang sebenarnya; fallback ke updated_at hanya untuk
+        // data lama yang belum punya kolom finished_at.
+        function buildWaktuMulaiSelesai(data) {
+          var selesai = data.finished_at || data.updated_at;
+          var parts = [];
+          if (data.started_at) parts.push("Mulai " + formatWaktu(data.started_at));
+          if (selesai) parts.push("Selesai " + formatWaktu(selesai));
+          return parts.join(" · ");
+        }
+
+        // Urutan tahap untuk stepper visual di atas modal.
+        var TRACKING_STEP_ORDER = [
+          "menunggu",
+          "berlangsung",
+          "menunggu_verifikasi",
+          "selesai",
+        ];
+        function updateTrackingSteps(status) {
+          var idx = TRACKING_STEP_ORDER.indexOf(status);
+          if (idx === -1) idx = 0; // status belum dimulai -> anggap di tahap "Menunggu"
+          // Kalau statusnya sudah "selesai" (tahap TERAKHIR), seluruh step
+          // termasuk "Selesai" sendiri ditandai centang (is-done) -- bukan
+          // titik merah berkedip (is-current), karena berkedip menyiratkan
+          // "sedang berjalan", padahal prosesnya sudah 100% tuntas.
+          var isFinalStepDone = status === "selesai";
+          document
+            .querySelectorAll("#trackingSteps .tstep")
+            .forEach(function (el, i) {
+              el.classList.remove("is-done", "is-current", "is-pending");
+              if (i < idx || (isFinalStepDone && i === idx)) el.classList.add("is-done");
+              else if (i === idx) el.classList.add("is-current");
+              else el.classList.add("is-pending");
+            });
+        }
+
+        function renderTrackingStatus(data) {
+          updateTrackingSteps(data.status);
+          var dot = document.getElementById("trackingDot");
+          var text = document.getElementById("trackingStatusText");
+          var updated = document.getElementById("trackingUpdatedAt");
+          var help = document.getElementById("trackingHelpText");
+          var title = document.getElementById("trackingModalTitle");
+          dot.className = "tracking-dot";
+          if (data.status === "berlangsung") {
+            dot.classList.add("tracking-dot-live");
+            text.textContent = "Petugas sedang dalam perjalanan (live)";
+            updated.textContent = data.started_at
+              ? "Mulai " + formatWaktu(data.started_at)
+              : data.updated_at
+                ? "Update terakhir " + formatWaktu(data.updated_at)
+                : "";
+            title.innerHTML =
+              '<i class="bi bi-broadcast text-danger"></i> Lacak Live Petugas Badal Umroh';
+            help.innerHTML =
+              '<i class="bi bi-info-circle text-primary"></i> Peta ini menampilkan posisi petugas pelaksana Badal Umroh Anda secara berkala (diperbarui otomatis setiap beberapa detik) selama petugas menekan "Mulai Badal" di perangkatnya.';
+          } else if (data.status === "menunggu_verifikasi") {
+            dot.classList.add("tracking-dot-warn");
+            text.textContent =
+              "Petugas sudah menyelesaikan pelaksanaan, menunggu verifikasi admin";
+            updated.textContent = buildWaktuMulaiSelesai(data);
+            title.innerHTML =
+              '<i class="bi bi-hourglass-split text-warning"></i> Riwayat Rute Petugas Badal Umroh';
+            help.innerHTML =
+              '<i class="bi bi-info-circle text-primary"></i> Petugas sudah menekan "Selesai" dan seluruh rute perjalanan sudah terekam sebagai bukti (lihat rute di bawah). Pesanan akan resmi berstatus "selesai" setelah admin memverifikasi.';
+          } else if (data.status === "selesai") {
+            dot.classList.add("tracking-dot-done");
+            text.textContent =
+              "Pelaksanaan Badal Umroh telah selesai & terverifikasi";
+            updated.textContent = buildWaktuMulaiSelesai(data);
+            title.innerHTML =
+              '<i class="bi bi-check2-circle text-success"></i> Riwayat Rute Petugas Badal Umroh';
+            help.innerHTML =
+              '<i class="bi bi-info-circle text-primary"></i> Ini adalah rekaman rute perjalanan petugas selama melaksanakan Badal Umroh Anda, sebagai bukti dokumentasi.';
+          } else {
+            dot.classList.add("tracking-dot-idle");
+            text.textContent =
+              "Menunggu petugas menekan \"Mulai Badal\" di perangkatnya...";
+            updated.textContent = "";
+            title.innerHTML =
+              '<i class="bi bi-broadcast text-danger"></i> Lacak Live Petugas Badal Umroh';
+          }
+        }
+
+        function ensureTrackingMap() {
+          if (trackingMap || typeof L === "undefined") return;
+          // Default awal: tampilan luas seluruh Indonesia (bukan dipatok ke
+          // Arab Saudi) supaya gampang dites dari mana saja di Indonesia --
+          // peta tetap otomatis fit ke rute/titik asli begitu data tracking
+          // dimuat (lihat renderTrackingRoute() / updateTrackingMap()).
+          // preferCanvas:true -- garis rute & titik GPS (L.polyline/
+          // circleMarker) digambar via <canvas>, bukan <svg>. Sebelumnya
+          // (SVG, default Leaflet) leaflet-image gagal "memotret" garis
+          // rute saat tombol "Unduh Gambar Rute" ditekan -- hasil unduhan
+          // cuma menampilkan tile peta polos tanpa garis sama sekali,
+          // karena parser SVG->canvas di plugin itu tidak konsisten dengan
+          // transform pane pada versi Leaflet yang dipakai di sini.
+          // Layer <canvas> jauh lebih andal ditangkap (plugin tinggal
+          // drawImage() langsung), jadi garis & titik ikut muncul di hasil
+          // unduhan.
+          trackingMap = L.map("trackingMap", { preferCanvas: true }).setView(
+            [-2.5489, 118.0149],
+            5,
+          );
+          // Catatan: sebelumnya pakai tile CartoDB, tapi sekarang CARTO
+          // mewajibkan API key untuk tile raster-nya (tile tanpa key
+          // dibubuhi watermark "API KEY REQUIRED"). Pindah ke tile resmi
+          // OpenStreetMap (tile.openstreetmap.org) yang gratis tanpa key.
+          // Server ini sudah mengirim header CORS sejak lama, jadi peta
+          // tetap bisa "difoto" jadi <canvas> oleh leaflet-image (dibutuhkan
+          // tombol "Unduh Gambar Rute" di bawah) -- sama seperti tile yang
+          // sudah dipakai di petugas-badal.html.
+          L.tileLayer(
+            "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+            {
+              maxZoom: 19,
+              subdomains: "abc",
+              crossOrigin: true,
+              attribution: "&copy; OpenStreetMap contributors",
+            },
+          ).addTo(trackingMap);
+        }
+
+        function updateTrackingMap(lat, lng) {
+          ensureTrackingMap();
+          if (!trackingMap) return;
+          var latLng = [lat, lng];
+          if (!trackingMarker) {
+            trackingMarker = L.marker(latLng).addTo(trackingMap);
+            trackingMap.setView(latLng, 15);
+          } else {
+            trackingMarker.setLatLng(latLng);
+          }
+          // Selalu geser peta agar marker tetap terlihat (petugas bergerak).
+          trackingMap.panTo(latLng);
+        }
+
+        // Jarak antar 2 titik koordinat pakai rumus Haversine (km).
+        function haversineKm(a, b) {
+          var R = 6371;
+          var dLat = ((b.lat - a.lat) * Math.PI) / 180;
+          var dLng = ((b.lng - a.lng) * Math.PI) / 180;
+          var lat1 = (a.lat * Math.PI) / 180;
+          var lat2 = (b.lat * Math.PI) / 180;
+          var h =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.sin(dLng / 2) *
+              Math.sin(dLng / 2) *
+              Math.cos(lat1) *
+              Math.cos(lat2);
+          return R * 2 * Math.atan2(Math.sqrt(h), Math.sqrt(1 - h));
+        }
+
+        // === Pencocokan rute ke jalan (map matching) ===
+        // Titik GPS mentah yang dikirim tiap ~10 detik itu jarang persis di
+        // atas jalan (drift GPS di HP bisa belasan meter), jadi kalau cuma
+        // dihubungkan garis lurus antar titik, hasilnya "memotong" gang atau
+        // bangunan seperti sebelumnya. Di sini kita kirim seluruh titik ke
+        // OSRM Map Matching API (layanan publik gratis, dipakai banyak
+        // aplikasi peta open-source) supaya rute digambar mengikuti jaringan
+        // jalan OpenStreetMap yang sebenarnya -- persis seperti aplikasi
+        // navigasi/ojek online menyamakan titik GPS ke jalan terdekat.
+        //
+        // CATATAN PRODUKSI: router.project-osrm.org adalah server demo
+        // publik (gratis, tanpa API key, tapi ada batas rate & hanya profil
+        // "driving"/kendaraan). Untuk trafik tinggi atau butuh jaminan
+        // uptime, pertimbangkan self-host OSRM sendiri atau ganti ke
+        // penyedia berbayar (Mapbox Map Matching / Google Roads API).
+        // (Batas jumlah titik per request sekarang dihitung otomatis &
+        // bertingkat di matchGpsTraceToRoads() -- lihat "caps" di sana --
+        // karena server demo OSRM ternyata bisa menolak dengan "TooBig"
+        // bahkan untuk jumlah titik yang terlihat wajar.)
+
+        function simplifyPointsForMatching(points, maxPoints) {
+          if (points.length <= maxPoints) return points;
+          var step = points.length / maxPoints;
+          var out = [];
+          for (var i = 0; i < maxPoints; i++) {
+            out.push(points[Math.floor(i * step)]);
+          }
+          if (out[out.length - 1] !== points[points.length - 1]) {
+            out.push(points[points.length - 1]);
+          }
+          return out;
+        }
+
+        // OSRM Map Matching sering menolak SELURUH request (bukan cuma
+        // titik yang bermasalah) kalau ada 2 titik berurutan yang
+        // koordinatnya identik atau nyaris identik (mis. GPS "macet" di
+        // posisi yang sama saat sinyal lemah/device diam) -- errornya
+        // konsisten gagal di semua percobaan radius, seperti yang terlihat
+        // di console. Titik seperti ini juga tidak menambah informasi rute
+        // (petugas jelas belum berpindah), jadi aman dibuang sebelum
+        // dikirim ke OSRM.
+        function dedupeStationaryPoints(points, minMeters) {
+          if (!points || points.length < 2) return points;
+          var out = [points[0]];
+          for (var i = 1; i < points.length; i++) {
+            var prev = out[out.length - 1];
+            var d = haversineKm(prev, points[i]) * 1000; // meter
+            if (d >= minMeters) out.push(points[i]);
+          }
+          // Selalu simpan titik terakhir apa adanya (posisi akhir petugas)
+          // walau jaraknya dekat dengan titik sebelum-sebelumnya.
+          if (out[out.length - 1] !== points[points.length - 1]) {
+            out.push(points[points.length - 1]);
+          }
+          return out;
+        }
+
+        // Coba cocokkan sekali ke OSRM dengan jumlah titik & radius toleransi
+        // tertentu. Mengembalikan { latLngs, code } (bukan cuma null/array)
+        // supaya pemanggil tahu ALASAN gagalnya -- penting karena "TooBig"
+        // (server demo membatasi jumlah titik per request) butuh solusi beda
+        // dari "NoMatch" (titik tidak cocok dengan jalan mana pun): yang
+        // pertama butuh titiknya dikurangi, yang kedua butuh radius
+        // diperlonggar. Dipisah jadi fungsi sendiri dari
+        // matchGpsTraceToRoads() supaya bisa dicoba ulang dengan kombinasi
+        // berbeda.
+        function tryMatchOnce(sample, radiusMeters, profile) {
+          var coords = sample
+            .map(function (p) {
+              return p.lng + "," + p.lat;
+            })
+            .join(";");
+          // timestamps wajib naik/urut -- kalau data lama ada yang sama
+          // persis atau mundur (jam device tidak akurat), OSRM akan menolak,
+          // jadi dipaksa strictly increasing di sini.
+          var lastTs = -Infinity;
+          var timestamps = sample
+            .map(function (p) {
+              var t = Math.floor(new Date(p.recorded_at).getTime() / 1000);
+              if (!isFinite(t)) t = lastTs + 1;
+              if (t <= lastTs) t = lastTs + 1;
+              lastTs = t;
+              return t;
+            })
+            .join(";");
+          var radiuses = sample
+            .map(function () { return radiusMeters; })
+            .join(";");
+          var url =
+            "https://router.project-osrm.org/match/v1/" +
+            profile +
+            "/" +
+            coords +
+            "?geometries=geojson&overview=full&timestamps=" +
+            timestamps +
+            "&radiuses=" +
+            radiuses;
+          // Timeout eksplisit -- server demo OSRM publik ini bisa jauh
+          // lebih lambat direspons lewat jaringan seluler (4G/5G dengan
+          // latensi tinggi/tidak stabil) dibanding WiFi/kabel laptop.
+          // Tanpa batas waktu, satu chunk yang menggantung akan membuat
+          // SELURUH proses map-matching (yang berjalan berurutan per
+          // chunk) ikut menggantung, dan overlay "Menyesuaikan rute ke
+          // jalan..." menutupi peta tanpa pernah hilang.
+          return fetch(url, { signal: AbortSignal.timeout(9000) })
+            .then(function (res) { return res.json(); })
+            .then(function (data) {
+              if (
+                !data ||
+                data.code !== "Ok" ||
+                !data.matchings ||
+                !data.matchings.length
+              ) {
+                // Catat alasan asli penolakan OSRM ke console supaya bisa
+                // didiagnosis (mis. "TooBig" karena titiknya kebanyakan untuk
+                // batas server demo, vs "NoMatch" karena memang tidak ada
+                // jalan yang cocok) -- daripada diam-diam dibuang.
+                var code = (data && data.code) || "NoResponse";
+                console.warn(
+                  "OSRM map-matching ditolak (" +
+                    sample.length +
+                    " titik, profil " +
+                    profile +
+                    ", radius " +
+                    radiusMeters +
+                    "m):",
+                  code,
+                  (data && data.message) || "",
+                );
+                return { latLngs: null, code: code };
+              }
+              // OSRM bisa memecah rute jadi beberapa segmen kalau ada celah
+              // besar antar titik (mis. sinyal GPS hilang sesaat) -- semua
+              // segmen digabung berurutan jadi satu garis.
+              var latLngs = [];
+              data.matchings.forEach(function (m) {
+                (m.geometry.coordinates || []).forEach(function (c) {
+                  latLngs.push([c[1], c[0]]);
+                });
+              });
+              return { latLngs: latLngs.length > 1 ? latLngs : null, code: "Ok" };
+            })
+            .catch(function () {
+              return { latLngs: null, code: "NetworkError" }; // gagal konek ke layanan pencocokan
+            });
+        }
+
+        // Untuk 1 chunk (potongan kecil titik berurutan), coba radius ketat
+        // dulu (25m -- akurasi GPS smartphone di luar ruangan umumnya
+        // 5-20m), lalu makin longgar (50m, 100m) kalau ditolak karena
+        // "NoMatch"/titik meleset. Kalau ditolak "TooBig", radius tidak akan
+        // menolong -- langsung berhenti supaya matchChunk() bisa mengecilkan
+        // ukuran chunk-nya.
+        //
+        // Kalau SEMUA radius profil "driving" tetap "NoMatch" (titik lewat
+        // gang/jalan setapak/halaman yang tidak ada di graf jalan kendaraan
+        // OSRM), dicoba sekali lagi pakai profil "foot" -- graf jalan kaki
+        // OSRM mencakup gang & jalan setapak yang tidak dilalui kendaraan,
+        // jadi potongan rute yang tadinya "keluar jalan" (garis lurus
+        // memotong blok) bisa ikut ditempelkan ke jalur yang benar-benar
+        // ada. Ini TIDAK menambah jumlah titik per request (ukuran chunk
+        // tetap sama, 10 titik) -- cuma menambah 1-2 percobaan ekstra HANYA
+        // untuk potongan yang gagal -- jadi tidak menambah risiko "TooBig"
+        // di server demo OSRM yang gratis ini.
+        function tryMatchWithRadiusFallback(sample) {
+          return tryMatchOnce(sample, 25, "driving").then(function (r1) {
+            if (r1.latLngs || r1.code === "TooBig") return r1;
+            return tryMatchOnce(sample, 50, "driving").then(function (r2) {
+              if (r2.latLngs || r2.code === "TooBig") return r2;
+              return tryMatchOnce(sample, 100, "driving").then(function (r3) {
+                if (r3.latLngs || r3.code === "TooBig") return r3;
+                return tryMatchOnce(sample, 25, "foot").then(function (r4) {
+                  if (r4.latLngs) return r4;
+                  return tryMatchOnce(sample, 50, "foot");
+                });
+              });
+            });
+          });
+        }
+
+        // Cocokkan SATU potongan kecil titik berurutan ke jalan. Kalau
+        // server demo menolak dengan "TooBig" (batas jumlah titik per
+        // request-nya ternyata jauh lebih ketat dari dugaan -- pernah gagal
+        // bahkan di 15 titik), potongan ini dibagi dua lagi secara rekursif
+        // sampai berhasil atau tinggal 2 titik (ukuran minimum yang valid
+        // untuk map matching). Kalau di ukuran minimum pun masih gagal
+        // (bukan "TooBig" lagi, berarti titiknya memang tidak bisa
+        // dicocokkan ke jalan mana pun), potongan ini di-tandai "gagal" dan
+        // nanti digambar sebagai garis lurus saja -- HANYA untuk potongan
+        // itu, bukan seluruh rute.
+        function matchChunk(chunk) {
+          if (chunk.length < 2) return Promise.resolve({ latLngs: null });
+          return tryMatchWithRadiusFallback(chunk).then(function (result) {
+            if (result.latLngs) return result;
+            if (result.code === "TooBig" && chunk.length > 2) {
+              var mid = Math.ceil(chunk.length / 2);
+              var left = chunk.slice(0, mid);
+              var right = chunk.slice(mid - 1); // titik tengah dipakai bersama supaya 2 bagian tetap nyambung
+              return matchChunk(left).then(function (leftResult) {
+                return matchChunk(right).then(function (rightResult) {
+                  var combined = [];
+                  if (leftResult.latLngs) combined = combined.concat(leftResult.latLngs);
+                  else combined = combined.concat(left.map(function (p) { return [p.lat, p.lng]; }));
+                  var rightLatLngs = rightResult.latLngs ||
+                    right.map(function (p) { return [p.lat, p.lng]; });
+                  // Buang 1 titik pertama hasil "right" supaya titik sambungan
+                  // (yang dipakai bersama) tidak digambar dobel.
+                  combined = combined.concat(rightLatLngs.slice(1));
+                  return { latLngs: combined, partial: !leftResult.latLngs || !rightResult.latLngs };
+                });
+              });
+            }
+            // Gagal karena alasan lain (NoMatch/error jaringan) -- bukan
+            // "TooBig" -- menyerah untuk potongan ini, pakai garis lurus.
+            return { latLngs: null };
+          });
+        }
+
+        // Pisahkan seluruh rute jadi potongan-potongan kecil berurutan
+        // (bukan diambil jarang/acak dari seluruh rute -- itu penyebab versi
+        // sebelumnya cuma berhasil mencocokkan sepotong kecil lalu membuang
+        // sisanya). Tiap potongan overlap 1 titik dengan potongan berikutnya
+        // supaya saat semua potongan digabung, garisnya tetap nyambung tanpa
+        // celah di batas potongan.
+        function chunkPointsForMatching(points, chunkSize) {
+          var chunks = [];
+          var i = 0;
+          while (i < points.length - 1) {
+            var end = Math.min(i + chunkSize, points.length);
+            chunks.push(points.slice(i, end));
+            if (end >= points.length) break;
+            i = end - 1; // mundur 1 supaya titik terakhir chunk ini = titik pertama chunk berikutnya
+          }
+          return chunks;
+        }
+
+        function matchGpsTraceToRoads(points) {
+          if (!points || points.length < 2) return Promise.resolve(null);
+          // Buang dulu titik yang praktis diam di tempat (< 3m dari titik
+          // sebelumnya) -- lihat catatan di dedupeStationaryPoints().
+          var deduped = dedupeStationaryPoints(points, 3);
+          if (deduped.length < 2) return Promise.resolve(null);
+          // Kalau rute-nya sangat panjang (ratusan/ribuan titik), ringkas
+          // dulu ke maksimum 300 titik representatif -- cukup detail untuk
+          // sebuah rute Badal Umroh, sekaligus membatasi jumlah request ke
+          // OSRM (tiap potongan = 1 request) supaya tidak membebani server
+          // demo publik yang gratis ini.
+          var prepared = deduped.length > 300
+            ? simplifyPointsForMatching(deduped, 300)
+            : deduped;
+          // Potong jadi chunk kecil (10 titik/potongan) -- cukup kecil untuk
+          // aman dari "TooBig", cukup besar untuk hasil yang halus. Tiap
+          // potongan dicocokkan TERPISAH lalu disambung berurutan, supaya
+          // SELURUH rute tercover (bukan cuma sepotong).
+          var chunks = chunkPointsForMatching(prepared, 10);
+          var anyMatched = false;
+          var anyFailed = false;
+
+          function processChunkIndex(i, acc) {
+            if (i >= chunks.length) {
+              return Promise.resolve({ latLngs: acc, allMatched: anyMatched && !anyFailed });
+            }
+            return matchChunk(chunks[i]).then(function (result) {
+              var latLngsForChunk;
+              if (result.latLngs) {
+                anyMatched = true;
+                if (result.partial) anyFailed = true;
+                latLngsForChunk = result.latLngs;
+              } else {
+                anyFailed = true;
+                latLngsForChunk = chunks[i].map(function (p) { return [p.lat, p.lng]; });
+              }
+              // Chunk ke-2 dst overlap 1 titik dengan chunk sebelumnya --
+              // buang titik pertamanya supaya tidak digambar dobel di garis
+              // gabungan.
+              var toAppend = acc.length ? latLngsForChunk.slice(1) : latLngsForChunk;
+              return processChunkIndex(i + 1, acc.concat(toAppend));
+            });
+          }
+
+          return processChunkIndex(0, []).then(function (result) {
+            if (!anyMatched) return null; // semua potongan gagal -> fallback garis lurus total (perilaku lama)
+            return { latLngs: result.latLngs, allMatched: !anyFailed };
+          });
+        }
+
+        function setTrackingLegend(mode, pointCount) {
+          var legend = document.getElementById("trackingLegend");
+          var swatch = document.getElementById("trackingLegendSwatch");
+          var routeText = document.getElementById("trackingLegendRouteText");
+          legend.classList.remove("d-none");
+          if (mode === "matched") {
+            swatch.classList.remove("is-dashed");
+            routeText.textContent = "Rute mengikuti jalan";
+          } else if (mode === "partial") {
+            // Sebagian potongan rute berhasil di-snap ke jalan, sebagian
+            // lagi (mis. area tanpa data jalan di OpenStreetMap, atau GPS
+            // sempat meleset jauh) tetap digambar garis lurus apa adanya --
+            // tetap 1 garis utuh, jadi swatch-nya tidak dibuat dash total.
+            swatch.classList.remove("is-dashed");
+            routeText.textContent =
+              "Rute mengikuti jalan (sebagian titik pakai garis lurus)";
+          } else {
+            swatch.classList.add("is-dashed");
+            routeText.textContent =
+              "Garis lurus antar titik (rute jalan tidak tersedia saat ini)";
+          }
+        }
+
+        // Marker penanda titik mulai & selesai perjalanan petugas -- pakai
+        // L.circleMarker (bukan L.marker+divIcon) supaya ikut ter-render di
+        // <canvas> (lihat preferCanvas di ensureTrackingMap()) dan otomatis
+        // ikut kefoto saat tombol "Unduh Gambar Rute" ditekan -- divIcon
+        // custom tidak bisa ditangkap leaflet-image karena itu elemen HTML,
+        // bukan canvas/svg.
+        function clearStartFinishMarkers() {
+          if (trackingStartMarker && trackingMap) {
+            trackingMap.removeLayer(trackingStartMarker);
+          }
+          if (trackingFinishMarker && trackingMap) {
+            trackingMap.removeLayer(trackingFinishMarker);
+          }
+          trackingStartMarker = null;
+          trackingFinishMarker = null;
+        }
+
+        function drawStartFinishMarkers(latLngsRaw) {
+          clearStartFinishMarkers();
+          if (!trackingMap || !latLngsRaw || latLngsRaw.length < 2) return;
+          trackingStartMarker = L.circleMarker(latLngsRaw[0], {
+            radius: 9,
+            color: "#fff",
+            weight: 3,
+            fillColor: "#16a34a",
+            fillOpacity: 1,
+          })
+            .addTo(trackingMap)
+            .bindTooltip("Mulai", { permanent: false, direction: "top" });
+          trackingFinishMarker = L.circleMarker(
+            latLngsRaw[latLngsRaw.length - 1],
+            {
+              radius: 9,
+              color: "#fff",
+              weight: 3,
+              fillColor: "#dc2626",
+              fillOpacity: 1,
+            },
+          )
+            .addTo(trackingMap)
+            .bindTooltip("Selesai", { permanent: false, direction: "top" });
+        }
+
+        function renderTrackingRoute(points) {
+          var statsBox = document.getElementById("trackingStats");
+          var routeImgBtn = document.getElementById("btnUnduhRuteGambar");
+          var loadingEl = document.getElementById("trackingMapLoading");
+          var legendEl = document.getElementById("trackingLegend");
+          if (!points || points.length < 1) {
+            statsBox.classList.add("d-none");
+            routeImgBtn.classList.add("d-none");
+            legendEl.classList.add("d-none");
+            return;
+          }
+          ensureTrackingMap();
+          if (trackingMap) {
+            var latLngsRaw = points.map(function (p) {
+              return [p.lat, p.lng];
+            });
+            if (trackingPolyline) {
+              trackingMap.removeLayer(trackingPolyline);
+              trackingPolyline = null;
+            }
+            if (trackingRouteSinglePoint) {
+              trackingMap.removeLayer(trackingRouteSinglePoint);
+              trackingRouteSinglePoint = null;
+            }
+            if (latLngsRaw.length > 1) {
+              // Tampilkan dulu garis lurus (fallback) supaya pemesan tidak
+              // melihat peta kosong, lalu diganti begitu hasil pencocokan
+              // jalan datang -- terasa "smooth", bukan tiba-tiba melompat.
+              trackingPolyline = L.polyline(latLngsRaw, {
+                color: "#fc4c02",
+                weight: 7,
+                opacity: 0.55,
+                lineCap: "round",
+                lineJoin: "round",
+                dashArray: "6 6",
+              }).addTo(trackingMap);
+              drawStartFinishMarkers(latLngsRaw);
+              trackingRouteBounds = trackingPolyline.getBounds();
+              trackingMap.fitBounds(trackingRouteBounds, {
+                padding: [24, 24],
+              });
+              setTrackingLegend("straight", points.length);
+              loadingEl.classList.remove("d-none");
+              matchGpsTraceToRoads(points).then(function (result) {
+                loadingEl.classList.add("d-none");
+                if (result && result.latLngs && trackingPolyline) {
+                  trackingMap.removeLayer(trackingPolyline);
+                  trackingPolyline = L.polyline(result.latLngs, {
+                    color: "#fc4c02",
+                    weight: 7,
+                    opacity: 0.9,
+                    lineCap: "round",
+                    lineJoin: "round",
+                  }).addTo(trackingMap);
+                  // Marker start/finish digambar ulang di atas garis baru
+                  // supaya tetap tampil paling atas (di atas polyline yang
+                  // baru saja dibuat ulang).
+                  drawStartFinishMarkers(latLngsRaw);
+                  trackingRouteBounds = trackingPolyline.getBounds();
+                  trackingMap.fitBounds(trackingRouteBounds, {
+                    padding: [24, 24],
+                  });
+                  setTrackingLegend(
+                    result.allMatched ? "matched" : "partial",
+                    points.length,
+                  );
+                }
+              });
+            } else if (latLngsRaw.length === 1) {
+              // Cuma 1 titik terekam (mis. petugas langsung tekan "Selesai"
+              // setelah "Mulai") -- tetap tampilkan sebagai pin lokasi
+              // tunggal, tidak ada garis rute untuk digambar.
+              trackingRouteSinglePoint = L.marker(latLngsRaw[0])
+                .addTo(trackingMap)
+                .bindPopup("Lokasi tercatat")
+                .openPopup();
+              trackingMap.setView(latLngsRaw[0], 16);
+              trackingRouteBounds = null;
+              legendEl.classList.add("d-none");
+            }
+            routeImgBtn.classList.remove("d-none");
+          }
+          // Hitung total jarak & durasi dari titik pertama ke titik terakhir.
+          var totalKm = 0;
+          for (var i = 1; i < points.length; i++) {
+            totalKm += haversineKm(points[i - 1], points[i]);
+          }
+          var durasiText = "-";
+          try {
+            var start = new Date(points[0].recorded_at);
+            var end = new Date(points[points.length - 1].recorded_at);
+            var diffMin = Math.round((end - start) / 60000);
+            if (diffMin >= 60) {
+              durasiText =
+                Math.floor(diffMin / 60) + " jam " + (diffMin % 60) + " mnt";
+            } else {
+              durasiText = diffMin + " menit";
+            }
+          } catch (e) {}
+          document.getElementById("trackingStatDistance").textContent =
+            totalKm < 1
+              ? Math.round(totalKm * 1000) + " m"
+              : totalKm.toFixed(2) + " km";
+          document.getElementById("trackingStatDuration").textContent =
+            durasiText;
+          document.getElementById("trackingCardSub").textContent =
+            formatTanggalPanjang(points[0].recorded_at) +
+            " · " +
+            buildWaktuMulaiSelesaiFromPoints(points);
+          statsBox.classList.remove("d-none");
+        }
+
+        // Versi "Mulai .. · Selesai .." khusus dari titik GPS pertama/terakhir
+        // (dipakai di sub-judul kartu rute, terpisah dari buildWaktuMulaiSelesai
+        // yang sumbernya data status pesanan, bukan titik tracking).
+        function buildWaktuMulaiSelesaiFromPoints(points) {
+          if (!points || !points.length) return "";
+          var mulai = formatWaktu(points[0].recorded_at);
+          var selesai = formatWaktu(points[points.length - 1].recorded_at);
+          return "Mulai " + mulai + " · Selesai " + selesai;
+        }
+
+        // Menangkap peta (tile asli + garis rute yang sedang tampil di
+        // trackingMap) jadi gambar PNG, lalu menambahkan kartu statistik
+        // (jarak/durasi/jumlah titik) di bagian bawah -- ala kartu "share
+        // rute" Strava -- supaya jadi bukti dokumentasi visual.
+        //
+        // Sebelum "difoto", peta DIPAKSA nge-fit ke seluruh rute dulu
+        // (trackingRouteBounds) tanpa animasi -- supaya hasil unduhan
+        // selalu menampilkan rute utuh dari titik mulai sampai selesai,
+        // walaupun pemesan sempat zoom/geser peta secara manual sebelum
+        // menekan tombol unduh (sebelumnya: kalau lupa zoom out dulu,
+        // gambar hasil unduhan bisa memotong sebagian rute).
+        function downloadRouteImage() {
+          if (!currentTrackingPoints.length || !currentTrackingOrderId || !trackingMap)
+            return;
+          var btn = document.getElementById("btnUnduhRuteGambar");
+          var originalHtml = btn.innerHTML;
+          btn.disabled = true;
+          btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
+
+          function captureNow() {
+            leafletImage(trackingMap, function (err, mapCanvas) {
+              btn.disabled = false;
+              btn.innerHTML = originalHtml;
+              if (err || !mapCanvas) {
+                showToast(
+                  "Gagal membuat gambar rute. Coba lagi beberapa saat.",
+                  "danger",
+                );
+                return;
+              }
+              // --- Susun teks footer dengan lebar mengikuti lebar peta ---
+              // Sebelumnya tinggi footer & ukuran font di-hardcode (64px /
+              // 18px / 13px) dengan asumsi peta selalu lebar seperti di
+              // desktop. Di HP, mapCanvas.width jauh lebih sempit sehingga
+              // baris "Jarak .. • Durasi .. • Peta: OpenStreetMap" melebihi
+              // lebar kanvas dan tampak terpotong di gambar hasil unduhan.
+              // Sekarang: font mengecil otomatis bila perlu, dan baris
+              // statistik dibungkus (word-wrap) ke baris baru jika masih
+              // tidak muat, lalu tinggi footer dihitung sesuai jumlah baris
+              // yang benar-benar dipakai.
+              var padX = 18;
+              var padTop = 22;
+              var padBottom = 14;
+              var titleLineHeight = 24;
+              var statLineHeight = 17;
+              var lineGap = 8;
+              var availWidth = mapCanvas.width - padX * 2;
+
+              var measureCanvas = document.createElement("canvas");
+              var mctx = measureCanvas.getContext("2d");
+
+              // Bungkus daftar "token" (tiap statistik dianggap satu
+              // kesatuan, tidak dipotong di tengah) ke beberapa baris
+              // sesuai lebar yang tersedia.
+              function wrapTokens(tokens, separator) {
+                var lines = [];
+                var current = "";
+                tokens.forEach(function (token) {
+                  var candidate = current ? current + separator + token : token;
+                  if (mctx.measureText(candidate).width > availWidth && current) {
+                    lines.push(current);
+                    current = token;
+                  } else {
+                    current = candidate;
+                  }
+                });
+                if (current) lines.push(current);
+                return lines;
+              }
+
+              // Judul: kecilkan font kalau order ID panjang & peta sempit.
+              // Order ID (mis. "psn-1787981425068-xxxx") tidak punya spasi,
+              // jadi tidak bisa dibungkus per-kata seperti baris statistik --
+              // sebelumnya ini menyebabkan judul kepotong mentah di tepi
+              // kanvas walau font sudah dikecilkan ke ukuran minimum.
+              // Sekarang: kalau 1 baris masih kepanjangan, judul dipecah
+              // jadi 2 baris (teks utama + "#orderid"), dan kalau order ID
+              // itu sendiri masih kepanjangan, dipotong dengan elipsis "…".
+              function truncateToWidth(text, maxWidth) {
+                if (mctx.measureText(text).width <= maxWidth) return text;
+                var lo = 0,
+                  hi = text.length;
+                while (lo < hi) {
+                  var mid = Math.ceil((lo + hi) / 2);
+                  var candidate = text.slice(0, mid) + "…";
+                  if (mctx.measureText(candidate).width <= maxWidth) {
+                    lo = mid;
+                  } else {
+                    hi = mid - 1;
+                  }
+                }
+                return lo > 0 ? text.slice(0, lo) + "…" : "…";
+              }
+
+              var titleMain = "ManasikGo — Bukti Rute Badal Umroh";
+              var orderIdText = "#" + currentTrackingOrderId;
+              var titleFullText = titleMain + " " + orderIdText;
+              var titleFontSize = 18;
+              mctx.font = "bold " + titleFontSize + "px Arial, sans-serif";
+              while (
+                titleFontSize > 13 &&
+                mctx.measureText(titleFullText).width > availWidth
+              ) {
+                titleFontSize -= 1;
+                mctx.font = "bold " + titleFontSize + "px Arial, sans-serif";
+              }
+
+              var titleLines;
+              if (mctx.measureText(titleFullText).width <= availWidth) {
+                titleLines = [titleFullText];
+              } else {
+                // Tetap tidak muat dalam 1 baris di font minimum -> pecah
+                // jadi 2 baris, order ID dipotong elipsis kalau perlu.
+                titleLines = [
+                  truncateToWidth(titleMain, availWidth),
+                  truncateToWidth(orderIdText, availWidth),
+                ];
+              }
+
+              // Statistik: bungkus dulu, kalau masih ada baris yang
+              // kepanjangan, kecilkan font lalu bungkus ulang.
+              var statDistance =
+                document.getElementById("trackingStatDistance").textContent;
+              var statDuration =
+                document.getElementById("trackingStatDuration").textContent;
+              var statTokens = [
+                "Jarak " + statDistance,
+                "Durasi " + statDuration,
+              ];
+              var statFontSize = 13;
+              mctx.font = statFontSize + "px Arial, sans-serif";
+              var statLines = wrapTokens(statTokens, "   •   ");
+              while (
+                statFontSize > 11 &&
+                statLines.some(function (l) {
+                  return mctx.measureText(l).width > availWidth;
+                })
+              ) {
+                statFontSize -= 1;
+                mctx.font = statFontSize + "px Arial, sans-serif";
+                statLines = wrapTokens(statTokens, "   •   ");
+              }
+
+              var footerHeight =
+                padTop +
+                titleLines.length * titleLineHeight +
+                lineGap +
+                statLines.length * statLineHeight +
+                padBottom;
+
+              var outCanvas = document.createElement("canvas");
+              outCanvas.width = mapCanvas.width;
+              outCanvas.height = mapCanvas.height + footerHeight;
+              var ctx = outCanvas.getContext("2d");
+              ctx.drawImage(mapCanvas, 0, 0);
+              // Kartu statistik di bawah gambar peta
+              ctx.fillStyle = "#0f2419";
+              ctx.fillRect(0, mapCanvas.height, outCanvas.width, footerHeight);
+
+              ctx.fillStyle = "#ffffff";
+              ctx.font = "bold " + titleFontSize + "px Arial, sans-serif";
+              var titleFirstY = mapCanvas.height + padTop + titleFontSize * 0.75;
+              titleLines.forEach(function (line, idx) {
+                ctx.fillText(line, padX, titleFirstY + idx * titleLineHeight);
+              });
+              var titleLastY = titleFirstY + (titleLines.length - 1) * titleLineHeight;
+
+              ctx.font = statFontSize + "px Arial, sans-serif";
+              ctx.fillStyle = "#d1d5db";
+              var statStartY = titleLastY + lineGap + statFontSize * 0.9;
+              statLines.forEach(function (line, idx) {
+                ctx.fillText(line, padX, statStartY + idx * statLineHeight);
+              });
+
+              var pngUrl = outCanvas.toDataURL("image/png");
+              var a = document.createElement("a");
+              a.href = pngUrl;
+              a.download = "badal-rute-" + currentTrackingOrderId + ".png";
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+            });
+          }
+
+          if (trackingRouteBounds && trackingRouteBounds.isValid()) {
+            // animate:false -- perubahan view langsung terjadi (tidak
+            // menunggu animasi pan/zoom selesai), tapi tile baru yang masuk
+            // ke area pandang tetap butuh sedikit waktu untuk diunduh &
+            // digambar browser, jadi capture-nya ditunda sebentar (bukan
+            // langsung di frame yang sama) supaya tidak "memotret" peta
+            // yang masih setengah termuat.
+            trackingMap.fitBounds(trackingRouteBounds, {
+              padding: [30, 30],
+              animate: false,
+            });
+            setTimeout(captureNow, 350);
+          } else {
+            captureNow();
+          }
+        }
+
+        var routeImgBtnEl = document.getElementById("btnUnduhRuteGambar");
+        if (routeImgBtnEl)
+          routeImgBtnEl.addEventListener("click", downloadRouteImage);
+
+        // isRetry=true menandai ini percobaan ULANG otomatis (bukan yang
+        // pertama) -- jaringan mobile/seluler jauh lebih sering gagal
+        // sesaat (packet loss, pindah sinyal 4G<->wifi) dibanding koneksi
+        // laptop yang biasanya stabil di WiFi/kabel. Sebelumnya kegagalan
+        // ini cuma dicatat ke console.warn dan dibiarkan -- pemesan di HP
+        // cuma melihat peta kosong tanpa tahu ada request yang gagal, jadi
+        // terlihat seperti "peta rusak" padahal cuma butuh dicoba ulang.
+        function loadTrackingRouteOnce(orderId, isRetry) {
+          // Rute lengkap tidak berubah kalau sudah menunggu_verifikasi/selesai,
+          // jadi cukup diambil sekali per sesi buka modal (bukan tiap polling)
+          // supaya tidak boros request ke Apps Script.
+          if (pointsLoadedForOrderId === orderId) return;
+          var errorEl = document.getElementById("trackingMapError");
+          if (errorEl) errorEl.classList.add("d-none");
+          window.HCApi
+            .getBadalTrackPoints(orderId)
+            .then(function (points) {
+              pointsLoadedForOrderId = orderId;
+              currentTrackingPoints = points || [];
+              renderTrackingRoute(currentTrackingPoints);
+            })
+            .catch(function (error) {
+              console.warn("Gagal memuat riwayat rute:", error.message);
+              if (!isRetry) {
+                // 1x percobaan ulang otomatis setelah jeda singkat, sebelum
+                // menampilkan tombol "Coba Lagi" manual ke pemesan.
+                setTimeout(function () {
+                  if (currentTrackingOrderId === orderId) {
+                    loadTrackingRouteOnce(orderId, true);
+                  }
+                }, 2500);
+                return;
+              }
+              if (errorEl) {
+                errorEl.classList.remove("d-none");
+                errorEl.dataset.orderId = orderId;
+              }
+            });
+        }
+
+        var btnRetryTrackingRouteEl = document.getElementById(
+          "btnRetryTrackingRoute",
+        );
+        if (btnRetryTrackingRouteEl) {
+          btnRetryTrackingRouteEl.addEventListener("click", function () {
+            var errorEl = document.getElementById("trackingMapError");
+            var orderId =
+              (errorEl && errorEl.dataset.orderId) || currentTrackingOrderId;
+            if (errorEl) errorEl.classList.add("d-none");
+            pointsLoadedForOrderId = null;
+            loadTrackingRouteOnce(orderId);
+          });
+        }
+
+        var trackingPollFailCount = 0;
+        function pollTracking(orderId) {
+          window.HCApi
+            .getBadalTracking(orderId)
+            .then(function (data) {
+              trackingPollFailCount = 0;
+              renderTrackingStatus(data);
+              if (
+                data.status === "berlangsung" &&
+                typeof data.lat === "number" &&
+                typeof data.lng === "number" &&
+                isFinite(data.lat) &&
+                isFinite(data.lng)
+              ) {
+                updateTrackingMap(data.lat, data.lng);
+              }
+              // Begitu petugas menekan "Selesai" (atau sudah diverifikasi),
+              // ambil & gambar seluruh rute + statistik, dan
+              // hentikan polling posisi live karena tidak akan berubah lagi.
+              if (
+                (data.status === "menunggu_verifikasi" ||
+                  data.status === "selesai") &&
+                trackingTimer
+              ) {
+                clearInterval(trackingTimer);
+                trackingTimer = null;
+              }
+              if (
+                data.status === "menunggu_verifikasi" ||
+                data.status === "selesai"
+              ) {
+                loadTrackingRouteOnce(orderId);
+              }
+            })
+            .catch(function (error) {
+              console.warn("Gagal memuat lokasi live:", error.message);
+              // Beberapa kali gagal berturut-turut (bukan cuma 1x, supaya
+              // tidak salah alarm karena 1 hiccup jaringan) -- kabari
+              // pemesan lewat teks status yang sudah ada, alih-alih diam
+              // saja seolah semuanya baik-baik saja padahal data live
+              // sebenarnya berhenti diperbarui.
+              trackingPollFailCount++;
+              if (trackingPollFailCount >= 3) {
+                var updatedEl = document.getElementById("trackingUpdatedAt");
+                if (updatedEl) {
+                  updatedEl.textContent =
+                    "Koneksi terputus, mencoba menyambung ulang...";
+                }
+              }
+            });
+        }
+
+        function openTrackingModal(orderId) {
+          currentTrackingOrderId = orderId;
+          currentTrackingPoints = [];
+          pointsLoadedForOrderId = null;
+          document.getElementById("trackingStats").classList.add("d-none");
+          document.getElementById("trackingCardSub").textContent = "-";
+          document
+            .getElementById("btnUnduhRuteGambar")
+            .classList.add("d-none");
+          if (trackingPolyline && trackingMap) {
+            trackingMap.removeLayer(trackingPolyline);
+            trackingPolyline = null;
+          }
+          if (trackingRouteSinglePoint && trackingMap) {
+            trackingMap.removeLayer(trackingRouteSinglePoint);
+            trackingRouteSinglePoint = null;
+          }
+          clearStartFinishMarkers();
+          trackingRouteBounds = null;
+          document.getElementById("trackingLegend").classList.add("d-none");
+          document
+            .getElementById("trackingMapLoading")
+            .classList.add("d-none");
+          var errorElInit = document.getElementById("trackingMapError");
+          if (errorElInit) errorElInit.classList.add("d-none");
+          updateTrackingSteps("menunggu");
+          new bootstrap.Modal(trackingModalEl).show();
+          // Peta baru bisa diukur ukurannya dengan benar setelah modal
+          // selesai animasi tampil (elemen sebelumnya display:none).
+          trackingModalEl.addEventListener(
+            "shown.bs.modal",
+            function onShown() {
+              trackingModalEl.removeEventListener("shown.bs.modal", onShown);
+              ensureTrackingMap();
+              if (trackingMap) trackingMap.invalidateSize();
+              // Sebagian browser mobile (terutama saat modal ditutup lalu
+              // dibuka lagi dengan cepat, atau layar masih menyesuaikan
+              // setelah rotasi/keyboard) belum selesai reflow persis saat
+              // "shown.bs.modal" ditembakkan -- 1 invalidateSize() susulan
+              // ini menangkap ukuran final peta supaya tidak terlihat
+              // "kepotong"/kosong sebagian di HP.
+              setTimeout(function () {
+                if (trackingMap) trackingMap.invalidateSize();
+              }, 300);
+              pollTracking(orderId);
+              if (trackingTimer) clearInterval(trackingTimer);
+              trackingTimer = setInterval(function () {
+                pollTracking(orderId);
+              }, trackingPollMs);
+            },
+          );
+        }
+
+        if (trackingModalEl) {
+          trackingModalEl.addEventListener("hidden.bs.modal", function () {
+            if (trackingTimer) {
+              clearInterval(trackingTimer);
+              trackingTimer = null;
+            }
+          });
+          // Rotasi layar HP (potret<->lanskap) atau munculnya toolbar
+          // browser mobile mengubah tinggi viewport tanpa memicu event
+          // Leaflet apa pun -- tanpa ini peta bisa terlihat "terpotong"
+          // separuh sampai pemesan menggeser petanya sendiri.
+          window.addEventListener("resize", function () {
+            if (
+              trackingMap &&
+              trackingModalEl.classList.contains("show")
+            ) {
+              trackingMap.invalidateSize();
+            }
+          });
+          window.addEventListener("orientationchange", function () {
+            if (!trackingMap) return;
+            setTimeout(function () {
+              if (trackingMap) trackingMap.invalidateSize();
+            }, 300);
+          });
+        }
+
+        // === Edit Profile ===
+        document
+          .getElementById("editProfileBtn")
+          .addEventListener("click", function () {
+            document.getElementById("editNama").value = user.nama || "";
+            document.getElementById("editWhatsapp").value = user.whatsapp || "";
+            document.getElementById("editPassword").value = "";
+            document.getElementById("editPasswordConfirm").value = "";
+            document.getElementById("editProfileAlert").classList.add("d-none");
+            new bootstrap.Modal(
+              document.getElementById("editProfileModal"),
+            ).show();
+          });
+
+        document
+          .getElementById("editProfileForm")
+          .addEventListener("submit", async function (e) {
+            e.preventDefault();
+            var alertBox = document.getElementById("editProfileAlert");
+            alertBox.classList.add("d-none");
+            var nama = document.getElementById("editNama").value.trim();
+            var whatsapp = document.getElementById("editWhatsapp").value.trim();
+            var password = document.getElementById("editPassword").value;
+            var passwordConfirm = document.getElementById(
+              "editPasswordConfirm",
+            ).value;
+            if (!nama || !whatsapp) {
+              alertBox.textContent = "Nama dan WhatsApp wajib diisi.";
+              alertBox.classList.remove("d-none");
+              return;
+            }
+            if (password && password.length < 8) {
+              alertBox.textContent = "Password minimal 8 karakter.";
+              alertBox.classList.remove("d-none");
+              return;
+            }
+            if (password !== passwordConfirm) {
+              alertBox.textContent = "Password dan ulangi password tidak sama.";
+              alertBox.classList.remove("d-none");
+              return;
+            }
+            var submitBtn = document.getElementById("editProfileSubmit");
+            submitBtn.disabled = true;
+            submitBtn.innerHTML =
+              '<span class="spinner-border spinner-border-sm"></span> Menyimpan...';
+            try {
+              var token = window.HCAuth.getToken();
+              var payload = { id: user.id, nama: nama, whatsapp: whatsapp };
+              if (password) payload.password = password;
+              await window.HCApi.usersUpdate(payload, token);
+              // Update local session
+              var session = window.HCAuth.getSession();
+              if (session) {
+                session.user.nama = nama;
+                session.user.whatsapp = whatsapp;
+                window.HCAuth.setSession(session);
+              }
+              user.nama = nama;
+              user.whatsapp = whatsapp;
+              renderProfile();
+              bootstrap.Modal.getInstance(
+                document.getElementById("editProfileModal"),
+              ).hide();
+              window.HCUtils.showToast("Profil berhasil diperbarui.");
+            } catch (error) {
+              alertBox.textContent = error.message || "Gagal menyimpan profil.";
+              alertBox.classList.remove("d-none");
+            } finally {
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = '<i class="bi bi-check2"></i> Simpan';
+            }
+          });
+
+        // === Order Form ===
+        document.querySelectorAll(".open-order-form").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var layanan = this.dataset.layanan;
+            var label = this.dataset.label;
+            document.getElementById("orderLayanan").value = layanan;
+            document.getElementById("orderLabel").value = label;
+            document.getElementById("orderFormModalTitle").textContent =
+              "Pesan " + label;
+            document.getElementById("orderNama").value = user.nama || "";
+            document.getElementById("orderWa").value = user.whatsapp || "";
+            document.getElementById("orderCatatan").value = "";
+            document.getElementById("orderFormAlert").classList.add("d-none");
+            // Extra field based on layanan
+            var extraTarget = document.getElementById("orderExtraFieldTarget");
+            if (layanan === "badal_umroh") {
+              extraTarget.innerHTML =
+                '<label class="form-label" for="orderUntuk">Untuk Siapa?</label>' +
+                '<input class="form-control" id="orderUntuk" placeholder="Contoh: (nama yang akan dibadalkan)" type="text">' +
+                '<div class="form-text">Nama orang yang akan dibadalkan umrohnya.</div>';
+            } else if (layanan === "wakaf_quran") {
+              extraTarget.innerHTML =
+                '<label class="form-label" for="orderJumlah">Jumlah Mushaf</label>' +
+                '<select class="form-select" id="orderJumlah"><option value="1">1 Mushaf</option><option value="5">5 Mushaf</option><option value="10">10 Mushaf</option><option value="20">20 Mushaf</option><option value="50">50 Mushaf</option></select>';
+            } else if (layanan === "panitia_haji") {
+              extraTarget.innerHTML =
+                '<label class="form-label" for="orderPosisi">Posisi yang Diminati</label>' +
+                '<input class="form-control" id="orderPosisi" placeholder="Contoh: Pembimbing Ibadah / Tenaga Medis" type="text">';
+            } else {
+              extraTarget.innerHTML = "";
+            }
+            new bootstrap.Modal(
+              document.getElementById("orderFormModal"),
+            ).show();
+          });
+        });
+
+        document
+          .getElementById("orderForm")
+          .addEventListener("submit", async function (e) {
+            e.preventDefault();
+            var alertBox = document.getElementById("orderFormAlert");
+            alertBox.classList.add("d-none");
+            var layanan = document.getElementById("orderLayanan").value;
+            var label = document.getElementById("orderLabel").value;
+            var nama = document.getElementById("orderNama").value.trim();
+            var wa = document.getElementById("orderWa").value.trim();
+            var catatan = document.getElementById("orderCatatan").value.trim();
+            if (!nama || !wa) {
+              alertBox.textContent = "Nama dan WhatsApp wajib diisi.";
+              alertBox.classList.remove("d-none");
+              return;
+            }
+            // Collect extra data
+            var extraData = {};
+            if (layanan === "badal_umroh") {
+              extraData.untuk = document.getElementById("orderUntuk")
+                ? document.getElementById("orderUntuk").value.trim()
+                : "";
+            } else if (layanan === "wakaf_quran") {
+              extraData.jumlah = document.getElementById("orderJumlah")
+                ? document.getElementById("orderJumlah").value
+                : "1";
+            } else if (layanan === "panitia_haji") {
+              extraData.posisi = document.getElementById("orderPosisi")
+                ? document.getElementById("orderPosisi").value.trim()
+                : "";
+            }
+            var submitBtn = document.getElementById("orderSubmitBtn");
+            submitBtn.disabled = true;
+            submitBtn.innerHTML =
+              '<span class="spinner-border spinner-border-sm"></span> Memproses...';
+            try {
+              var token = window.HCAuth.getToken();
+              // Save order to backend
+              await window.HCApi.createOrder(
+                {
+                  user_id: user.id,
+                  layanan: layanan,
+                  nama_pemesan: nama,
+                  whatsapp_pemesan: wa,
+                  data_pesanan: extraData,
+                },
+                token,
+              );
+              // Build WhatsApp message
+              var pesan =
+                "Assalamu'alaikum, saya " +
+                nama +
+                " (WA: " +
+                wa +
+                ") ingin memesan jasa *" +
+                label +
+                "*.";
+              if (layanan === "badal_umroh" && extraData.untuk) {
+                pesan += "\nUntuk: " + extraData.untuk;
+              } else if (layanan === "wakaf_quran" && extraData.jumlah) {
+                pesan += "\nJumlah: " + extraData.jumlah + " Mushaf";
+              } else if (layanan === "panitia_haji" && extraData.posisi) {
+                pesan += "\nPosisi yang diminati: " + extraData.posisi;
+              }
+              if (catatan) pesan += "\nCatatan: " + catatan;
+              pesan += "\n\nMohon info paket dan biayanya. Terima kasih.";
+              window.open(
+                "https://wa.me/" +
+                  WA_NUMBER +
+                  "?text=" +
+                  encodeURIComponent(pesan),
+                "_blank",
+              );
+              bootstrap.Modal.getInstance(
+                document.getElementById("orderFormModal"),
+              ).hide();
+              window.HCUtils.showToast(
+                "Pesanan berhasil dikirim! Silakan lanjutkan di WhatsApp.",
+              );
+              loadOrders();
+            } catch (error) {
+              alertBox.textContent = error.message || "Gagal membuat pesanan.";
+              alertBox.classList.remove("d-none");
+            } finally {
+              submitBtn.disabled = false;
+              submitBtn.innerHTML =
+                '<i class="bi bi-whatsapp"></i> Kirim & Lanjut ke WA';
+            }
+          });
+
+        // === Filter Orders ===
+        document
+          .getElementById("orderFilter")
+          .addEventListener("change", renderOrders);
+
+        // === Logout ===
+        document
+          .getElementById("logoutBtn")
+          .addEventListener("click", function () {
+            window.HCAuth.logout();
+            window.location.href = "index.html";
+          });
+
+        // === Tanya Admin WA ===
+        document
+          .getElementById("tanyaAdminBtn")
+          .addEventListener("click", function (e) {
+            var nama = user.nama || "Member";
+            var wa = user.whatsapp || "";
+            var pesan =
+              "Assalamu'alaikum, saya " +
+              nama +
+              " (WA: " +
+              wa +
+              ") ingin bertanya mengenai layanan ManasikGo.";
+            this.href =
+              "https://wa.me/" +
+              WA_NUMBER +
+              "?text=" +
+              encodeURIComponent(pesan);
+          });
+
+        // === Init tab behavior: when clicking service tab, go to Pesan Layanan ===
+        document
+          .querySelectorAll('[data-bs-toggle="pill"]')
+          .forEach(function (tab) {
+            tab.addEventListener("shown.bs.tab", function () {
+              // Refresh orders when switching to status tab
+              if (this.id === "tab-status") {
+                loadOrders();
+              }
+            });
+          });
+
+        // === Init ===
+        renderProfile();
+        loadOrders();
+      });
+    </script>
+  </body>
+</html>

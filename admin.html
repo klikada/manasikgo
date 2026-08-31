@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("manasikgo-theme");
+          if (!t) {
+            t =
+              window.matchMedia &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light";
+          }
+          if (t === "dark") {
+            document.documentElement.classList.add("theme-dark-preload");
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin Panel | ManasikGo</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" href="assets/images/logo.png" type="image/png"><link rel="apple-touch-icon" href="assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/responsive.css" />
+    <link rel="stylesheet" href="assets/css/animation.css" />
+    <link rel="stylesheet" href="assets/css/admin.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"
+    />
+  </head>
+  <body class="admin-body">
+    <div
+      id="authCheckScreen"
+      class="admin-login d-flex align-items-center justify-content-center"
+    >
+      <div class="text-center">
+        <div class="spinner-border text-primary mb-3" role="status"></div>
+        <p class="lead-muted small mb-0">Memeriksa sesi login...</p>
+      </div>
+    </div>
+
+    <div id="adminApp" class="d-none">
+      <nav class="navbar admin-topbar" aria-label="Admin">
+        <div class="container-fluid">
+          <a class="navbar-brand d-flex align-items-center" href="index.html"
+            ><span class="brand-mark"><i class="bi bi-compass"></i></span
+            >ManasikGo <span class="badge-soft ms-2">Admin</span></a
+          >
+          <div class="d-flex align-items-center gap-2">
+            <div class="admin-user-chip d-none d-sm-flex" id="adminUserChip">
+              <span class="admin-user-chip-avatar" id="adminUserChipAvatar"
+                >?</span
+              >
+              <span class="admin-user-chip-info">
+                <span class="admin-user-chip-name" id="adminUserChipName"
+                  >Memuat...</span
+                >
+                <span
+                  class="admin-user-chip-role"
+                  id="adminUserChipRole"
+                ></span>
+              </span>
+            </div>
+            <button
+              class="btn btn-outline-light btn-sm"
+              type="button"
+              data-theme-toggle
+              aria-label="Ganti tema"
+            >
+              <i data-theme-icon class="bi bi-moon-stars"></i>
+            </button>
+            <a
+              class="btn btn-outline-light btn-sm"
+              href="index.html"
+              target="_blank"
+              ><i class="bi bi-box-arrow-up-right"></i> Lihat Situs</a
+            >
+            <button class="btn btn-light btn-sm" id="logoutBtn" type="button">
+              <i class="bi bi-box-arrow-right"></i> Keluar
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <div class="admin-layout">
+        <button
+          class="btn btn-outline-primary d-lg-none admin-sidebar-toggle m-3"
+          type="button"
+          id="sidebarToggle"
+        >
+          <i class="bi bi-list"></i> Menu Konten
+        </button>
+        <aside class="admin-sidebar" id="adminSidebar"></aside>
+
+        <main class="admin-content">
+          <div id="dashboardView">
+            <div class="mb-4">
+              <span class="eyebrow">Beranda</span>
+              <h1 class="h4 fw-bold mb-1" id="dashboardGreeting">
+                Selamat datang
+              </h1>
+              <p class="lead-muted small mb-0" id="dashboardSubtitle"></p>
+            </div>
+            <div class="admin-stat-grid" id="dashboardStats">
+              <div class="text-center py-5 w-100">
+                <div class="spinner-border text-primary"></div>
+              </div>
+            </div>
+            <div class="admin-quick-grid" id="dashboardQuick"></div>
+            <div class="surface p-3 p-md-4" id="dashboardRecent"></div>
+          </div>
+
+          <div id="contentView" class="d-none">
+            <div
+              class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3"
+            >
+              <div>
+                <span class="eyebrow" id="activeSheetLabel">Konten</span>
+                <h1 class="h4 fw-bold mb-0" id="activeSheetTitle">
+                  Pilih jenis konten
+                </h1>
+              </div>
+              <div class="d-flex gap-2">
+                <input
+                  class="form-control form-control-sm"
+                  id="searchInput"
+                  type="search"
+                  placeholder="Cari..."
+                  style="max-width: 200px"
+                />
+                <button
+                  class="btn btn-primary btn-sm"
+                  id="addBtn"
+                  type="button"
+                >
+                  <i class="bi bi-plus-lg"></i> Tambah Baru
+                </button>
+              </div>
+            </div>
+            <div
+              id="adminAlert"
+              class="alert py-2 small d-none"
+              role="alert"
+            ></div>
+            <div class="table-responsive surface">
+              <table class="table table-hover align-middle mb-0" id="dataTable">
+                <thead>
+                  <tr id="tableHeadRow"></tr>
+                </thead>
+                <tbody id="tableBody">
+                  <tr>
+                    <td class="text-center py-5 lead-muted">
+                      Pilih salah satu jenis konten di menu.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="usersView" class="d-none">
+            <div
+              class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3"
+            >
+              <div>
+                <span class="eyebrow">Akun</span>
+                <h1 class="h4 fw-bold mb-0">Pengguna</h1>
+              </div>
+              <button
+                class="btn btn-primary btn-sm"
+                id="addUserBtn"
+                type="button"
+              >
+                <i class="bi bi-person-plus"></i> Tambah Pengguna
+              </button>
+            </div>
+            <div
+              id="usersAlert"
+              class="alert py-2 small d-none"
+              role="alert"
+            ></div>
+            <div class="table-responsive surface">
+              <table class="table table-hover align-middle mb-0">
+                <thead>
+                  <tr>
+                    <th>Nama</th>
+                    <th>Email</th>
+                    <th>WhatsApp</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th class="text-end">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="usersTableBody">
+                  <tr>
+                    <td colspan="6" class="text-center py-5 lead-muted">
+                      Memuat data pengguna...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div id="profileView" class="d-none">
+            <div
+              class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3"
+            >
+              <div>
+                <span class="eyebrow">Akun</span>
+                <h1 class="h4 fw-bold mb-0">Profil Saya</h1>
+              </div>
+            </div>
+            <div
+              id="profileAlert"
+              class="alert alert-danger py-2 small d-none"
+              role="alert"
+            ></div>
+            <div class="surface p-3 p-md-4" style="max-width: 560px">
+              <form id="profileForm">
+                <div class="mb-3">
+                  <label class="form-label small fw-bold"
+                    >Foto Profil (Avatar Penulis)</label
+                  >
+                  <div class="d-flex align-items-center gap-3 flex-wrap">
+                    <img
+                      id="profileAvatarPreview"
+                      class="image-field-preview rounded-circle"
+                      style="
+                        width: 72px;
+                        height: 72px;
+                        object-fit: cover;
+                        border-radius: 50%;
+                      "
+                      src="assets/images/article-placeholder.svg"
+                      alt="Pratinjau avatar"
+                    />
+                    <div class="flex-grow-1" style="min-width: 220px">
+                      <input
+                        class="form-control form-control-sm mb-2"
+                        id="profileFotoUrl"
+                        type="text"
+                        placeholder="Tempel link foto (https://... atau link share Google Drive)"
+                      />
+                      <input
+                        class="form-control form-control-sm"
+                        id="profileFotoUpload"
+                        type="file"
+                        accept="image/*"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-text">
+                    Tempel link foto dari internet (termasuk link share
+                    Google Drive), atau unggah langsung dari perangkat. Foto
+                    ini akan tampil sebagai avatar di samping nama Anda pada
+                    setiap kartu &amp; halaman detail artikel yang kolom
+                    "Penulis"-nya sama dengan nama akun ini.
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label small fw-bold">Nama</label>
+                  <input class="form-control" id="profileNama" required />
+                  <div class="form-text">
+                    Nama ini harus sama persis dengan yang diisi di kolom
+                    "Penulis" saat menulis artikel, supaya avatar bisa
+                    dicocokkan otomatis.
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label small fw-bold">WhatsApp</label>
+                  <input class="form-control" id="profileWhatsapp" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label small fw-bold">Role</label>
+                  <div><span class="badge-soft" id="profileRoleBadge"></span></div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label small fw-bold"
+                    >Password Baru (opsional)</label
+                  >
+                  <input
+                    class="form-control"
+                    id="profilePassword"
+                    type="password"
+                    minlength="8"
+                  />
+                  <div class="form-text">
+                    Kosongkan jika tidak ingin mengubah password.
+                  </div>
+                </div>
+                <button
+                  class="btn btn-primary btn-sm"
+                  id="profileSubmitBtn"
+                  type="submit"
+                >
+                  <i class="bi bi-check2"></i> Simpan Profil
+                </button>
+              </form>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <div class="modal fade" id="userFormModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title h5" id="userFormModalTitle">
+              Tambah Pengguna
+            </h2>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Tutup"
+            ></button>
+          </div>
+          <form id="userEntryForm">
+            <div class="modal-body">
+              <div
+                id="userFormAlert"
+                class="alert alert-danger py-2 small d-none"
+              ></div>
+              <input type="hidden" id="userFormId" />
+              <div class="mb-3">
+                <label class="form-label" for="userFormNama">Nama</label>
+                <input class="form-control" id="userFormNama" required />
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="userFormEmail">Email</label>
+                <input
+                  class="form-control"
+                  id="userFormEmail"
+                  type="email"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="userFormWhatsapp"
+                  >WhatsApp</label
+                >
+                <input class="form-control" id="userFormWhatsapp" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="userFormRole">Role</label>
+                <select class="form-select" id="userFormRole">
+                  <option value="member">Member</option>
+                  <option value="penulis">Pengelola Konten (Penulis)</option>
+                  <option value="petugas_badal">
+                    Petugas Badal (Live Tracking)
+                  </option>
+                  <option value="super_admin">Super Admin</option>
+                </select>
+                <div class="form-text">
+                  Untuk role "Petugas Badal": isi nama akun ini
+                  <strong>sama persis</strong> dengan nama petugas di menu
+                  Layanan &rarr; Petugas Badal, supaya pesanan yang
+                  ditugaskan bisa muncul di dashboard petugasnya
+                  (<code>petugas-badal.html</code>).
+                </div>
+              </div>
+              <div class="mb-3">
+                <label
+                  class="form-label"
+                  for="userFormPassword"
+                  id="userFormPasswordLabel"
+                  >Password</label
+                >
+                <input
+                  class="form-control"
+                  id="userFormPassword"
+                  type="password"
+                  minlength="8"
+                />
+                <div class="form-text" id="userFormPasswordHint">
+                  Minimal 8 karakter.
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-outline-secondary"
+                data-bs-dismiss="modal"
+              >
+                Batal
+              </button>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                id="userFormSubmitBtn"
+              >
+                <i class="bi bi-check2"></i> Simpan
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal cepat "Terima & Tugaskan Petugas" (khusus Pesanan Badal Umroh) -->
+    <div class="modal fade" id="assignPetugasModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title h5">
+              <i class="bi bi-person-check text-success"></i> Terima Pesanan
+              &amp; Tugaskan Petugas
+            </h2>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Tutup"
+            ></button>
+          </div>
+          <form id="assignPetugasForm">
+            <div class="modal-body">
+              <div
+                id="assignPetugasAlert"
+                class="alert alert-danger py-2 small d-none"
+              ></div>
+              <input type="hidden" id="assignPesananId" />
+              <p class="small lead-muted mb-3" id="assignPesananInfo">-</p>
+              <div class="mb-3">
+                <label class="form-label" for="assignPetugasSelect"
+                  >Pilih Petugas Badal</label
+                >
+                <select
+                  class="form-select"
+                  id="assignPetugasSelect"
+                  required
+                ></select>
+                <div class="form-text">
+                  Daftar diambil dari menu Layanan &rarr; Petugas Badal.
+                  Kalau nama yang dicari belum ada, tambahkan dulu di menu
+                  tersebut.
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="assignTanggalHijri"
+                  >Tanggal Pelaksanaan (Hijriah)</label
+                >
+                <input
+                  class="form-control"
+                  id="assignTanggalHijri"
+                  placeholder='Contoh: "12 Rabiul Awal 1448 H" (boleh dikosongkan dulu)'
+                />
+              </div>
+              <p class="small lead-muted mb-0">
+                <i class="bi bi-info-circle text-primary"></i> Menyimpan di
+                sini otomatis mengubah status pesanan menjadi
+                <strong>"diproses"</strong> dan langsung memunculkannya di
+                dashboard petugas terpilih untuk live tracking.
+              </p>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-outline-secondary"
+                data-bs-dismiss="modal"
+              >
+                Batal
+              </button>
+              <button
+                type="submit"
+                class="btn btn-success"
+                id="assignPetugasSubmitBtn"
+              >
+                <i class="bi bi-check2"></i> Terima &amp; Simpan
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="formModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title h5" id="formModalTitle">Tambah Data</h2>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Tutup"
+            ></button>
+          </div>
+          <form id="entryForm">
+            <div class="modal-body" id="formFields"></div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-outline-secondary"
+                data-bs-dismiss="modal"
+              >
+                Batal
+              </button>
+              <button type="submit" class="btn btn-primary" id="formSubmitBtn">
+                <i class="bi bi-check2"></i> Simpan
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast-container position-fixed top-0 end-0 p-3"></div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      defer
+    ></script>
+    <script src="assets/js/api.js" defer></script>
+    <script src="assets/js/auth.js" defer></script>
+    <script src="assets/js/darkmode.js" defer></script>
+    <script src="assets/js/admin.js" defer></script>
+  </body>
+</html>
