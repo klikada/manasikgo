@@ -160,14 +160,14 @@
               </div>
             </div>
 
-            <a class="tab-btn tab-btn-link" href="pendaftaran-haji.html">
+            <button class="tab-btn" data-tab="pendaftaran" id="tabPendaftaranBtn">
               <span class="ic"><i class="bi bi-pencil-square"></i></span>Cara
-              Pendaftaran<span class="ext"><i class="bi bi-box-arrow-up-right"></i></span>
-            </a>
-            <a class="tab-btn tab-btn-link" href="teknis-pelaksanaan-haji.html">
+              Pendaftaran
+            </button>
+            <button class="tab-btn" data-tab="teknis" id="tabTeknisBtn">
               <span class="ic"><i class="bi bi-signpost-split"></i></span>Teknis
-              Pelaksanaan<span class="ext"><i class="bi bi-box-arrow-up-right"></i></span>
-            </a>
+              Pelaksanaan
+            </button>
             <button class="tab-btn" data-tab="ketentuan">
               <span class="ic"><i class="bi bi-list-check"></i></span>Ketentuan
               Haji
@@ -191,26 +191,11 @@
               <div>
                 <h2>Pengertian Haji</h2>
                 <div class="sub">
-                  Menuju Baitullah untuk menyempurnakan rukun Islam kelima.
+                  Definisi, dasar hukum, dan perbedaannya dengan umrah.
                 </div>
               </div>
             </div>
-            <div class="card">
-              <p>
-                Haji adalah berkunjung ke Baitullah (Ka'bah) di Makkah untuk
-                melaksanakan amalan ibadah tertentu pada waktu tertentu, dengan
-                syarat, rukun, dan ketentuan yang telah ditetapkan. Haji
-                merupakan rukun Islam kelima dan wajib bagi mereka yang mampu
-                (<em>istitha'ah</em>).
-              </p>
-              <p>
-                Rangkaian haji meliputi ihram, wukuf di Arafah, mabit di
-                Muzdalifah dan Mina, melontar jumrah, tawaf, sa'i, hingga
-                tahallul. Pilih salah satu jenis haji melalui tab
-                <strong>Jenis Haji</strong> untuk melihat alur lengkapnya.
-              </p>
-            </div>
-          </section>
+           
 
           <section class="panel" id="panel-jenis">
             <div class="panel-head">
@@ -240,32 +225,69 @@
             </div>
 
             <div class="type-panel active" id="type-tamattu">
-              <div class="card type-intro">
-                <p>
-                  Pada Haji Tamattu', jamaah melaksanakan umrah terlebih dahulu
-                  pada bulan-bulan haji, lalu bertahallul. Setelah itu, pada 8
-                  Dzulhijjah, jamaah berihram kembali untuk menunaikan haji.
-                  Jenis ini paling umum dipilih jamaah Indonesia dan dikenakan
-                  dam.
-                </p>
-              </div>
+            
             </div>
             <div class="type-panel" id="type-ifrad">
-              <div class="card type-intro">
-                <p>
-                  Pada Haji Ifrad, jamaah berihram untuk haji tanpa didahului
-                  umrah. Jamaah tetap berihram hingga seluruh rangkaian haji
-                  selesai. Jenis ini tidak mewajibkan dam.
-                </p>
-              </div>
+             
             </div>
             <div class="type-panel" id="type-qiran">
-              <div class="card type-intro">
-                <p>
-                  Pada Haji Qiran, jamaah meniatkan haji dan umrah sekaligus
-                  dalam satu ihram. Gabungan niat ini dikenakan dam.
-                </p>
+            
+            </div>
+          </section>
+
+
+
+          <!-- Cara Pendaftaran Haji bersifat statis dan dirender oleh
+               assets/js/pendaftaran.js. Panel ini sengaja memiliki ID tetap
+               agar tata-cara.js dapat mempertahankannya saat data API dirender. -->
+          <section class="panel" id="panel-pendaftaran">
+            <div class="panel-head">
+              <span
+                class="panel-icon"
+                style="background: var(--tc-emerald-tint); color: var(--tc-emerald-deep);"
+                ><i class="bi bi-pencil-square"></i
+              ></span>
+              <div>
+                <h2>Cara Pendaftaran Haji</h2>
+                <div class="sub">
+                  Langkah pendaftaran haji reguler dari pembukaan tabungan
+                  hingga memperoleh nomor porsi.
+                </div>
               </div>
+            </div>
+            <div id="pendaftaranContent"></div>
+          </section>
+
+          <section class="panel" id="panel-teknis">
+            <div class="panel-head">
+              <span
+                class="panel-icon"
+                style="
+                  background: var(--tc-gold-soft);
+                  color: var(--tc-gold-deep);
+                "
+                ><i class="bi bi-signpost-split"></i
+              ></span>
+              <div>
+                <h2>Teknis Pelaksanaan Haji</h2>
+                <div class="sub">
+                  Setelah menyelesaikan proses pendaftaran dan memperoleh nomor
+                  porsi, jamaah memasuki tahap persiapan pelaksanaan ibadah
+                  haji.
+                </div>
+              </div>
+            </div>
+
+            <!-- Konten teknis pelaksanaan (tahap ADMINISTRATIF sebelum
+                 berangkat: fikih, paspor, kesehatan, pelunasan, visa)
+                 bersifat statis dan dirender dari
+                 assets/js/teknis-pelaksanaan.js (bukan dari Admin
+                 Panel/API), mengikuti dokumen resmi "TEKNIS PELAKSANAAN
+                 HAJI TERBARU". Lihat renderTataCaraHeader() di
+                 tata-cara.js yang melindungi panel ini dari penimpaan
+                 innerHTML. -->
+            <div id="teknisContent">
+              <div class="text-center py-4 lead-muted">Memuat...</div>
             </div>
           </section>
 
@@ -311,71 +333,9 @@
               <div class="text-center py-4 lead-muted">Memuat...</div>
             </div>
           </section>
-
-          <div class="text-center py-5 lead-muted" data-loading-placeholder>
-            <div
-              class="spinner-border text-primary mb-3"
-              role="status"
-              aria-hidden="true"
-            ></div>
-            <p class="mb-0">Memuat...</p>
-          </div>
         </div>
 
-        <div class="surface p-3 p-lg-4 mt-4">
-          <h2 class="h5 fw-bold mb-1">
-            <i class="bi bi-signpost-split text-primary"></i> Pelajari Lebih
-            Lanjut
-          </h2>
-          <p class="lead-muted mb-3">
-            Dua panduan berikut dipisah ke halaman sendiri agar lebih mudah
-            dibaca dan dibagikan.
-          </p>
-          <div class="subpage-links">
-            <a class="card subpage-link-card" href="pendaftaran-haji.html">
-              <span
-                class="panel-icon"
-                style="
-                  background: var(--tc-emerald-tint);
-                  color: var(--tc-emerald-deep);
-                "
-                ><i class="bi bi-pencil-square"></i
-              ></span>
-              <span>
-                <h3>Cara Pendaftaran Haji</h3>
-                <p>
-                  Langkah mendaftar haji reguler, dari tabungan haji hingga
-                  keberangkatan.
-                </p>
-                <span class="go"
-                  >Baca panduan pendaftaran
-                  <i class="bi bi-arrow-right"></i
-                ></span>
-              </span>
-            </a>
-            <a class="card subpage-link-card" href="teknis-pelaksanaan-haji.html">
-              <span
-                class="panel-icon"
-                style="
-                  background: var(--tc-gold-soft);
-                  color: var(--tc-gold-deep);
-                "
-                ><i class="bi bi-signpost-split"></i
-              ></span>
-              <span>
-                <h3>Teknis Pelaksanaan Ibadah</h3>
-                <p>
-                  Urutan rinci hari demi hari: ihram, wukuf, mabit, jumrah,
-                  hingga tawaf wada'.
-                </p>
-                <span class="go"
-                  >Baca teknis pelaksanaan
-                  <i class="bi bi-arrow-right"></i
-                ></span>
-              </span>
-            </a>
-          </div>
-        </div>
+
 
         <div class="surface p-4 mt-4">
           <h2 class="h5 fw-bold">
@@ -386,12 +346,6 @@
             lainnya.
           </p>
           <div class="d-flex gap-2 flex-wrap">
-            <a class="btn btn-outline-primary" href="pendaftaran-haji.html"
-              ><i class="bi bi-pencil-square"></i> Cara Pendaftaran</a
-            >
-            <a class="btn btn-outline-primary" href="teknis-pelaksanaan-haji.html"
-              ><i class="bi bi-signpost-split"></i> Teknis Pelaksanaan</a
-            >
             <a class="btn btn-outline-primary" href="tata-cara-umrah.html"
               ><i class="bi bi-building"></i> Tata Cara Umrah</a
             >
@@ -399,7 +353,7 @@
               ><i class="bi bi-moon-stars"></i> Kumpulan Doa</a
             >
             <a class="btn btn-outline-primary" href="checklist-perlengkapan.html"
-              ><i class="bi bi-clipboard-check"></i> Persiapan Haji</a
+              ><i class="bi bi-clipboard-check"></i> Checklist Perlengkapan</a
             >
             <a class="btn btn-outline-primary" href="istilah.html"
               ><i class="bi bi-journal-text"></i> Kamus Istilah</a
@@ -429,6 +383,13 @@
     <script src="assets/js/darkmode.js" defer></script>
     <script src="assets/js/layanan.js" defer></script>
     <script src="assets/js/ibadah.js" defer></script>
-    <script src="assets/js/tata-cara.js" defer></script>
+    <script src="assets/js/tata-cara.js?v=20260902-tabcenter" defer></script>
+    <!-- Cara Pendaftaran Haji = STATIS.
+         File ini sengaja dimuat sebagai script biasa, bukan diinjeksi
+         secara dinamis, agar selesai dirender sebelum tata-cara.js (defer)
+         mulai mengganti konten dari API. Sumber data pendaftaran hanya
+         assets/js/pendaftaran.js. -->
+    <script src="assets/js/pendaftaran.js?v=20260823-1"></script>
+    <script src="assets/js/teknis-pelaksanaan.js"></script>
   </body>
 </html>
