@@ -4,12 +4,11 @@
  * Konten ini SENGAJA statis (bukan dari Admin Panel/API) karena mengikuti
  * alur resmi pendaftaran haji reguler Kementerian Agama. Satu-satunya
  * sumber teksnya ada di file ini (assets/js/pendaftaran.js) — halaman
- * tata-cara-haji.html hanya menyediakan kontainer kosong
+ * tata-cara-haji.html hanya menyediakan kontainer kosong saja
  * (#pendaftaranContent) supaya tidak ada konten yang dobel/ditulis dua
  * kali di tempat berbeda. Sebelumnya konten ini juga ada sebagai halaman
  * terpisah "pendaftaran-haji.html" — halaman itu sudah dihapus dan
  * digabung ke sini supaya tidak ada duplikasi.
- *
  * Panel ini dilindungi dari penimpaan innerHTML oleh data TataCara/API,
  * lihat renderTataCaraHeader() di assets/js/tata-cara.js.
  */
