@@ -1,4 +1,6 @@
-
+/**
+ * Data & render statis "Teknis Pelaksanaan
+ */
 const teknisPelaksanaanHajiData = [
   {
     nomor: 1,
