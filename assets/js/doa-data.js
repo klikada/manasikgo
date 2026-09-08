@@ -529,6 +529,54 @@ const DoaStaticData = {
         arti: "Dan masukkanlah kami ke dalam surga bersama orang-orang yang berbakti, wahai Yang Mahaperkasa, wahai Yang Maha Pengampun, wahai Tuhan seluruh alam.",
         status: "Publish",
       },
+      {
+        id: "dp-036",
+        kategori: "Tawaf",
+        putaran: 7,
+        urutan: 6,
+        variant: "sunnah",
+        judul_bagian: "Do'a Sesudah Melaksanakan Thawaf",
+        // keterangan:
+        //   "Lorem ipsum dolor sit amet, bacaan sunnah tambahan (opsional) — silakan ganti dengan teks sebenarnya.",
+        arab: "اللَّهُمَّ إِنَّكَ تَعْلَمُ سِرِّي وَعَلَانِيَتِي فَاقْبَلْ مَعْذِرَتِي، وَتَعْلَمُ حَاجَتِي فَأَعْطِنِي سُؤْلِي، وَتَعْلَمُ مَا فِي نَفْسِي فَاغْفِرْ لِي ذُنُوبِي. اللَّهُمَّ إِنِّي أَسْأَلُكَ إِيمَانًا يُبَاشِرُ قَلْبِي، وَيَقِينًا صَادِقًا حَتَّى أَعْلَمَ أَنَّهُ لَا يُصِيبُنِي إِلَّا مَا كَتَبْتَ لِي، رِضًا مِنْكَ بِمَا قَسَمْتَ لِي. أَنْتَ وَلِيِّي فِي الدُّنْيَا وَالْآخِرَةِ، تَوَفَّنِي مُسْلِمًا وَأَلْحِقْنِي بِالصَّالِحِينَ. اللَّهُمَّ لَا تَدَعْ لَنَا فِي مَقَامِنَا هَذَا ذَنْبًا إِلَّا غَفَرْتَهُ، وَلَا هَمًّا إِلَّا فَرَّجْتَهُ، وَلَا حَاجَةً إِلَّا قَضَيْتَهَا وَيَسَّرْتَهَا. فَيَسِّرْ أُمُورَنَا، وَاشْرَحْ صُدُورَنَا، وَنَوِّرْ قُلُوبَنَا، وَاخْتِمْ بِالصَّالِحَاتِ أَعْمَالَنَا. اللَّهُمَّ تَوَفَّنَا مُسْلِمِينَ وَأَحْيِنَا مُسْلِمِينَ، وَأَلْحِقْنَا بِالصَّالِحِينَ، غَيْرَ خَزَايَا وَلَا مَفْتُونِينَ.",
+        latin:
+          "Allāhumma yā Rabbal-Baitil-‘Atīq, a‘tiq riqābanā wa riqāba ābā’inā wa ummahātinā wa ikhwāninā wa awlādinā minan-nār, yā Dzal-Jūdi wal-Karami wal-Faḍli wal-Manni wal-‘Aṭā’i wal-Iḥsān. Allāhumma aḥsin ‘āqibatanā fil-umūri kullihā, wa ajirnā min khizyid-dunyā wa ‘adzābil-ākhirah. Allāhumma innī ‘abduka wabnu ‘abdik, wāqifun taḥta bābik, multazimun bi-a‘ṭābik, mutadzallilun baina yadaik, arjū raḥmatak, wa akhsyā ‘adzābak, yā Qadīmal-Iḥsān. Allāhumma innī as’aluka an tarfa‘a dzikrī, wa taḍa‘a wizrī, wa tuṣliḥa amrī, wa tuṭahhira qalbī, wa tunawwira lī fī qabrī, wa taghfira lī dzanbī, wa as’alukad-darajātal-‘ulā minal-jannah.",
+        arti: "Ya Allah, wahai Tuhan Baitullah yang suci, bebaskanlah kami, ayah-ayah kami, ibu-ibu kami, saudara-saudara kami, dan anak-anak kami dari api neraka. Wahai Zat Yang Maha Pemurah, Maha Mulia, memiliki keutamaan, karunia, pemberian, dan kebaikan. Ya Allah, perbaikilah akhir seluruh urusan kami dan lindungilah kami dari kehinaan dunia dan azab akhirat. Ya Allah, sesungguhnya aku adalah hamba-Mu dan anak dari hamba-Mu. Aku berdiri di bawah pintu-Mu, berpegang pada ambang pintu-Mu, merendahkan diri di hadapan-Mu. Aku mengharapkan rahmat-Mu dan takut akan azab-Mu, wahai Zat Yang sejak dahulu senantiasa memberikan kebaikan. Ya Allah, aku memohon kepada-Mu agar Engkau meninggikan sebutanku, menghapus bebanku, memperbaiki urusanku, menyucikan hatiku, menerangi kuburku, mengampuni dosaku, dan aku memohon kepada-Mu derajat-derajat yang tinggi di dalam surga",
+        // sumber: "Lorem ipsum — HR. Lorem Riwayat (contoh sumber, silakan sesuaikan)",
+        status: "Publish",
+      },
+      {
+        id: "dp-037",
+        kategori: "Tawaf",
+        putaran: 7,
+        urutan: 7,
+        variant: "sunnah",
+        judul_bagian: "Do'a Setelah Shalat Sunnat Di Belakang Maqam Ibrahim ",
+        // keterangan:
+        //   "Lorem ipsum dolor sit amet, bacaan sunnah tambahan (opsional) — silakan ganti dengan teks sebenarnya.",
+        arab: "اللَّهُمَّ إِنَّكَ تَعْلَمُ سِرِّي وَعَلَانِيَتِي فَاقْبَلْ مَعْذِرَتِي، وَتَعْلَمُ حَاجَتِي فَأَعْطِنِي سُؤْلِي، وَتَعْلَمُ مَا فِي نَفْسِي فَاغْفِرْ لِي ذُنُوبِي. اللَّهُمَّ إِنِّي أَسْأَلُكَ إِيمَانًا يُبَاشِرُ قَلْبِي، وَيَقِينًا صَادِقًا حَتَّى أَعْلَمَ أَنَّهُ لَا يُصِيبُنِي إِلَّا مَا كَتَبْتَ لِي، رِضًا مِنْكَ بِمَا قَسَمْتَ لِي. أَنْتَ وَلِيِّي فِي الدُّنْيَا وَالْآخِرَةِ، تَوَفَّنِي مُسْلِمًا وَأَلْحِقْنِي بِالصَّالِحِينَ. اللَّهُمَّ لَا تَدَعْ لَنَا فِي مَقَامِنَا هَذَا ذَنْبًا إِلَّا غَفَرْتَهُ، وَلَا هَمًّا إِلَّا فَرَّجْتَهُ، وَلَا حَاجَةً إِلَّا قَضَيْتَهَا وَيَسَّرْتَهَا. فَيَسِّرْ أُمُورَنَا، وَاشْرَحْ صُدُورَنَا، وَنَوِّرْ قُلُوبَنَا، وَاخْتِمْ بِالصَّالِحَاتِ أَعْمَالَنَا. اللَّهُمَّ تَوَفَّنَا مُسْلِمِينَ وَأَحْيِنَا مُسْلِمِينَ، وَأَلْحِقْنَا بِالصَّالِحِينَ، غَيْرَ خَزَايَا وَلَا مَفْتُونِينَ.",
+        latin:
+          "Allāhumma innaka ta‘lamu sirrī wa ‘alāniyatī faqbal ma‘dziratī, wa ta‘lamu ḥājatī fa-a‘ṭinī su’lī, wa ta‘lamu mā fī nafsī faghfir lī dzunūbī. Allāhumma innī as’aluka īmānan yubāsyiru qalbī, wa yaqīnan ṣādiqan ḥattā a‘lama annahu lā yuṣībunī illā mā katabta lī, riḍan minka bimā qasamta lī. Anta waliyyī fid-dunyā wal-ākhirah, tawaffanī musliman wa alḥiqnī biṣ-ṣāliḥīn. Allāhumma lā tada‘ lanā fī maqāminā hādzā dzanban illā ghafartah, wa lā hamman illā farrajtah, wa lā ḥājatan illā qaḍaitahā wa yassartahā. Fa yassir umūranā, wasyraḥ ṣudūranā, wa nawwir qulūbanā, wakhtim biṣ-ṣāliḥāti a‘mālanā. Allāhumma tawaffanā muslimīna wa aḥyinā muslimīna, wa alḥiqnā biṣ-ṣāliḥīna, ghaira khazāyā wa lā maftūnīn.",
+        arti: "Ya Allah, sesungguhnya Engkau mengetahui rahasiaku dan apa yang tampak dariku, maka terimalah permohonan maafku. Engkau mengetahui kebutuhanku, maka kabulkanlah permohonanku. Engkau mengetahui apa yang ada dalam diriku, maka ampunilah dosa-dosaku. Ya Allah, aku memohon kepada-Mu iman yang menyentuh hatiku dan keyakinan yang benar, sehingga aku mengetahui bahwa tidak ada sesuatu yang menimpaku kecuali apa yang telah Engkau tetapkan untukku, dengan penuh keridaan terhadap apa yang Engkau tetapkan untukku. Engkaulah pelindungku di dunia dan akhirat. Wafatkanlah aku dalam keadaan muslim dan gabungkanlah aku bersama orang-orang saleh. Ya Allah, janganlah Engkau tinggalkan bagi kami di tempat kami ini suatu dosa kecuali Engkau mengampuninya, suatu kesusahan kecuali Engkau melapangkannya, dan suatu kebutuhan kecuali Engkau memenuhinya dan memudahkannya. Maka mudahkanlah urusan kami, lapangkanlah dada kami, terangilah hati kami, dan akhirilah amal-amal kami dengan amal-amal saleh. Ya Allah, wafatkanlah kami dalam keadaan muslim, hidupkanlah kami dalam keadaan muslim, dan gabungkanlah kami bersama orang-orang saleh, tanpa kehinaan dan tanpa menjadi orang-orang yang terkena fitnah.",
+        // sumber: "Lorem ipsum — HR. Lorem Riwayat (contoh sumber, silakan sesuaikan)",
+        status: "Publish",
+      },
+      {
+        id: "dp-038",
+        kategori: "Tawaf",
+        putaran: 7,
+        urutan: 8,
+        variant: "sunnah",
+        judul_bagian: "Do'a Minum Air Zam Zam ",
+        // keterangan:
+        //   "Lorem ipsum dolor sit amet, bacaan sunnah tambahan (opsional) — silakan ganti dengan teks sebenarnya.",
+        arab: "اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِزْقًا وَاسِعًا، وَشِفَاءً مِنْ كُلِّ دَاءٍ وَسَقَمٍ، بِرَحْمَتِكَ يَا أَرْحَمَ الرَّاحِمِينَ",
+        latin:
+          "Allāhumma innī as’aluka ‘ilman nāfi‘an, wa rizqan wāsi‘an, wa syifā’an min kulli dā’in wa saqamin, biraḥmatika yā arḥamar-rāḥimīn.",
+        arti: "Ya Allah, sesungguhnya aku memohon kepada-Mu ilmu yang bermanfaat, rezeki yang luas, dan kesembuhan dari segala penyakit dan sakit, dengan rahmat-Mu, wahai Zat Yang Maha Pengasih di antara para pengasih.",
+        // sumber: "Lorem ipsum — HR. Lorem Riwayat (contoh sumber, silakan sesuaikan)",
+        status: "Publish",
+      },
     ],
     "Sa'i": [
       {
@@ -811,10 +859,26 @@ const DoaStaticData = {
         arti: "Sesungguhnya Safa dan Marwah merupakan sebagian dari syiar Allah. Maka barang siapa berhaji ke Baitullah atau berumrah, tidak ada dosa baginya mengerjakan sa'i antara keduanya. Dan barang siapa dengan kerelaan hati mengerjakan kebajikan, maka sesungguhnya Allah Maha Mensyukuri, Maha Mengetahui.",
         status: "Publish",
       },
+      {
+        id: "sp-022",
+        kategori: "Sa'i",
+        putaran: 7,
+        urutan: 4,
+        variant: "sunnah",
+        judul_bagian: "Do'a Selesai Sa'i",
+        keterangan:
+          "Lorem ipsum dolor sit amet, bacaan sunnah tambahan (opsional) — silakan ganti dengan teks sebenarnya.",
+        arab:"اللَّهُمَّ رَبَّنَا تَقَبَّلْ مِنَّا وَعَافِنَا وَاعْفُ عَنَّا، وَعَلَى طَاعَتِكَ وَشُكْرِكَ أَعِنَّا، وَعَلَى غَيْرِكَ لَا تَكِلْنَا، وَعَلَى الْإِيمَانِ وَالْإِسْلَامِ الْكَامِلِ جَمِيعًا تَوَفَّنَا وَأَنْتَ عَنَّا رَاضٍ. اللَّهُمَّ ارْحَمْنِي بِتَرْكِ الْمَعَاصِي أَبَدًا مَا أَبْقَيْتَنِي، وَارْحَمْنِي أَنْ أَتَكَلَّفَ مَا لَا يَعْنِينِي، وَارْزُقْنِي حُسْنَ النَّظَرِ فِيمَا يُرْضِيكَ عَنِّي، يَا أَرْحَمَ الرَّاحِمِينَ.",
+        latin:
+          "Allāhumma Rabbanā taqabbal minnā wa ‘āfinā wa‘fu ‘annā, wa ‘alā ṭā‘atika wa syukrika a‘innā, wa ‘alā ghairika lā takilnā, wa ‘alal-īmāni wal-islāmil-kāmili jamī‘an tawaffanā wa anta ‘annā rāḍin. Allāhumma rḥamnī bitarkil-ma‘āṣī abadan mā abqaitanī, warḥamnī an atakallafa mā lā ya‘nīnī, warzuqnī ḥusnan-naẓari fīmā yurḍīka ‘annī, yā arḥamar-rāḥimīn.",
+        arti: "Ya Allah, Tuhan kami, terimalah dari kami, berilah kami keselamatan dan maafkanlah kami. Bantulah kami untuk menaati dan mensyukuri-Mu. Jangan Engkau serahkan kami kepada selain-Mu. Wafatkanlah kami dalam keadaan memiliki iman dan Islam yang sempurna, dan dalam keadaan Engkau rida kepada kami. Ya Allah, rahmatilah aku dengan meninggalkan maksiat selama Engkau masih memberiku kehidupan. Rahmatilah aku agar aku tidak membebani diri dengan sesuatu yang tidak bermanfaat bagiku. Karuniakanlah kepadaku kemampuan untuk melihat dan memilih apa yang membuat-Mu rida kepadaku, wahai Zat Yang Maha Pengasih di antara para pengasih.",
+        // sumber: "Lorem ipsum — HR. Lorem Riwayat (contoh sumber, silakan sesuaikan)",
+        status: "Publish",
+      },
     ],
   },
 
-list: {
+  list: {
     // Doa Umum ditampilkan pada halaman doa-umum.html.
     Umum: [
       {
@@ -1055,6 +1119,7 @@ list: {
         sumber: "Al-Quran - QS. Al-Isra’: 80",
         status: "Publish",
       },
+
     ],
     Arafah: [
       {
@@ -1066,6 +1131,7 @@ list: {
         latin:
           "Lā ilāha illallāhu waḥdahu lā syarīka lah, lahul-mulku wa lahul-ḥamdu wa huwa 'alā kulli syai'in qadīr.",
         arti: "Tidak ada sesembahan yang berhak disembah kecuali Allah semata, tidak ada sekutu bagi-Nya, bagi-Nya kerajaan dan segala pujian, dan Dia Maha Berkuasa atas segala sesuatu.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 1 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1078,6 +1144,7 @@ list: {
         latin:
           "Rabbanā zhalamnā anfusanā wa in lam taghfir lanā wa tarḥamnā lanakūnanna minal-khāsirīn.",
         arti: "Ya Tuhan kami, kami telah menzhalimi diri kami sendiri. Jika Engkau tidak mengampuni dan tidak merahmati kami, niscaya kami termasuk orang-orang yang merugi.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 2 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1089,6 +1156,7 @@ list: {
         latin:
           "Allāhumma innī as'alukal-'afwa wal-'āfiyata fid-dunyā wal-ākhirah.",
         arti: "Ya Allah, sesungguhnya aku memohon maaf kepada-Mu dan memohon keselamatan di dunia dan akhirat.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 3 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1099,6 +1167,7 @@ list: {
         arab: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْهُدَى وَالتُّقَى وَالْعَفَافَ وَالْغِنَى",
         latin: "Allāhumma innī as'alukal-hudā wat-tuqā wal-'afāfa wal-ghinā.",
         arti: "Ya Allah, aku memohon kepada-Mu petunjuk, ketaqwaan, penjagaan terhadap kehormatan, dan merasa cukup.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 4 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1111,6 +1180,7 @@ list: {
         latin:
           "Allāhumma innī as'alukats-tsabāta fil-amri wal-'azīmata 'alar-rusyd.",
         arti: "Ya Allah, sesungguhnya aku memohon kepada-Mu keteguhan dalam segala urusan dan tekad yang kuat dalam berbuat lurus.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 5 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1122,6 +1192,7 @@ list: {
         arab: "اللَّهُمَّ مُصَرِّفَ الْقُلُوبِ صَرِّفْ قُلُوبَنَا عَلَى طَاعَتِكَ",
         latin: "Allāhumma muṣarrifal-qulūb, ṣarrif qulūbanā 'alā ṭā'atik.",
         arti: "Ya Allah, yang membolak-balikkan hati, balikanlah hati kami di atas ketaatan kepada-Mu.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 6 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1134,6 +1205,7 @@ list: {
         latin:
           "Allāhumma a'innā 'alā syukrika, wa dzikrika, wa ḥusni 'ibādatik.",
         arti: "Ya Allah, bantulah kami untuk bersyukur kepada-Mu, mengingat-Mu, dan beribadah kepada-Mu dengan sebaik-baiknya.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 7 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1146,6 +1218,7 @@ list: {
         latin:
           "Allāhumma āti nafsī taqwāhā wa zakkihā anta khairu man zakkāhā.",
         arti: "Ya Allah, berikanlah ketaqwaan pada jiwaku dan bersihkanlah jiwaku; sesungguhnya Engkau adalah sebaik-baik Dzat yang membersihkan jiwa.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 8 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1157,6 +1230,7 @@ list: {
         arab: "رَبَّنَا تَقَبَّلْ مِنَّا إِنَّكَ أَنْتَ السَّمِيعُ الْعَلِيمُ",
         latin: "Rabbanā taqabbal minnā innaka antas-samī'ul-'alīm.",
         arti: "Ya Tuhan kami, terimalah (amal) dari kami. Sesungguhnya Engkau Maha Mendengar lagi Maha Mengetahui.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 9 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1169,6 +1243,7 @@ list: {
         latin:
           "Allāhumma innī a'ūdzu bika min jahdil-balā'i, wa darakisy-syaqā'i, wa sū'il-qaḍā'i, wa syamātatil-a'dā'.",
         arti: "Ya Allah, aku berlindung kepada-Mu dari cobaan yang berat, turunnya kesusahan, buruknya ketentuan, dan kegembiraan musuh atas musibah.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 10 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1180,6 +1255,7 @@ list: {
         latin:
           "Rabbi a'ūdzu bika min hamazātisy-syayāṭīn, wa a'ūdzu bika rabbi an yaḥḍurūn.",
         arti: "Ya Rabbku, aku berlindung kepada-Mu dari bisikan-bisikan syetan, dan aku berlindung kepada-Mu wahai Rabbku dari hadirnya syetan-syetan dalam urusanku.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 11 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1191,6 +1267,7 @@ list: {
         latin:
           "Allāhummakfinī biḥalālika 'an ḥarāmik, wa aghninī bifaḍlika 'amman siwāk.",
         arti: "Ya Allah, berilah aku kecukupan dengan rezeki yang halal, sehingga aku tidak memerlukan yang haram, dan berilah aku kekayaan dengan karunia-Mu, sehingga aku tidak memerlukan bantuan selain diri-Mu.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 12 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1202,6 +1279,7 @@ list: {
         latin:
           "Rabbanā hab lanā min azwājinā wa dzurriyyātinā qurrata a'yunin waj'alnā lil-muttaqīna imāmā.",
         arti: "Ya Tuhan kami, anugerahkanlah kepada kami istri-istri dan keturunan kami sebagai penyejuk hati, dan jadikanlah kami imam bagi orang-orang yang bertaqwa.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 13 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1213,6 +1291,7 @@ list: {
         latin:
           "Rabbi hab lī min ladunka dzurriyyatan ṭayyibatan innaka samī'ud-du'ā'.",
         arti: "Ya Rabbku, berikanlah kepadaku dari sisi-Mu keturunan yang baik, sesungguhnya Engkau adalah Dzat Yang Maha Mendengarkan doa.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 14 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1225,6 +1304,7 @@ list: {
         latin:
           "Allāhumma aktsir mālī wa waladī wa bārik lī fīmā a'ṭaitanī wa aṭil ḥayātī 'alā ṭā'atika wa aḥsin 'amalī waghfir lī.",
         arti: "Ya Allah perbanyaklah harta dan anakku serta berkahilah karunia yang Engkau beri. Panjangkanlah umurku dalam ketaatan pada-Mu dan baguskanlah amalku serta ampunilah dosa-dosaku.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 15 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1237,6 +1317,7 @@ list: {
         latin:
           "Allāhumma 'āfinī fī badanī, Allāhumma 'āfinī fī sam'ī, Allāhumma 'āfinī fī baṣarī.",
         arti: "Ya Allah, berikanlah keselamatan pada badanku. Ya Allah, berikanlah keselamatan pada pendengaranku. Ya Allah, berikanlah keselamatan pada penglihatanku.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 16 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1248,6 +1329,7 @@ list: {
         latin:
           "Rabbanā lā tu'ākhidznā in nasīnā au akhṭa'nā ... wa lā tuḥammilnā mā lā ṭāqata lanā bih.",
         arti: "Ya Tuhan kami, janganlah engkau siksa kami jika kami lupa atau kami bersalah... janganlah Engkau bebankan kepada kami sesuatu yang kami tidak mampu.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 17 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1260,6 +1342,7 @@ list: {
         latin:
           "Rabbanā lā tuzigh qulūbanā ba'da idz hadaitanā wa hab lanā min ladunka raḥmatan innaka antal-wahhāb.",
         arti: "Ya Tuhan kami, janganlah Engkau palingkan hati-hati kami setelah Engkau memberi hidayah kepada kami, dan berikanlah rahmat kepada kami dari sisi-Mu.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 18 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1271,6 +1354,7 @@ list: {
         latin:
           "Rabbanaghfir lanā wa li ikhwāninalladzīna sabaqūnā bil-īmāni wa lā taj'al fī qulūbinā ghillan lilladzīna āmanū.",
         arti: "Ya Tuhan kami, ampunilah dosa kami dan janganlah Engkau jadikan di dalam hati kami rasa hasad kepada orang-orang yang beriman.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 19 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1283,6 +1367,7 @@ list: {
         latin:
           "Allāhumma innī a'ūdzu bika minal-baraṣi wal-junūni wal-judzāmi wa min sayyi'il-asqām.",
         arti: "Ya Allah, aku berlindung kepada-Mu dari penyakit belang, gila, kusta dan penyakit-penyakit buruk.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 20 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1294,6 +1379,7 @@ list: {
         latin:
           "Allāhumma rabbas-samāwāti wa rabbal-arḍ ... aqḍi 'annad-daina wa aghninā minal-faqr.",
         arti: "Ya Allah, Rabb bagi langit dan bumi... tunaikanlah hutang kami dan berikanlah kami kecukupan dari kefakiran.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 21 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1306,6 +1392,7 @@ list: {
         latin:
           "Allāhumma innī as'alukal-khaira kullahu 'ājilihi wa ājilihi mā 'alimtu minhu wa mā lam a'lam.",
         arti: "Ya Allah, aku mohon kepada-Mu kebaikan semuanya, yang sekarang maupun yang akan datang, yang aku ketahui maupun yang tidak aku ketahui.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 22 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1317,6 +1404,7 @@ list: {
         latin:
           "Allāhumma bi'ilmikal-ghaiba wa qudratika 'alal-khalqi aḥyinī mā 'alimtal-ḥayāta khairan lī wa tawaffanī idzā 'alimtal-wafāta khairan lī.",
         arti: "Ya Allah, dengan ilmu-Mu terhadap perkara yang ghaib dan dengan kekuasaan-Mu atas ciptaan-Mu, hidupkanlah aku apabila Engkau mengetahui bahwa hidup itu baik bagiku, dan matikanlah aku apabila kematian itu lebih baik bagiku.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 23 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1328,6 +1416,7 @@ list: {
         latin:
           "Allāhumma innī a'ūdzu bika minal-kasali wal-harami wal-maghrami wa min fitnatil-qabri wa 'adzābil-qabri wa min fitnatin-nāri wa 'adzābin-nār.",
         arti: "Ya Allah, aku berlindung kepada-Mu dari rasa malas, kepikunan, hutang, fitnah kubur dan adzab kubur, fitnah neraka dan adzab neraka.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 24 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1340,6 +1429,7 @@ list: {
         latin:
           "Rabbanā faghfir lanā dzunūbanā wa kaffir 'annā sayyi'ātinā wa tawaffanā ma'al-abrār.",
         arti: "Ya Tuhan kami, ampunilah dosa-dosa kami, hapuskanlah kesalahan-kesalahan kami, dan wafatkanlah kami bersama orang-orang yang berbuat kebaikan.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 25 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1351,6 +1441,7 @@ list: {
         latin:
           "Rabbanā atmim lanā nūranā waghfir lanā innaka 'alā kulli syai'in qadīr.",
         arti: "Ya Rabb kami, sempurnakanlah bagi kami cahaya kami dan ampunilah kami. Sesungguhnya Engkau Maha Kuasa atas segala sesuatu.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 26 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1362,6 +1453,7 @@ list: {
         latin:
           "Allāhumma innī a'ūdzu bika minal-bukhli wal-jubni wa a'ūdzu bika an uradda ilā ardzalil-'umuri wa a'ūdzu bika min fitnatid-dunyā wa a'ūdzu bika min 'adzābil-qabr.",
         arti: "Ya Allah, aku berlindung kepada-Mu dari sifat bakhil, pengecut, dikembalikan kepada usia paling hina (pikun), fitnah dunia, dan adzab kubur.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 27 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1374,6 +1466,7 @@ list: {
         latin:
           "Allāhumma innī a'ūdzu bika minal-kasali wal-harami wal-ma'tsami wal-maghrami wa min fitnatil-qabri wa 'adzābil-qabri wa min fitnatin-nāri wa 'adzābin-nār.",
         arti: "Ya Allah, aku berlindung kepada-Mu dari rasa malas dan kepikunan, dari dosa dan hutang berat, dari fitnah kubur dan adzab kubur, dari fitnah neraka dan adzab neraka.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 28 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1385,6 +1478,7 @@ list: {
         latin:
           "Allāhummaj'al lī fī qalbī nūran, wa fī sam'ī nūran, wa fī baṣarī nūran.",
         arti: "Ya Allah, jadikanlah untukku cahaya di dalam hatiku, cahaya di dalam lisanku, cahaya di pendengaranku, cahaya dalam penglihatanku.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 29 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1396,6 +1490,7 @@ list: {
         arab: "رَبَّنَا لَا تُخْزِنَا يَوْمَ الْقِيَامَةِ إِنَّكَ لَا تُخْلِفُ الْمِيعَادَ",
         latin: "Rabbanā lā tukhzinā yaumal-qiyāmati innaka lā tukhliful-mī'ād.",
         arti: "Ya Tuhan kami, janganlah Kau hinakan kami pada hari kiamat. Sesungguhnya Engkau tidak menyelisihi janji.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 30 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1408,6 +1503,7 @@ list: {
         latin:
           "Allāhummaghfir lī dzanbī kullahu diqqahu wa jillahu wa awwalahu wa ākhirahu wa 'alāniyatahu wa sirrahu.",
         arti: "Ya Allah, ampunilah dosaku seluruhnya, yang kecil maupun yang besar, yang awal maupun yang akhir, yang dinampakkan maupun yang disembunyikan.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 31 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1420,6 +1516,7 @@ list: {
         latin:
           "Allāhumma innī as'aluka īmānan lā yartaddu wa na'īman lā yanfadu wa murāfaqata Muḥammadin ṣallallāhu 'alaihi wa sallam fī a'lā jannatil-khuld.",
         arti: "Ya Allah, sesungguhnya aku memohon kepada-Mu iman yang tidak akan lepas, nikmat yang tidak akan habis, dan menyertai Muhammad shallallahu alaihi wa sallam di surga yang paling tinggi selama-lamanya.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 32 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1431,6 +1528,7 @@ list: {
         latin:
           "Allāhumma ṣalli 'alā Muḥammadin wa 'alā āli Muḥammadin kamā ṣallaita 'alā Ibrāhīma wa 'alā āli Ibrāhīm.",
         arti: "Ya Allah, berikanlah shalawat kepada Nabi Muhammad dan keluarga beliau, sebagaimana Engkau memberikan shalawat kepada Nabi Ibrahim dan keluarga beliau.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 33 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1443,6 +1541,7 @@ list: {
         latin:
           "Allāhumma innī as'alukal-jannata wa mā qarraba ilaihā min qaulin au 'amal, wa a'ūdzu bika minan-nāri wa mā qarraba ilaihā min qaulin au 'amal.",
         arti: "Ya Allah, aku meminta kepada-Mu surga dan apa yang mendekatkan kepada surga, baik berupa ucapan maupun amalan. Dan aku berlindung kepada-Mu dari neraka dan apa yang mendekatkan kepadanya.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 34 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1455,6 +1554,7 @@ list: {
         latin:
           "Rabbanaṣrif 'annā 'adzāba jahannama inna 'adzābahā kāna gharāmā.",
         arti: "Ya Tuhan kami, jauhkanlah neraka Jahannam dari kami; sesungguhnya adzab Jahannam adalah melazimi seseorang.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 35 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1466,6 +1566,7 @@ list: {
         latin:
           "Allāhumma innī as'alukal-jannata wa mā qarraba ilaihā min qaulin au 'amal.",
         arti: "Ya Allah, aku meminta kepada-Mu surga dan apa yang mendekatkan kepada surga, baik berupa ucapan maupun amalan.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 36 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1478,6 +1579,7 @@ list: {
         latin:
           "Allāhumma innī as'aluka īmānan lā yartaddu wa na'īman lā yanfadu wa murāfaqata Muḥammadin fī a'lā jannatil-khuld.",
         arti: "Ya Allah, aku memohon iman yang tidak akan lepas, nikmat yang tidak akan habis, dan menyertai Nabi Muhammad di surga tertinggi selama-lamanya.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 37 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1489,6 +1591,7 @@ list: {
         latin:
           "Rabbanā ātinā fid-dunyā ḥasanatan wa fil-ākhirati ḥasanatan wa qinā 'adzāban-nār.",
         arti: "Ya Tuhan kami, berilah kami kebaikan di dunia dan kebaikan di akhirat, dan peliharalah kami dari siksa neraka.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 38 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1500,6 +1603,7 @@ list: {
         latin:
           "Rabbi hab lī min ladunka dzurriyyatan ṭayyibatan innaka samī'ud-du'ā'.",
         arti: "Ya Rabbku, berikanlah kepadaku dari sisi-Mu keturunan yang baik; sesungguhnya Engkau adalah Dzat Yang Maha Mendengarkan doa.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 39 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1511,6 +1615,7 @@ list: {
         latin:
           "Rabbij'alnī muqīmaṣ-ṣalāti wa min dzurriyyatī rabbanā wa taqabbal du'ā'.",
         arti: "Ya Rabbku, jadikanlah aku dan anak cucuku orang-orang yang tetap mendirikan shalat. Ya Tuhan kami, dan terimalah doaku.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 40 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1523,6 +1628,7 @@ list: {
         latin:
           "Rabbanā hab lanā min azwājinā wa dzurriyyātinā qurrata a'yunin waj'alnā lil-muttaqīna imāmā.",
         arti: "Ya Tuhan kami, anugerahkanlah kepada kami pasangan dan keturunan kami sebagai penyejuk hati, dan jadikanlah kami imam (pemimpin) bagi orang-orang yang bertaqwa.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 41 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1535,6 +1641,7 @@ list: {
         latin:
           "Rabbi auzi'nī an asykura ni'matakal-latī an'amta 'alayya wa 'alā wālidayya wa an a'mala ṣāliḥan tarḍāhu wa aṣliḥ lī fī dzurriyyatī.",
         arti: "Ya Tuhanku, jadikanlah aku orang yang bersyukur dengan nikmat-nikmat-Mu yang telah Engkau berikan kepadaku dan kepada kedua orang tuaku, dan jadikanlah aku beramal dengan amal saleh yang Engkau ridhai dan perbaikilah untukku keturunanku.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 42 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1546,6 +1653,7 @@ list: {
         arab: "رَبِّ ارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا",
         latin: "Rabbir-ḥamhumā kamā rabbayānī ṣaghīrā.",
         arti: "Ya Rabbku, sayangilah keduanya (ibu bapakku) sebagaimana keduanya telah menyayangiku di waktu kecil.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 43 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1557,6 +1665,7 @@ list: {
         latin:
           "Rabbanaghfir lī wa liwālidayya wa lil-mu'minīna yauma yaqūmul-ḥisāb.",
         arti: "Ya Rabbku, ampunilah dosaku dan juga orang tuaku dan juga orang-orang yang beriman di hari perhitungan.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 44 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1569,6 +1678,7 @@ list: {
         latin:
           "Rabbi auzi'nī an asykura ni'matakal-latī an'amta 'alayya wa 'alā wālidayya wa an a'mala ṣāliḥan tarḍāhu wa adkhilnī biraḥmatika fī 'ibādikaṣ-ṣāliḥīn.",
         arti: "Ya Tuhanku, jadikanlah aku bersyukur atas nikmat-Mu yang telah Engkau berikan kepadaku dan kepada kedua orang tuaku, dan jadikanlah aku beramal saleh yang Engkau ridhai, dan masukanlah aku dalam golongan hamba-hamba-Mu yang saleh.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 45 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1581,6 +1691,7 @@ list: {
         latin:
           "Allāhummakfinī biḥalālika 'an ḥarāmik, wa aghninī bifaḍlika 'amman siwāk.",
         arti: "Ya Allah, berilah aku kecukupan dengan rezeki yang halal sehingga aku tidak memerlukan yang haram, dan berilah aku kekayaan dengan karunia-Mu sehingga aku tidak memerlukan bantuan selain diri-Mu.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 46 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1592,6 +1703,7 @@ list: {
         arab: "رَبِّ اشْرَحْ لِي صَدْرِي وَيَسِّرْ لِي أَمْرِي",
         latin: "Rabbisyraḥ lī ṣadrī wa yassir lī amrī.",
         arti: "Ya Rabbku, lapangkanlah untukku dadaku, dan mudahkanlah bagiku urusanku.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 47 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1604,6 +1716,7 @@ list: {
         latin:
           "Allāhumma innī as'aluka 'ilman nāfi'an wa rizqan ṭayyiban wa 'amalan mutaqabbalā.",
         arti: "Ya Allah, aku memohon kepada-Mu ilmu yang bermanfaat, rezeki yang baik, dan amal yang diterima.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 48 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1616,6 +1729,7 @@ list: {
         latin:
           "Rabbanā hab lanā min azwājinā wa dzurriyyātinā qurrata a'yunin waj'alnā lil-muttaqīna imāmā.",
         arti: "Ya Tuhan kami, anugerahkanlah kepada kami pasangan-pasangan dan keturunan kami sebagai penyejuk hati, dan jadikanlah kami imam bagi orang-orang yang bertaqwa.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 49 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1627,6 +1741,7 @@ list: {
         arab: "رَبَّنَا آمَنَّا فَاغْفِرْ لَنَا وَارْحَمْنَا وَأَنْتَ خَيْرُ الرَّاحِمِينَ",
         latin: "Rabbanā āmannā faghfir lanā warḥamnā wa anta khairur-rāḥimīn.",
         arti: "Ya Tuhan kami, kami beriman maka ampunilah dosa kami, dan rahmatilah kami; sesungguhnya Engkau adalah sebaik-baik Dzat yang memberikan kasih sayang.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 50 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1638,6 +1753,7 @@ list: {
         latin:
           "Rabbanaghfir lanā wa li ikhwāninalladzīna sabaqūnā bil-īmāni wa lā taj'al fī qulūbinā ghillan lilladzīna āmanū.",
         arti: "Ya Tuhan kami, ampunilah dosa kami dan janganlah Engkau jadikan di dalam hati kami rasa hasad dan dengki kepada orang-orang yang beriman.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 51 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1650,6 +1766,7 @@ list: {
         latin:
           "Allāhummaghfir lahu warḥamhu wa 'āfihi wa'fu 'anhu wa akrim nuzulahu wa wassi' madkhalahu.",
         arti: "Ya Allah, ampunilah dia, rahmatilah dia, berikanlah 'afiat kepadanya, dan muliakanlah tempat tinggalnya serta luaskanlah tempat masuknya.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 52 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1662,6 +1779,7 @@ list: {
         latin:
           "Rabbanā wa adkhilhum jannāti 'adnin allatī wa'attahum wa man ṣalaḥa min ābā'ihim wa azwājihim wa dzurriyyātihim.",
         arti: "Ya Tuhan kami, dan masukkanlah mereka ke dalam surga 'Adn yang telah Engkau janjikan kepada mereka beserta orang-orang yang saleh dari bapak-bapak, istri-istri, dan keturunan mereka.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 53 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1674,6 +1792,7 @@ list: {
         latin:
           "Rabbanaghfir lanā wa li ikhwāninalladzīna sabaqūnā bil-īmāni wa lā taj'al fī qulūbinā ghillā.",
         arti: "Ya Tuhan kami, ampunilah dosa kami dan saudara-saudara kami dan janganlah Engkau jadikan di dalam hati kami rasa hasad kepada orang-orang yang beriman.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 54 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1686,6 +1805,7 @@ list: {
         latin:
           "Rabbanā ātinā fid-dunyā ḥasanatan wa fil-ākhirati ḥasanatan wa qinā 'adzāban-nār.",
         arti: "Ya Tuhan kami, berilah kami kebaikan di dunia dan kebaikan di akhirat, dan peliharalah kami dari siksa neraka.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 55 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1698,6 +1818,7 @@ list: {
         latin:
           "Allāhumma aḥsin 'āqibatanā fil-umūri kullihā wa ajirnā min khizyid-dunyā wa 'adzābil-ākhirah.",
         arti: "Ya Allah, baguskanlah setiap akhir urusan kami, dan selamatkanlah kami dari kebinasaan di dunia dan dari siksa akhirat.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 56 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1709,6 +1830,7 @@ list: {
         arab: "رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ",
         latin: "Rabbanā hab lanā min azwājinā wa dzurriyyātinā qurrata a'yun.",
         arti: "Ya Tuhan kami, anugerahkanlah kepada kami pasangan-pasangan dan keturunan kami sebagai penyejuk hati.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 57 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1721,6 +1843,7 @@ list: {
         latin:
           "Allāhumma innī as'aluka minal-khairi kullihi 'ājilihi wa ājilih.",
         arti: "Ya Allah, aku mohon kepada-Mu kebaikan semuanya, yang sekarang maupun yang akan datang, yang aku ketahui maupun yang tidak aku ketahui.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 58 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1733,6 +1856,7 @@ list: {
         latin:
           "Allāhumma innī zhalamtu nafsī zhulman katsīran wa lā yaghfirudz-dzunūba illā anta faghfir lī maghfiratan min 'indika warḥamnī.",
         arti: "Ya Allah, sesungguhnya aku menzhalimi diriku dengan kezaliman yang banyak, dan tidak ada yang mengampuni dosa kecuali Engkau, maka ampunilah diriku dan sayangilah aku.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 59 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1743,6 +1867,7 @@ list: {
         arab: "رَبَّنَا اغْفِرْ لَنَا وَلِإِخْوَانِنَا الَّذِينَ سَبَقُونَا بِالْإِيمَانِ",
         latin: "Rabbanaghfir lanā wa li ikhwāninalladzīna sabaqūnā bil-īmān.",
         arti: "Ya Tuhan kami, ampunilah dosa kami dan saudara-saudara kami yang telah mendahului kami dengan keimanan.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 60 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1754,6 +1879,7 @@ list: {
         arab: "رَبِّ زِدْنِي عِلْمًا",
         latin: "Rabbi zidnī 'ilmā.",
         arti: "Ya Rabbku, tambahkanlah ilmu kepadaku.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 61 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1765,6 +1891,7 @@ list: {
         arab: "رَبِّ نَجِّنِي مِنَ الْقَوْمِ الظَّالِمِينَ",
         latin: "Rabbi najjinī minal-qaumizh-zhālimīn.",
         arti: "Ya Tuhanku, selamatkanlah aku dari orang-orang yang zalim.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 62 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1776,6 +1903,7 @@ list: {
         arab: "رَبِّ انْصُرْنِي عَلَى الْقَوْمِ الْمُفْسِدِينَ",
         latin: "Rabbinṣurnī 'alal-qaumil-mufsidīn.",
         arti: "Ya Tuhanku, tolonglah aku (dengan menimpakan azab) atas kaum yang berbuat kerusakan.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 63 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1788,6 +1916,7 @@ list: {
         latin:
           "Rabbij'al hādzal-balada āminan wajnubnī wa baniyya an na'budal-aṣnām.",
         arti: "Ya Tuhanku, jadikanlah negeri ini negeri yang aman dan jauhkanlah aku beserta anak cucuku dari menyembah berhala.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 64 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1799,6 +1928,7 @@ list: {
         arab: "رَبَّنَا لَا تَجْعَلْنَا مَعَ الْقَوْمِ الظَّالِمِينَ",
         latin: "Rabbanā lā taj'alnā ma'al-qaumizh-zhālimīn.",
         arti: "Ya Tuhan kami, janganlah Engkau jadikan kami bersama orang-orang yang zhalim.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 65 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
       {
@@ -1811,6 +1941,7 @@ list: {
         latin:
           "Rabbanā lā taj'alnā fitnatan lilladzīna kafarū waghfir lanā rabbanā innaka antal-'azīzul-ḥakīm.",
         arti: "Ya Tuhan kami, janganlah Engkau jadikan kami (sasaran) fitnah bagi orang-orang kafir. Dan ampunilah kami ya Tuhan kami. Sesungguhnya Engkaulah Yang Maha Perkasa lagi Maha Bijaksana.",
+        sumber: "Lorem ipsum dolor sit amet — HR. Lorem Riwayat 66 (contoh sumber, silakan sesuaikan)",
         status: "Publish",
       },
     ],
