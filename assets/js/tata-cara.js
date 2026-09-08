@@ -30,8 +30,37 @@
     const jenis = jenisHalaman[halaman];
     if (!jenis || !window.HCApi) return;
 
-    const rows = await HCApi.getTataCara(jenis);
-    if (!rows || !rows.length) return;
+    const eyebrowEl = document.querySelector("[data-layanan-eyebrow]");
+    const titleEl = document.querySelector("[data-layanan-title]");
+    const leadEl = document.querySelector("[data-layanan-lead]");
+    const crumbEl = document.querySelector("[data-layanan-crumb]");
+    const sourceEl = document.querySelector("[data-layanan-source]");
+    const bodyEl = document.querySelector("[data-layanan-body]");
+
+    // Pendaftaran Haji dan Teknis Pelaksanaan adalah KONTEN STATIS.
+    // Ambil node sebelum request API dimulai. Dengan begitu bodyEl.innerHTML
+    // tidak pernah bisa menghilangkan node yang dirender oleh file statis.
+    const staticPanelIds = ["panel-pendaftaran", "panel-teknis"];
+    const staticPanels = bodyEl
+      ? staticPanelIds
+          .map((id) => bodyEl.querySelector(`#${id}`))
+          .filter(Boolean)
+      : [];
+    staticPanels.forEach((panel) => panel.remove());
+
+    let rows;
+    try {
+      rows = await HCApi.getTataCara(jenis);
+    } catch (error) {
+      console.info(error?.message || error);
+      staticPanels.forEach((panel) => bodyEl?.appendChild(panel));
+      return;
+    }
+    if (!rows || !rows.length) {
+      staticPanels.forEach((panel) => bodyEl?.appendChild(panel));
+      return;
+    }
+
     const row = rows[0];
     const page = {
       judul: row.judul,
@@ -46,19 +75,73 @@
       .querySelector("meta[name='description']")
       ?.setAttribute("content", (page.ringkasan || "").replace(/<[^>]+>/g, ""));
 
-    const eyebrowEl = document.querySelector("[data-layanan-eyebrow]");
-    const titleEl = document.querySelector("[data-layanan-title]");
-    const leadEl = document.querySelector("[data-layanan-lead]");
-    const crumbEl = document.querySelector("[data-layanan-crumb]");
-    const sourceEl = document.querySelector("[data-layanan-source]");
-    const bodyEl = document.querySelector("[data-layanan-body]");
-
     if (eyebrowEl && page.eyebrow) eyebrowEl.textContent = page.eyebrow;
     if (titleEl && page.judul) titleEl.textContent = page.judul;
     if (leadEl && page.ringkasan) leadEl.innerHTML = page.ringkasan;
     if (crumbEl && page.judul) crumbEl.textContent = page.judul;
     if (sourceEl && page.source) sourceEl.textContent = page.source;
-    if (bodyEl && page.isi) bodyEl.innerHTML = page.isi;
+
+    if (bodyEl && page.isi) {
+      // Data TataCara lama dapat masih menyimpan versi lama Cara Pendaftaran
+      // (misalnya 3 kartu). Itu bukan sumber data yang benar untuk tab ini.
+      // Buang panel pendaftaran/teknis dari HTML API sebelum dimasukkan.
+      const dynamicWrap = document.createElement("div");
+      dynamicWrap.innerHTML = page.isi;
+
+      // Hapus teks petunjuk navigasi yang tidak diperlukan pada halaman Tata Cara.
+      // Hanya elemen yang memuat kalimat tersebut yang dihapus; alur dan konten
+      // lainnya tetap dipertahankan.
+      dynamicWrap.querySelectorAll("p, div, span, small").forEach((el) => {
+        const text = (el.textContent || "").replace(/\s+/g, " ").trim();
+        if (text.startsWith("Klik tombol di atas untuk berpindah topik")) {
+          el.remove();
+        }
+      });
+
+      dynamicWrap
+        .querySelectorAll("#panel-pendaftaran, #panel-teknis")
+        .forEach((panel) => panel.remove());
+
+      // Kompatibilitas dengan data lama yang belum memberi id panel.
+      dynamicWrap.querySelectorAll(".panel").forEach((panel) => {
+        const heading = panel.querySelector("h2, h3");
+        const text = (heading?.textContent || "")
+          .replace(/\s+/g, " ")
+          .trim()
+          .toLowerCase();
+        if (
+          text === "cara pendaftaran haji" ||
+          text === "teknis pelaksanaan haji"
+        ) {
+          panel.remove();
+        }
+      });
+
+      // Rapikan tabel yang mungkin datang dari konten TataCara/API.
+      // Hanya pembungkus/layout yang ditambahkan; isi tabel tidak diubah.
+      dynamicWrap.querySelectorAll("table").forEach((table) => {
+        if (table.parentElement?.classList.contains("tc-table-wrap")) return;
+        const wrap = document.createElement("div");
+        wrap.className = "tc-table-wrap";
+        table.parentNode.insertBefore(wrap, table);
+        wrap.appendChild(table);
+      });
+
+      // Ganti hanya konten yang berasal dari TataCara/API. Node panel statis
+      // (termasuk isi yang sudah dirender pendaftaran.js) tidak pernah dibuat
+      // ulang dari API.
+      bodyEl.innerHTML = dynamicWrap.innerHTML;
+
+      // Kembalikan node statis ASLI, bukan clone. Dengan begitu seluruh isi
+      // #pendaftaranContent dari assets/js/pendaftaran.js tetap utuh.
+      const ketentuanPanel = bodyEl.querySelector("#panel-ketentuan");
+      staticPanels.forEach((panel) => {
+        if (ketentuanPanel) bodyEl.insertBefore(panel, ketentuanPanel);
+        else bodyEl.appendChild(panel);
+      });
+    } else {
+      staticPanels.forEach((panel) => bodyEl?.appendChild(panel));
+    }
   };
 
   const typeInfo = {
@@ -308,13 +391,9 @@
     }
   };
 
-  // Urutan render disengaja: tunggu renderTataCaraHeader() selesai dulu
-  // (ia bisa menimpa SELURUH isi ".content" / [data-layanan-body], yang
-  // juga menjadi induk dari #type-tamattu/#type-ifrad/#type-qiran/
-  // #seg-syarat dkk) sebelum renderJenisHaji() & renderKetentuan()
-  // mengisi sub-panel di dalamnya. Karena semuanya kini berjalan
-  // berurutan dalam satu skrip, tidak ada lagi race condition dengan
-  // skrip lain.
+  // renderTataCaraHeader() lebih dulu mengunci/mengeluarkan panel statis
+  // (Pendaftaran dan Teknis), membersihkan versi lama dari HTML API, lalu
+  // mengembalikannya. Setelah itu barulah panel dinamis diisi.
   document.addEventListener("DOMContentLoaded", async () => {
     try {
       await renderTataCaraHeader();
@@ -323,13 +402,6 @@
     }
     renderJenisHaji();
     renderKetentuan();
-    // Label tombol "Jenis Haji" dibuka sesuai jenis yang sedang terpilih
-    // (dropdown tamattu/ifrad/qiran yang ber-class "selected" saat ini).
-    const activeType = document.querySelector(".dropdown-item.selected");
-    const jenisLabelInit = document.querySelector(".jenis-label");
-    if (activeType && jenisLabelInit && typeInfo[activeType.dataset.type]) {
-      jenisLabelInit.textContent = typeInfo[activeType.dataset.type].title;
-    }
   });
 
   const activatePanel = (tab) => {
@@ -352,6 +424,74 @@
     jenisBtn?.classList.remove("open");
   };
 
+  // Saat tab dipilih, geser bar tab secara horizontal agar tab aktif berada
+  // di area yang nyaman dilihat. Ini hanya mengubah posisi scroll tabbar;
+  // konten, data, dan alur panel tetap sama.
+  const centerActiveTab = (tabBtn) => {
+    const tabbar = document.getElementById("tabbar");
+    if (!tabbar || !tabBtn) return;
+
+    // Pada layar mobile tabbar berupa area yang dapat digeser horizontal.
+    // Gunakan posisi visual elemen terhadap viewport tabbar, bukan hanya
+    // offsetLeft, agar tombol yang semula kepotong tetap benar-benar
+    // bergeser ke area tengah saat dipilih.
+    const target = tabBtn.closest(".dropdown-wrap") || tabBtn;
+    const tabbarRect = tabbar.getBoundingClientRect();
+    const targetRect = target.getBoundingClientRect();
+    const targetCenter = targetRect.left + targetRect.width / 2;
+    const tabbarCenter = tabbarRect.left + tabbarRect.width / 2;
+    const delta = targetCenter - tabbarCenter;
+    const maxScroll = Math.max(0, tabbar.scrollWidth - tabbar.clientWidth);
+    const desired = Math.max(0, Math.min(tabbar.scrollLeft + delta, maxScroll));
+
+    tabbar.scrollTo({
+      left: desired,
+      behavior: "smooth",
+    });
+  };
+
+  // Dropdown "Jenis Haji" sebelumnya position:absolute mengikuti tombolnya
+  // di dalam .tabbar - di sebagian browser/ukuran layar mobile ini bikin
+  // dropdown ikut terpotong/tidak tampil dengan benar (menumpuk dengan
+  // elemen lain). Solusinya disamakan dengan pola yang sudah terbukti
+  // jalan di app.js untuk kotak saran pencarian (positionSuggestBox):
+  // menu dipindah jadi anak langsung <body>, lalu diposisikan dengan
+  // position:fixed mengikuti posisi tombol lewat getBoundingClientRect(),
+  // dihitung ulang tiap kali dibuka & saat scroll/resize selagi tampil.
+  // Dengan begitu dropdown ini SELALU tampil penuh & paling atas, baik
+  // di mobile maupun desktop.
+  const positionedFloatingMenus = new WeakSet();
+  const positionJenisMenu = () => {
+    const jenisBtn = document.getElementById("jenisBtn");
+    const jenisMenu = document.getElementById("jenisMenu");
+    if (!jenisBtn || !jenisMenu) return;
+
+    if (jenisMenu.parentElement !== document.body) {
+      document.body.appendChild(jenisMenu);
+      jenisMenu.classList.add("jenis-menu-floating");
+    }
+
+    const place = () => {
+      const rect = jenisBtn.getBoundingClientRect();
+      const menuWidth = Math.max(rect.width, 220);
+      const maxLeft = window.innerWidth - menuWidth - 12;
+      const left = Math.min(Math.max(rect.left, 12), Math.max(maxLeft, 12));
+      jenisMenu.style.top = `${rect.bottom + 8}px`;
+      jenisMenu.style.left = `${left}px`;
+      jenisMenu.style.minWidth = `${menuWidth}px`;
+    };
+    place();
+
+    if (!positionedFloatingMenus.has(jenisMenu)) {
+      positionedFloatingMenus.add(jenisMenu);
+      const reposition = () => {
+        if (jenisMenu.classList.contains("show")) place();
+      };
+      window.addEventListener("scroll", reposition, true);
+      window.addEventListener("resize", reposition);
+    }
+  };
+
   document.addEventListener("click", (event) => {
     // Tombol tab utama (Pengertian, Jenis Haji, Cara Pendaftaran, dst).
     const tabBtn = event.target.closest(".tab-btn[data-tab]");
@@ -360,12 +500,30 @@
       if (tab === "jenis") {
         const jenisMenu = document.getElementById("jenisMenu");
         const isOpen = jenisMenu?.classList.contains("show");
+        if (!isOpen) positionJenisMenu();
         jenisMenu?.classList.toggle("show", !isOpen);
         tabBtn.classList.toggle("open", !isOpen);
+        // BUG LAMA: klik tombol "Jenis Haji" hanya membuka/menutup
+        // dropdown-nya, tapi TIDAK PERNAH memindahkan tampilan ke panel
+        // Jenis Haji itu sendiri — activatePanel("jenis") sebelumnya
+        // cuma dipanggil saat memilih salah satu item (Tamattu/Ifrad/
+        // Qiran) di dalam dropdown. Akibatnya jika tombol ini diklik,
+        // area konten di bawah tabbar tetap menampilkan panel lama
+        // (mis. "Pengertian") walau dropdown-nya sudah terbuka. Sekarang
+        // panel Jenis Haji langsung ditampilkan (dengan jenis yang
+        // terakhir dipilih/​default Tamattu') begitu tombolnya diklik.
+        activatePanel(tab);
+        centerActiveTab(tabBtn);
         event.stopPropagation();
         return;
       }
+      // BUG LAMA: dropdown "Jenis Haji" yang sedang terbuka tidak pernah
+      // ditutup saat pengguna berpindah ke tab lain (mis. "Cara
+      // Pendaftaran"), sehingga menu-nya masih melayang menutupi panel
+      // yang baru aktif. Tutup dulu di sini sebelum pindah panel.
+      closeDropdown();
       activatePanel(tab);
+      centerActiveTab(tabBtn);
       return;
     }
 
@@ -375,6 +533,7 @@
       const jenisBtn = document.getElementById("jenisBtn");
       const jenisMenu = document.getElementById("jenisMenu");
       const willShow = !jenisMenu?.classList.contains("show");
+      if (willShow) positionJenisMenu();
       jenisMenu?.classList.toggle("show", willShow);
       jenisBtn?.classList.toggle("open", willShow);
       jenisBtn?.scrollIntoView({ behavior: "smooth", block: "nearest" });
@@ -398,11 +557,10 @@
       const subEl = document.getElementById("jenisSub");
       if (titleEl && typeInfo[type]) titleEl.textContent = typeInfo[type].title;
       if (subEl && typeInfo[type]) subEl.textContent = typeInfo[type].sub;
-      // Perbarui label tombol "Jenis Haji" ikut berubah sesuai pilihan.
-      const jenisLabel = document.querySelector(".jenis-label");
-      if (jenisLabel && typeInfo[type]) {
-        jenisLabel.textContent = typeInfo[type].title;
-      }
+      // Label tombol "Jenis Haji" SENGAJA tidak diubah mengikuti jenis
+      // yang dipilih - tetap selalu tertulis "Jenis Haji" apa pun
+      // pilihannya, sesuai permintaan. Yang berubah hanya konten panel
+      // (judul/ringkasan/kartu) di bawahnya.
       closeDropdown();
       activatePanel("jenis");
       return;
@@ -423,8 +581,14 @@
       return;
     }
 
-    // Klik di luar dropdown menutup dropdown yang sedang terbuka.
-    if (!event.target.closest(".dropdown-wrap")) {
+    // Klik di luar dropdown menutup dropdown yang sedang terbuka. Menu
+    // yang sudah dipindah ke <body> (lihat positionJenisMenu) dicek
+    // terpisah lewat #jenisMenu karena posisinya di DOM sudah tidak lagi
+    // di dalam .dropdown-wrap.
+    if (
+      !event.target.closest(".dropdown-wrap") &&
+      !event.target.closest("#jenisMenu")
+    ) {
       closeDropdown();
     }
   });
