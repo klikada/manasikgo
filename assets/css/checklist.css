@@ -15,16 +15,7 @@
    - Warna teks halaman pilihan tidak hijau
    - Card informasi Gelombang menggunakan warna kuning lembut
 
-   TIDAK MENGUBAH:
-   - HTML
-   - isi/data
-   - urutan data
-   - checklist.js
-   - checklist-data.js
-   - filter logic
-   - checkbox logic
-   - navigasi
-========================================================================== */
+
 
 
 /* ==========================================================================
@@ -2612,4 +2603,340 @@ body.dark-mode .hc-pack-page .checklist-wave-info .wave-chip {
   .hc-pack-page .hc-filter-grid--two {
     grid-template-columns: 1fr;
   }
+}
+
+
+/* ==========================================================================
+   FIX DARK MODE — CATATAN CHECKLIST PERLENGKAPAN
+   Hanya warna note/catatan. Isi, checklist, filter, data dan alur tidak diubah.
+   ========================================================================== */
+html.theme-dark-preload body .hc-pack-page .hc-note-card,
+body.dark-mode .hc-pack-page .hc-note-card,
+html.dark .hc-pack-page .hc-note-card,
+html.theme-dark .hc-pack-page .hc-note-card {
+  background: #1c241f !important;
+  border-color: #35433b !important;
+  color: #e6ece8 !important;
+}
+
+html.theme-dark-preload body .hc-pack-page .hc-note-card h2,
+body.dark-mode .hc-pack-page .hc-note-card h2,
+html.dark .hc-pack-page .hc-note-card h2,
+html.theme-dark .hc-pack-page .hc-note-card h2 {
+  color: #eef3ef !important;
+}
+
+html.theme-dark-preload body .hc-pack-page .hc-note-card p,
+body.dark-mode .hc-pack-page .hc-note-card p,
+html.dark .hc-pack-page .hc-note-card p,
+html.theme-dark .hc-pack-page .hc-note-card p {
+  color: #cbd6cf !important;
+}
+
+html.theme-dark-preload body .hc-pack-page .hc-note-card *,
+body.dark-mode .hc-pack-page .hc-note-card *,
+html.dark .hc-pack-page .hc-note-card *,
+html.theme-dark .hc-pack-page .hc-note-card * {
+  border-color: #35433b;
+}
+
+html.theme-dark-preload body .hc-pack-page .hc-note-card .hc-note-icon,
+body.dark-mode .hc-pack-page .hc-note-card .hc-note-icon,
+html.dark .hc-pack-page .hc-note-card .hc-note-icon,
+html.theme-dark .hc-pack-page .hc-note-card .hc-note-icon {
+  background: #26372e !important;
+  color: #9bc9ad !important;
+}
+
+
+/* ==========================================================================
+   FINAL DARK MODE FIX — CATATAN CHECKLIST PERLENGKAPAN
+   Hanya warna kartu Catatan yang diperbaiki.
+   ========================================================================== */
+html.theme-dark-preload body .hc-pack-page .hc-note-card,
+body.dark-mode .hc-pack-page .hc-note-card,
+html.dark .hc-pack-page .hc-note-card,
+html.theme-dark .hc-pack-page .hc-note-card {
+  background: #202923 !important;
+  color: #e6ece8 !important;
+  border-color: #48564d !important;
+}
+
+html.theme-dark-preload body .hc-pack-page .hc-note-card h2,
+body.dark-mode .hc-pack-page .hc-note-card h2,
+html.dark .hc-pack-page .hc-note-card h2,
+html.theme-dark .hc-pack-page .hc-note-card h2 {
+  color: #eef3ef !important;
+}
+
+html.theme-dark-preload body .hc-pack-page .hc-note-card p,
+body.dark-mode .hc-pack-page .hc-note-card p,
+html.dark .hc-pack-page .hc-note-card p,
+html.theme-dark .hc-pack-page .hc-note-card p {
+  color: #d0dad4 !important;
+}
+
+html.theme-dark-preload body .hc-pack-page .hc-note-card .hc-note-icon,
+body.dark-mode .hc-pack-page .hc-note-card .hc-note-icon,
+html.dark .hc-pack-page .hc-note-card .hc-note-icon,
+html.theme-dark .hc-pack-page .hc-note-card .hc-note-icon {
+  background: #2c3b32 !important;
+  color: #a9d2b8 !important;
+}
+
+html.theme-dark-preload body .hc-pack-page .hc-note-card strong,
+body.dark-mode .hc-pack-page .hc-note-card strong,
+html.dark .hc-pack-page .hc-note-card strong,
+html.theme-dark .hc-pack-page .hc-note-card strong {
+  color: #eef3ef !important;
+}
+
+
+/* ==========================================================================
+   FINAL PATCH — DARK MODE CHECKLIST PERLENGKAPAN
+   Hanya memperbaiki warna teks/info pada mode gelap.
+   Isi, filter, checklist, data, dan alur tidak diubah.
+   ========================================================================== */
+
+/* Catatan pada halaman pilihan Checklist Perlengkapan. */
+html.theme-dark-preload .checklist-page:not(.hc-pack-page) > .container > .surface,
+body.dark-mode .checklist-page:not(.hc-pack-page) > .container > .surface,
+html.dark .checklist-page:not(.hc-pack-page) > .container > .surface,
+html.theme-dark .checklist-page:not(.hc-pack-page) > .container > .surface {
+  background: #24382f !important;
+  border-color: #365246 !important;
+  color: #eef5ef !important;
+}
+
+html.theme-dark-preload .checklist-page:not(.hc-pack-page) > .container > .surface h2,
+body.dark-mode .checklist-page:not(.hc-pack-page) > .container > .surface h2,
+html.dark .checklist-page:not(.hc-pack-page) > .container > .surface h2,
+html.theme-dark .checklist-page:not(.hc-pack-page) > .container > .surface h2 {
+  color: #eef5ef !important;
+}
+
+html.theme-dark-preload .checklist-page:not(.hc-pack-page) > .container > .surface p,
+body.dark-mode .checklist-page:not(.hc-pack-page) > .container > .surface p,
+html.dark .checklist-page:not(.hc-pack-page) > .container > .surface p,
+html.theme-dark .checklist-page:not(.hc-pack-page) > .container > .surface p {
+  color: #c9d6ce !important;
+}
+
+html.theme-dark-preload .checklist-page:not(.hc-pack-page) > .container > .surface > div > i,
+body.dark-mode .checklist-page:not(.hc-pack-page) > .container > .surface > div > i,
+html.dark .checklist-page:not(.hc-pack-page) > .container > .surface > div > i,
+html.theme-dark .checklist-page:not(.hc-pack-page) > .container > .surface > div > i {
+  color: #9fd3a8 !important;
+}
+
+/* Informasi cairan pada halaman Perlengkapan Haji/Umrah. */
+html.theme-dark-preload .hc-pack-page .hc-luggage-info,
+body.dark-mode .hc-pack-page .hc-luggage-info,
+html.dark .hc-pack-page .hc-luggage-info,
+html.theme-dark .hc-pack-page .hc-luggage-info {
+  background: #302b20 !important;
+  border-color: #665a3d !important;
+  color: #d9d1b7 !important;
+}
+
+html.theme-dark-preload .hc-pack-page .hc-luggage-info > div,
+body.dark-mode .hc-pack-page .hc-luggage-info > div,
+html.dark .hc-pack-page .hc-luggage-info > div,
+html.theme-dark .hc-pack-page .hc-luggage-info > div {
+  color: #d9d1b7 !important;
+}
+
+html.theme-dark-preload .hc-pack-page .hc-luggage-info strong,
+body.dark-mode .hc-pack-page .hc-luggage-info strong,
+html.dark .hc-pack-page .hc-luggage-info strong,
+html.theme-dark .hc-pack-page .hc-luggage-info strong {
+  color: #eee2bd !important;
+}
+
+html.theme-dark-preload .hc-pack-page .hc-luggage-info > i,
+body.dark-mode .hc-pack-page .hc-luggage-info > i,
+html.dark .hc-pack-page .hc-luggage-info > i,
+html.theme-dark .hc-pack-page .hc-luggage-info > i {
+  color: #d6b97a !important;
+}
+
+/* Teks utama checklist dan label kontrol agar tidak pucat/putih di atas
+   background putih pada dark mode. */
+html.theme-dark-preload .hc-pack-page .hc-filter-panel,
+body.dark-mode .hc-pack-page .hc-filter-panel {
+  color: #eef5ef;
+}
+
+html.theme-dark-preload .hc-pack-page .hc-filter-panel label,
+body.dark-mode .hc-pack-page .hc-filter-panel label,
+html.theme-dark-preload .hc-pack-page .hc-filter-panel h2,
+body.dark-mode .hc-pack-page .hc-filter-panel h2,
+html.theme-dark-preload .hc-pack-page .hc-filter-panel h3,
+body.dark-mode .hc-pack-page .hc-filter-panel h3 {
+  color: #eef5ef !important;
+}
+
+
+/* ==========================================================================
+   DARK MODE COLOR PATCH — CHECKLIST PERLENGKAPAN
+   Hanya memperbaiki kontrol filter dan informasi yang masih memakai
+   background/warna teks terang ketika dark mode.
+   Isi, data, checklist, filter logic, HTML, JS, dan alur TIDAK diubah.
+   ========================================================================== */
+
+/* Panel utama filter tetap gelap. */
+body.dark-mode .hc-pack-page .hc-filter-panel,
+.theme-dark-preload body .hc-pack-page .hc-filter-panel,
+html.dark .hc-pack-page .hc-filter-panel,
+html.theme-dark .hc-pack-page .hc-filter-panel {
+  background: #1d3028 !important;
+  color: #edf3ee !important;
+  border-color: #3d5549 !important;
+}
+
+/* Judul dan label filter. */
+body.dark-mode .hc-pack-page .hc-filter-panel h2,
+body.dark-mode .hc-pack-page .hc-filter-panel h3,
+body.dark-mode .hc-pack-page .hc-filter-panel label,
+.theme-dark-preload body .hc-pack-page .hc-filter-panel h2,
+.theme-dark-preload body .hc-pack-page .hc-filter-panel h3,
+.theme-dark-preload body .hc-pack-page .hc-filter-panel label,
+html.dark .hc-pack-page .hc-filter-panel h2,
+html.dark .hc-pack-page .hc-filter-panel h3,
+html.dark .hc-pack-page .hc-filter-panel label,
+html.theme-dark .hc-pack-page .hc-filter-panel h2,
+html.theme-dark .hc-pack-page .hc-filter-panel h3,
+html.theme-dark .hc-pack-page .hc-filter-panel label {
+  color: #edf3ee !important;
+}
+
+/* Deskripsi kecil di header filter. */
+body.dark-mode .hc-pack-page .hc-filter-head p,
+.theme-dark-preload body .hc-pack-page .hc-filter-head p,
+html.dark .hc-pack-page .hc-filter-head p,
+html.theme-dark .hc-pack-page .hc-filter-head p {
+  color: #c9d5ce !important;
+}
+
+/* Gender & gelombang — hilangkan kotak putih pada dark mode. */
+body.dark-mode .hc-pack-page .hc-segment,
+.theme-dark-preload body .hc-pack-page .hc-segment,
+html.dark .hc-pack-page .hc-segment,
+html.theme-dark .hc-pack-page .hc-segment {
+  background: #17241f !important;
+  border-color: #3f564a !important;
+}
+
+body.dark-mode .hc-pack-page .hc-segment button,
+.theme-dark-preload body .hc-pack-page .hc-segment button,
+html.dark .hc-pack-page .hc-segment button,
+html.theme-dark .hc-pack-page .hc-segment button {
+  background: transparent !important;
+  color: #c6d1ca !important;
+}
+
+body.dark-mode .hc-pack-page .hc-segment button:hover,
+.theme-dark-preload body .hc-pack-page .hc-segment button:hover,
+html.dark .hc-pack-page .hc-segment button:hover,
+html.theme-dark .hc-pack-page .hc-segment button:hover {
+  background: #293d33 !important;
+  color: #f0f5f1 !important;
+}
+
+body.dark-mode .hc-pack-page .hc-segment button.active,
+.theme-dark-preload body .hc-pack-page .hc-segment button.active,
+html.dark .hc-pack-page .hc-segment button.active,
+html.theme-dark .hc-pack-page .hc-segment button.active {
+  background: #9bd2a5 !important;
+  color: #173022 !important;
+}
+
+/* Dropdown penempatan barang. */
+body.dark-mode .hc-pack-page .hc-select-trigger,
+.theme-dark-preload body .hc-pack-page .hc-select-trigger,
+html.dark .hc-pack-page .hc-select-trigger,
+html.theme-dark .hc-pack-page .hc-select-trigger {
+  background: #1d3028 !important;
+  color: #edf3ee !important;
+  border-color: #3f584b !important;
+}
+
+body.dark-mode .hc-pack-page .hc-select-trigger:hover,
+.theme-dark-preload body .hc-pack-page .hc-select-trigger:hover,
+html.dark .hc-pack-page .hc-select-trigger:hover,
+html.theme-dark .hc-pack-page .hc-select-trigger:hover {
+  background: #263c32 !important;
+  color: #ffffff !important;
+}
+
+body.dark-mode .hc-pack-page .hc-select-trigger i,
+.theme-dark-preload body .hc-pack-page .hc-select-trigger i,
+html.dark .hc-pack-page .hc-select-trigger i,
+html.theme-dark .hc-pack-page .hc-select-trigger i {
+  color: #dce8df !important;
+}
+
+/* Menu dan opsi dropdown. */
+body.dark-mode .hc-pack-page .hc-select-menu,
+.theme-dark-preload body .hc-pack-page .hc-select-menu,
+html.dark .hc-pack-page .hc-select-menu,
+html.theme-dark .hc-pack-page .hc-select-menu {
+  background: #1d3028 !important;
+  border-color: #3f584b !important;
+}
+
+body.dark-mode .hc-pack-page .hc-select-option,
+.theme-dark-preload body .hc-pack-page .hc-select-option,
+html.dark .hc-pack-page .hc-select-option,
+html.theme-dark .hc-pack-page .hc-select-option {
+  color: #e1ebe4 !important;
+}
+
+body.dark-mode .hc-pack-page .hc-select-option:hover,
+.theme-dark-preload body .hc-pack-page .hc-select-option:hover,
+html.dark .hc-pack-page .hc-select-option:hover,
+html.theme-dark .hc-pack-page .hc-select-option:hover {
+  background: #294136 !important;
+  color: #ffffff !important;
+}
+
+/* Badge status agar tidak menjadi putih pucat. */
+body.dark-mode .hc-pack-page .hc-current-badge,
+.theme-dark-preload body .hc-pack-page .hc-current-badge,
+html.dark .hc-pack-page .hc-current-badge,
+html.theme-dark .hc-pack-page .hc-current-badge {
+  background: #263a30 !important;
+  border-color: #466051 !important;
+  color: #a9d7b3 !important;
+}
+
+/* Informasi cairan: tetap bernuansa gold, tetapi teks jelas. */
+body.dark-mode .hc-pack-page .hc-luggage-info,
+.theme-dark-preload body .hc-pack-page .hc-luggage-info,
+html.dark .hc-pack-page .hc-luggage-info,
+html.theme-dark .hc-pack-page .hc-luggage-info {
+  background: #302b20 !important;
+  border-color: #665a3d !important;
+  color: #e1d8bd !important;
+}
+
+body.dark-mode .hc-pack-page .hc-luggage-info > div,
+.theme-dark-preload body .hc-pack-page .hc-luggage-info > div,
+html.dark .hc-pack-page .hc-luggage-info > div,
+html.theme-dark .hc-pack-page .hc-luggage-info > div {
+  color: #e1d8bd !important;
+}
+
+body.dark-mode .hc-pack-page .hc-luggage-info strong,
+.theme-dark-preload body .hc-pack-page .hc-luggage-info strong,
+html.dark .hc-pack-page .hc-luggage-info strong,
+html.theme-dark .hc-pack-page .hc-luggage-info strong {
+  color: #f0dfad !important;
+}
+
+body.dark-mode .hc-pack-page .hc-luggage-info > i,
+.theme-dark-preload body .hc-pack-page .hc-luggage-info > i,
+html.dark .hc-pack-page .hc-luggage-info > i,
+html.theme-dark .hc-pack-page .hc-luggage-info > i {
+  color: #d6b97a !important;
 }
