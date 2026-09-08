@@ -25,13 +25,27 @@
 
 .tabbar {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 8px;
+  overflow-x: auto;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 6px;
   box-shadow: var(--shadow);
+}
+
+.tabbar::-webkit-scrollbar {
+  display: none;
+}
+
+.tab-btn,
+.dropdown-wrap {
+  flex: 0 0 auto;
 }
 
 .tab-btn {
@@ -103,6 +117,41 @@
 
 .dropdown-wrap .dropdown-menu.show {
   display: block;
+}
+
+/* Aturan tampil/sembunyi versi ID (bukan class-scoped ke .dropdown-wrap)
+   supaya tetap berfungsi walau #jenisMenu sudah dipindah keluar dari
+   .dropdown-wrap oleh JS (lihat positionJenisMenu & .jenis-menu-floating
+   di bawah) - selektor class-scoped di atas berhenti berlaku begitu
+   elemen ini bukan lagi anak .dropdown-wrap, jadi butuh aturan ID yang
+   spesifisitasnya lebih tinggi supaya tetap menang dalam kondisi apa pun. */
+#jenisMenu {
+  display: none;
+}
+#jenisMenu.show {
+  display: block;
+}
+
+/* Begitu dropdown "Jenis Haji" dibuka pertama kali, JS (positionJenisMenu
+   di tata-cara.js) memindahkan #jenisMenu jadi anak langsung <body> dan
+   menambahkan kelas ini, supaya dropdown-nya position:fixed mengikuti
+   tombol lewat koordinat yang dihitung JS - meniru pola
+   .search-suggest-box-floating di app.js yang sudah terbukti tidak
+   pernah terpotong/ketutupan di mobile maupun desktop. Karena sudah
+   bukan anak dari .dropdown-wrap lagi, style dasarnya (warna, border,
+   shadow, dst) diulang di sini secara mandiri lewat selektor ID supaya
+   tidak hilang begitu dipindah lokasinya di DOM. */
+#jenisMenu.jenis-menu-floating {
+  position: fixed;
+  z-index: 9999;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  padding: 6px;
+  margin: 0;
+  max-height: 70vh;
+  overflow-y: auto;
 }
 
 .dropdown-wrap .dropdown-item {
@@ -675,98 +724,38 @@
     top: 0;
   }
 
-  /* Redesain tab bar mobile: sebelumnya satu baris yang digeser
-     horizontal, membuat sebagian tab (mis. "Cara Pendaftaran") selalu
-     terpotong di tepi layar tanpa terasa bisa digeser. Sekarang jadi
-     grid yang membungkus rapi (wrap) - semua tab langsung terlihat
-     tanpa perlu digeser sama sekali. */
+  /* Tab bar mobile: dulu dipaksa jadi grid 2 kolom yang membungkus ke
+     beberapa baris (menumpuk). Sekarang dikembalikan jadi SATU baris
+     yang bisa digeser/digulir horizontal (scroll kiri-kanan) supaya
+     rapi dan tidak menumpuk, mirip chip/tab yang umum di tampilan
+     mobile. Scrollbar-nya disembunyikan tapi tetap bisa discroll. */
   .tabbar {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Edge lama */
+  }
+
+  .tabbar::-webkit-scrollbar {
+    display: none; /* Chrome/Safari/Edge modern */
   }
 
   .tab-btn {
-    flex-shrink: 0;
-    width: 100%;
-    justify-content: center;
-    text-align: center;
-    white-space: normal;
-    line-height: 1.25;
-    padding: 10px 8px;
-  }
-
-  /* Selektor "Jenis Haji" berperilaku seperti dropdown/select, bukan tab
-     biasa, jadi diberi baris penuh sendiri supaya nama jenis terpilih
-     (mis. "Haji Tamattu'") + panah tetap nyaman dibaca dan tombolnya
-     tidak berebut tempat dengan tab lain di grid 2 kolom. */
-  /* Tab "Pengertian" dilebarkan jadi satu baris penuh (bukan cuma
-     setengah kolom grid) supaya sejajar dengan lebar baris "Jenis Haji"
-     di bawahnya - dengan begitu teksnya yang sudah center terlihat
-     benar-benar di tengah kartu, bukan menempel ke kiri. */
-  .tabbar > .tab-btn[data-tab="pengertian"] {
-    grid-column: 1 / -1;
+    flex: 0 0 auto;
+    width: auto;
+    white-space: nowrap;
+    scroll-snap-align: start;
   }
 
   .dropdown-wrap {
-    grid-column: 1 / -1;
-  }
-  .dropdown-wrap .tab-btn {
-    justify-content: flex-start;
-    text-align: left;
+    flex: 0 0 auto;
   }
 
-  /* "Cara Pendaftaran" & "Teknis Pelaksanaan" (tombol yang membuka halaman
-     terpisah) sengaja dipasangkan satu baris penuh berdua saja - baris ini
-     genap 2 kolom jadi otomatis rapi tanpa perlu aturan tambahan. Supaya
-     pasangannya konsisten walau urutan HTML berubah, keduanya dikunci
-     tampil berurutan lewat "order" alih-alih mengandalkan urutan markup. */
-  .tab-btn.tab-btn-link[href="pendaftaran-haji.html"] {
-    order: 3;
-  }
-  .tab-btn.tab-btn-link[href="teknis-pelaksanaan-haji.html"] {
-    order: 4;
-  }
-
-  /* "Ketentuan Haji" adalah tab kelima (ganjil) - kalau dibiarkan default,
-     dia sendirian di baris terakhir dan cuma mengisi setengah lebar,
-     menyisakan kotak kosong di sebelahnya yang terlihat seperti bug.
-     Jadi tab ini dilebarkan penuh satu baris, sama seperti "Pengertian"
-     dan "Jenis Haji" di atasnya, supaya terlihat rapi/disengaja. */
-  .tabbar > .tab-btn[data-tab="ketentuan"] {
-    grid-column: 1 / -1;
-    order: 5;
-  }
-
-  /* Teks nama jenis haji terpilih (mis. "Haji Tamattu'") dipusatkan di
-     tampilan mobile, sejajar dengan tab "Pengertian" yang juga rata
-     tengah. Ikon tetap di kiri & panah tetap di kanan sebagai penanda
-     dropdown, hanya teksnya yang dipusatkan pada ruang yang tersisa. */
-  .tab-btn .jenis-label {
-    text-align: center;
-  }
-
-  /* Label "Jenis Haji" / nama jenis terpilih dipaksa satu baris supaya
-     tinggi pil tab ini tetap sama dengan tab lain di sebelahnya -
-     sebelumnya bikin baris tab jadi jomplang/tidak nyaman dilihat
-     maupun disentuh saat menumpuk 2 baris. */
-  .tab-btn .jenis-label {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    flex: 1 1 auto;
-    min-width: 0;
-  }
-
-  /* Menu dropdown "Jenis Haji" melebar penuh mengikuti lebar tabbar
-     (bukan mepet ke tepi layar seperti sebelumnya) supaya pilihannya
-     nyaman disentuh jari. */
-  .dropdown-wrap .dropdown-menu {
-    left: 0;
-    right: 0;
-    width: 100%;
-    min-width: 0;
-    max-width: none;
+  .dropdown-wrap .dropdown-item {
+    padding: 12px 14px;
   }
 
   .kv-grid {
@@ -1071,4 +1060,936 @@
   .subpage-links {
     grid-template-columns: 1fr;
   }
+}
+
+
+/* ---------- Tabel pada konten Tata Cara ---------- */
+/* Tabel dari konten statis/API tetap mempertahankan isinya, tetapi diberi
+   ruang dan pembungkus horizontal agar tidak merusak layout halaman. */
+.content .tc-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 16px 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.content .tc-table-wrap table {
+  width: 100%;
+  min-width: 620px;
+  margin: 0;
+  border-collapse: collapse;
+}
+
+.content .tc-table-wrap th,
+.content .tc-table-wrap td {
+  padding: 11px 13px;
+  border: 1px solid var(--border);
+  vertical-align: top;
+  text-align: left;
+}
+
+.content .tc-table-wrap th {
+  font-weight: 700;
+  background: var(--tc-emerald-tint);
+  color: var(--text);
+}
+
+@media (max-width: 767.98px) {
+  .content .tc-table-wrap {
+    margin: 14px 0;
+    border-radius: 12px;
+  }
+
+  .content .tc-table-wrap table {
+    min-width: 560px;
+    font-size: 0.86rem;
+  }
+
+  .content .tc-table-wrap th,
+  .content .tc-table-wrap td {
+    padding: 9px 10px;
+  }
+}
+
+
+/* ==========================================================================
+   MOBILE LAYOUT FIX — KHUSUS HALAMAN TATA CARA HAJI
+   Hanya memperbaiki ruang/layout yang terlihat pada mobile.
+   Isi, urutan, alur, data, dan interaksi tidak diubah.
+   ========================================================================== */
+
+/* Cegah satu elemen yang terlalu lebar membuat seluruh halaman bergeser
+   horizontal. Tabel tetap boleh di-scroll di dalam pembungkusnya. */
+body:has(.container[data-layanan="tata-cara-haji"]) {
+  overflow-x: hidden;
+}
+
+.container[data-layanan="tata-cara-haji"],
+.container[data-layanan="tata-cara-haji"] .content,
+.container[data-layanan="tata-cara-haji"] .panel,
+.container[data-layanan="tata-cara-haji"] .card {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Tabel: gunakan lebar ruang yang tersedia terlebih dahulu. Jika isi
+   memang lebih lebar, yang bergerak hanya tabelnya, bukan seluruh halaman. */
+.container[data-layanan="tata-cara-haji"] .tc-table-wrap {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
+}
+
+.container[data-layanan="tata-cara-haji"] .tc-table-wrap table {
+  width: max-content;
+  min-width: 100%;
+  max-width: none;
+  table-layout: auto;
+}
+
+.container[data-layanan="tata-cara-haji"] .tc-table-wrap th,
+.container[data-layanan="tata-cara-haji"] .tc-table-wrap td {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+/* ---------- Ketentuan Haji: 4 tombol dibuat benar-benar seimbang ---------- */
+.container[data-layanan="tata-cara-haji"] .segmented {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.container[data-layanan="tata-cara-haji"] .seg-btn {
+  min-width: 0;
+  max-width: 100%;
+  white-space: nowrap;
+}
+
+@media (max-width: 767.98px) {
+  /* Beri ruang kiri-kanan yang konsisten. */
+  .container[data-layanan="tata-cara-haji"] {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Ketentuan: 4 pilihan tetap satu baris dan tidak menghasilkan
+     tombol "Sunnah" turun sendirian seperti pada screenshot sebelumnya. */
+  .container[data-layanan="tata-cara-haji"] .segmented {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 4px;
+    padding: 4px;
+    border-radius: 18px;
+    overflow: hidden;
+  }
+
+  .container[data-layanan="tata-cara-haji"] .seg-btn {
+    width: 100%;
+    min-width: 0;
+    padding: 9px 5px;
+    font-size: clamp(0.72rem, 2.4vw, 0.84rem);
+    line-height: 1.15;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    border-radius: 999px;
+  }
+
+  .container[data-layanan="tata-cara-haji"] .seg-btn i {
+    flex: 0 0 auto;
+    margin-right: 1px;
+  }
+
+  /* Header panel juga tidak boleh mendorong halaman ke samping. */
+  .container[data-layanan="tata-cara-haji"] .panel-head {
+    min-width: 0;
+  }
+
+  .container[data-layanan="tata-cara-haji"] .panel-head > div {
+    min-width: 0;
+  }
+
+  .container[data-layanan="tata-cara-haji"] .panel-head .sub {
+    overflow-wrap: anywhere;
+  }
+
+  /* Card pada mobile sedikit lebih lega tanpa mengubah ukuran desktop. */
+  .container[data-layanan="tata-cara-haji"] .card {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 399.98px) {
+  .container[data-layanan="tata-cara-haji"] .segmented {
+    gap: 3px;
+    padding: 3px;
+  }
+
+  .container[data-layanan="tata-cara-haji"] .seg-btn {
+    padding: 8px 3px;
+    font-size: 0.70rem;
+    gap: 2px;
+  }
+
+  .container[data-layanan="tata-cara-haji"] .seg-btn i {
+    font-size: 0.9em;
+  }
+}
+
+
+/* ==========================================================================
+   MOBILE FIX — TABEL PENGERTIAN HAJI vs UMRAH
+   Hanya mengatur layout responsive. Isi dan urutan data tetap sama.
+   Di desktop tabel tetap 3 kolom. Di mobile tabel TIDAK dipecah menjadi
+   kartu/baris bertumpuk; tabel tetap 3 kolom dan dapat digeser horizontal
+   di dalam area tabel.
+   ========================================================================== */
+
+.container[data-layanan="tata-cara-haji"] .compare-grid {
+  min-width: 0;
+}
+
+@media (max-width: 767.98px) {
+  .container[data-layanan="tata-cara-haji"] .compare-grid {
+    display: grid;
+    grid-template-columns: 112px minmax(300px, 1fr) minmax(300px, 1fr);
+    width: 100%;
+    min-width: 712px;
+    max-width: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    box-sizing: border-box;
+    border-radius: 14px;
+  }
+
+  .container[data-layanan="tata-cara-haji"] .compare-grid > div {
+    min-width: 0;
+    overflow-wrap: break-word;
+    word-break: normal;
+    padding: 12px 13px;
+    font-size: 0.84rem;
+    line-height: 1.55;
+  }
+
+  .container[data-layanan="tata-cara-haji"] .compare-grid > div:nth-child(3n + 1) {
+    font-size: 0.78rem;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .container[data-layanan="tata-cara-haji"] .compare-grid .ch-haji,
+  .container[data-layanan="tata-cara-haji"] .compare-grid .ch-umrah {
+    font-size: 0.86rem;
+    white-space: nowrap;
+  }
+}
+
+/* HP sangat kecil: sedikit lebih ringkas, tetapi struktur 3 kolom tetap sama. */
+@media (max-width: 399.98px) {
+  .container[data-layanan="tata-cara-haji"] .compare-grid {
+    grid-template-columns: 104px minmax(280px, 1fr) minmax(280px, 1fr);
+    min-width: 664px;
+  }
+
+  .container[data-layanan="tata-cara-haji"] .compare-grid > div {
+    padding: 11px 11px;
+    font-size: 0.81rem;
+  }
+}
+
+/* ---------- Dark mode: teks tabel tetap kontras dan mudah dibaca ---------- */
+body.dark-mode .container[data-layanan="tata-cara-haji"] .compare-grid > div,
+.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .compare-grid > div {
+  color: var(--text);
+  border-color: var(--border);
+}
+
+body.dark-mode .container[data-layanan="tata-cara-haji"] .compare-grid > div:nth-child(3n + 1),
+.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .compare-grid > div:nth-child(3n + 1) {
+  color: var(--text);
+  background: color-mix(in srgb, var(--surface) 82%, var(--bg));
+}
+
+body.dark-mode .container[data-layanan="tata-cara-haji"] .compare-grid .ch-haji,
+.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .compare-grid .ch-haji {
+  color: var(--text);
+  background: color-mix(in srgb, var(--primary) 24%, var(--surface));
+}
+
+body.dark-mode .container[data-layanan="tata-cara-haji"] .compare-grid .ch-umrah,
+.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .compare-grid .ch-umrah {
+  color: var(--text);
+  background: color-mix(in srgb, var(--accent) 22%, var(--surface));
+}
+
+body.dark-mode .container[data-layanan="tata-cara-haji"] .tc-table-wrap,
+.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .tc-table-wrap {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+body.dark-mode .container[data-layanan="tata-cara-haji"] .tc-table-wrap th,
+body.dark-mode .container[data-layanan="tata-cara-haji"] .tc-table-wrap td,
+.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .tc-table-wrap th,
+.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .tc-table-wrap td {
+  color: var(--text);
+  border-color: var(--border);
+}
+
+body.dark-mode .container[data-layanan="tata-cara-haji"] .tc-table-wrap th,
+.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .tc-table-wrap th {
+  background: color-mix(in srgb, var(--primary) 22%, var(--surface));
+}
+
+
+
+/* ==========================================================================
+   FINAL RESPONSIVE FIX — TATA CARA HAJI
+   Khusus layout:
+   1. Perbedaan Haji & Umrah menjadi kartu di mobile, bukan tabel/scroll.
+   2. Tombol navigasi utama dibuat lebih terpusat dan nyaman disentuh.
+   3. Warna teks mengikuti token tema agar tetap terbaca pada dark mode.
+   Isi, urutan, data, dan alur JavaScript TIDAK diubah.
+   ========================================================================== */
+
+/* ---------- Navigasi tab: lebih terpusat ---------- */
+.container[data-layanan="tata-cara-haji"] .tabbar {
+  justify-content: center;
+}
+
+/* ---------- Perbandingan Haji vs Umrah: desktop tetap seperti semula ---------- */
+.container[data-layanan="tata-cara-haji"] .compare-grid {
+  color: var(--text);
+  background: var(--surface);
+}
+
+.container[data-layanan="tata-cara-haji"] .compare-grid > div {
+  color: var(--text);
+}
+
+.container[data-layanan="tata-cara-haji"] .compare-grid > div:nth-child(3n + 1) {
+  color: var(--muted);
+}
+
+.container[data-layanan="tata-cara-haji"] .compare-grid .ch-haji {
+  color: var(--tc-emerald-deep);
+}
+
+.container[data-layanan="tata-cara-haji"] .compare-grid .ch-umrah {
+  color: var(--tc-gold-deep);
+}
+
+/* ---------- Mobile: ubah comparison menjadi kumpulan kartu ---------- */
+@media (max-width: 767.98px) {
+  .container[data-layanan="tata-cara-haji"] .tabbar {
+    width: min(100%, 720px);
+    margin-inline: auto;
+    justify-content: center;
+    flex-wrap: wrap;
+    overflow-x: visible;
+    gap: 6px;
+    padding: 7px;
+  }
+
+  .container[data-layanan="tata-cara-haji"] .tabbar .tab-btn {
+    flex: 0 1 auto;
+    justify-content: center;
+    padding: 10px 13px;
+    min-height: 42px;
+  }
+
+  .container[data-layanan="tata-cara-haji"] .tabbar .dropdown-wrap {
+    flex: 0 1 auto;
+  }
+
+  /* Comparison:
+     setiap fitur menjadi satu blok:
+     [nama fitur]
+     [Haji] [Umrah]
+     sehingga tidak ada teks yang bertumpuk dan tidak perlu scroll
+     horizontal. */
+  .container[data-layanan="tata-cara-haji"] .compare-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    width: 100%;
+    min-width: 0;
+    margin-top: 16px;
+    gap: 0;
+    overflow: hidden;
+    border-radius: 16px;
+    background: var(--surface);
+  }
+
+  .container[data-layanan="tata-cara-haji"] .compare-grid > div {
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 12px 13px;
+    font-size: 0.86rem;
+    line-height: 1.55;
+    overflow-wrap: anywhere;
+    word-break: normal;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Nama aspek/perbedaan dibuat sebagai heading yang membentang penuh. */
+  .container[data-layanan="tata-cara-haji"] .compare-grid > div:nth-child(3n + 1) {
+    grid-column: 1 / -1;
+    padding: 10px 13px 7px;
+    background: var(--bg);
+    color: var(--muted);
+    font-size: 0.74rem;
+    line-height: 1.35;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.035em;
+    border-bottom: 0;
+  }
+
+  /* Haji dan Umrah menjadi dua kartu yang berdampingan. */
+  .container[data-layanan="tata-cara-haji"] .compare-grid .ch-haji,
+  .container[data-layanan="tata-cara-haji"] .compare-grid .ch-umrah {
+    min-width: 0;
+    white-space: normal;
+    font-size: 0.84rem;
+    line-height: 1.55;
+    font-weight: 700;
+  }
+
+  .container[data-layanan="tata-cara-haji"] .compare-grid .ch-haji {
+    background: var(--tc-emerald-tint);
+    color: var(--tc-emerald-deep);
+    border-right: 1px solid var(--border);
+  }
+
+  .container[data-layanan="tata-cara-haji"] .compare-grid .ch-umrah {
+    background: var(--tc-gold-soft);
+    color: var(--tc-gold-deep);
+  }
+
+  /* Isi tiap sisi dibuat lebih ringan daripada heading-nya. */
+  .container[data-layanan="tata-cara-haji"] .compare-grid > div:not(.ch-haji):not(.ch-umrah):not(:nth-child(3n + 1)) {
+    background: var(--surface);
+  }
+
+  /* Dark mode: pastikan teks isi mengikuti warna tema, bukan hitam default. */
+  html.theme-dark-preload .container[data-layanan="tata-cara-haji"] .compare-grid,
+  html.theme-dark .container[data-layanan="tata-cara-haji"] .compare-grid {
+    color: var(--text);
+    background: var(--surface);
+  }
+
+  html.theme-dark-preload .container[data-layanan="tata-cara-haji"] .compare-grid > div,
+  html.theme-dark .container[data-layanan="tata-cara-haji"] .compare-grid > div {
+    color: var(--text);
+    border-color: var(--border);
+  }
+
+  html.theme-dark-preload .container[data-layanan="tata-cara-haji"] .compare-grid > div:nth-child(3n + 1),
+  html.theme-dark .container[data-layanan="tata-cara-haji"] .compare-grid > div:nth-child(3n + 1) {
+    color: var(--muted);
+    background: var(--bg);
+  }
+
+  html.theme-dark-preload .container[data-layanan="tata-cara-haji"] .compare-grid .ch-haji,
+  html.theme-dark .container[data-layanan="tata-cara-haji"] .compare-grid .ch-haji {
+    color: var(--tc-emerald-deep);
+    background: var(--tc-emerald-tint);
+  }
+
+  html.theme-dark-preload .container[data-layanan="tata-cara-haji"] .compare-grid .ch-umrah,
+  html.theme-dark .container[data-layanan="tata-cara-haji"] .compare-grid .ch-umrah {
+    color: var(--tc-gold-deep);
+    background: var(--tc-gold-soft);
+  }
+
+  /* Header panel dan tombol ganti jenis tidak terlalu mepet di HP. */
+  .container[data-layanan="tata-cara-haji"] .panel-head {
+    gap: 11px;
+  }
+
+  .container[data-layanan="tata-cara-haji"] .panel-head .sub {
+    color: var(--muted);
+  }
+
+  .container[data-layanan="tata-cara-haji"] .change-type-btn {
+    flex: 0 0 auto;
+    color: var(--tc-emerald-deep);
+    background: var(--surface);
+    border-color: var(--border);
+  }
+}
+
+@media (max-width: 479.98px) {
+  .container[data-layanan="tata-cara-haji"] .tabbar {
+    padding: 6px;
+    gap: 5px;
+  }
+
+  .container[data-layanan="tata-cara-haji"] .tabbar .tab-btn {
+    padding: 9px 10px;
+    font-size: 0.82rem;
+  }
+
+  .container[data-layanan="tata-cara-haji"] .compare-grid > div {
+    padding: 11px 10px;
+    font-size: 0.82rem;
+  }
+
+  .container[data-layanan="tata-cara-haji"] .compare-grid > div:nth-child(3n + 1) {
+    padding: 9px 10px 6px;
+    font-size: 0.70rem;
+  }
+
+  .container[data-layanan="tata-cara-haji"] .compare-grid .ch-haji,
+  .container[data-layanan="tata-cara-haji"] .compare-grid .ch-umrah {
+    font-size: 0.80rem;
+  }
+}
+
+
+/* ==========================================================================
+   FINAL PATCH V2 — TATA CARA HAJI
+   Permintaan:
+   - Mobile tab/tombol kembali SATU BARIS dan bisa digeser horizontal.
+   - Tidak wrap/menumpuk ke beberapa baris.
+   - Dark mode: teks dan ikon di halaman Tata Cara Haji tetap kontras.
+   - Tidak mengubah HTML, isi, data, JS, urutan, atau alur.
+   ========================================================================== */
+
+/* Desktop: tab tetap nyaman dan terpusat. */
+.tabbar-wrap .tabbar {
+  justify-content: center;
+}
+
+/* MOBILE:
+   Jangan wrap. Semua tombol tetap satu baris dan pengguna dapat menggeser
+   kiri-kanan. */
+@media (max-width: 767.98px) {
+  .tabbar-wrap .tabbar {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: flex-start !important;
+    align-items: center;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: auto !important;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    scroll-snap-type: x proximity;
+    padding: 6px;
+    gap: 8px;
+  }
+
+  .tabbar-wrap .tabbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tabbar-wrap .tab-btn,
+  .tabbar-wrap .dropdown-wrap {
+    flex: 0 0 auto !important;
+    width: auto !important;
+    min-width: max-content;
+  }
+
+  .tabbar-wrap .tab-btn {
+    white-space: nowrap !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    scroll-snap-align: start;
+  }
+
+  .tabbar-wrap .dropdown-wrap {
+    display: block;
+  }
+
+  .tabbar-wrap .dropdown-wrap .tab-btn {
+    width: auto !important;
+  }
+}
+
+/* HP sangat kecil: tombol tetap satu baris, hanya padding diperkecil. */
+@media (max-width: 399.98px) {
+  .tabbar-wrap .tabbar {
+    gap: 6px;
+    padding: 5px;
+  }
+
+  .tabbar-wrap .tab-btn {
+    padding: 9px 11px;
+    font-size: 0.82rem;
+  }
+}
+
+/* ==========================================================================
+   DARK MODE — Tata Cara Haji
+   Beberapa elemen halaman memiliki warna yang berasal dari style/komponen
+   lain. Paksa elemen teks utama mengikuti token tema saat dark mode.
+   ========================================================================== */
+
+body.dark-mode .section .container[data-layanan="tata-cara-haji"],
+.theme-dark-preload body .section .container[data-layanan="tata-cara-haji"] {
+  color: var(--text);
+}
+
+body.dark-mode .container[data-layanan="tata-cara-haji"] .panel,
+body.dark-mode .container[data-layanan="tata-cara-haji"] .panel *,
+body.dark-mode .container[data-layanan="tata-cara-haji"] .card,
+body.dark-mode .container[data-layanan="tata-cara-haji"] .card *,
+.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .panel,
+.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .panel *,
+.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .card,
+.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .card * {
+  border-color: var(--border);
+}
+
+body.dark-mode .container[data-layanan="tata-cara-haji"] h1,
+body.dark-mode .container[data-layanan="tata-cara-haji"] h2,
+body.dark-mode .container[data-layanan="tata-cara-haji"] h3,
+body.dark-mode .container[data-layanan="tata-cara-haji"] h4,
+body.dark-mode .container[data-layanan="tata-cara-haji"] h5,
+body.dark-mode .container[data-layanan="tata-cara-haji"] h6,
+body.dark-mode .container[data-layanan="tata-cara-haji"] p,
+body.dark-mode .container[data-layanan="tata-cara-haji"] li,
+body.dark-mode .container[data-layanan="tata-cara-haji"] strong,
+body.dark-mode .container[data-layanan="tata-cara-haji"] label,
+.theme-dark-preload body .container[data-layanan="tata-cara-haji"] h1,
+.theme-dark-preload body .container[data-layanan="tata-cara-haji"] h2,
+.theme-dark-preload body .container[data-layanan="tata-cara-haji"] h3,
+.theme-dark-preload body .container[data-layanan="tata-cara-haji"] h4,
+.theme-dark-preload body .container[data-layanan="tata-cara-haji"] h5,
+.theme-dark-preload body .container[data-layanan="tata-cara-haji"] h6,
+.theme-dark-preload body .container[data-layanan="tata-cara-haji"] p,
+.theme-dark-preload body .container[data-layanan="tata-cara-haji"] li,
+.theme-dark-preload body .container[data-layanan="tata-cara-haji"] strong,
+.theme-dark-preload body .container[data-layanan="tata-cara-haji"] label {
+  color: var(--text);
+}
+
+/* Teks sekunder tetap sedikit lebih lembut, tetapi tidak gelap. */
+body.dark-mode .container[data-layanan="tata-cara-haji"] .sub,
+body.dark-mode .container[data-layanan="tata-cara-haji"] .muted,
+body.dark-mode .container[data-layanan="tata-cara-haji"] .lead-muted,
+body.dark-mode .container[data-layanan="tata-cara-haji"] .small,
+.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .sub,
+.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .muted,
+.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .lead-muted,
+.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .small {
+  color: var(--muted) !important;
+}
+
+/* Tombol/tab dark mode. */
+body.dark-mode .container[data-layanan="tata-cara-haji"] .tabbar,
+.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .tabbar {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+body.dark-mode .container[data-layanan="tata-cara-haji"] .tab-btn,
+.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .tab-btn {
+  color: var(--text);
+}
+
+body.dark-mode .container[data-layanan="tata-cara-haji"] .tab-btn:hover,
+.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .tab-btn:hover {
+  background: var(--tc-emerald-tint);
+  color: var(--text);
+}
+
+body.dark-mode .container[data-layanan="tata-cara-haji"] .tab-btn.active,
+.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .tab-btn.active {
+  color: #fff;
+}
+
+/* Comparison Haji/Umrah — tetap terang dibaca di dark mode. */
+body.dark-mode .container[data-layanan="tata-cara-haji"] .compare-grid > div,
+.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .compare-grid > div {
+  color: var(--text);
+  border-color: var(--border);
+}
+
+body.dark-mode .container[data-layanan="tata-cara-haji"] .compare-grid > div:nth-child(3n + 1),
+.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .compare-grid > div:nth-child(3n + 1) {
+  color: var(--muted);
+  background: color-mix(in srgb, var(--surface) 86%, var(--bg));
+}
+
+body.dark-mode .container[data-layanan="tata-cara-haji"] .compare-grid .ch-haji,
+.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .compare-grid .ch-haji {
+  color: var(--text);
+  background: color-mix(in srgb, var(--primary) 24%, var(--surface));
+}
+
+body.dark-mode .container[data-layanan="tata-cara-haji"] .compare-grid .ch-umrah,
+.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .compare-grid .ch-umrah {
+  color: var(--text);
+  background: color-mix(in srgb, var(--accent) 22%, var(--surface));
+}
+
+/* Link pada isi tetap terbaca. */
+body.dark-mode .container[data-layanan="tata-cara-haji"] a:not(.tab-btn),
+.theme-dark-preload body .container[data-layanan="tata-cara-haji"] a:not(.tab-btn) {
+  color: var(--accent-strong);
+}
+
+body.dark-mode .container[data-layanan="tata-cara-haji"] a:not(.tab-btn):hover,
+.theme-dark-preload body .container[data-layanan="tata-cara-haji"] a:not(.tab-btn):hover {
+  color: var(--accent);
+}
+
+
+/* ==========================================================================
+   FIX DARK MODE — CATATAN TATA CARA HAJI
+   Hanya warna note/catatan. Isi dan alur tidak diubah.
+   ========================================================================== */
+html.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .reg-note,
+body.dark-mode .container[data-layanan="tata-cara-haji"] .reg-note,
+html.dark .container[data-layanan="tata-cara-haji"] .reg-note,
+html.theme-dark .container[data-layanan="tata-cara-haji"] .reg-note {
+  background: #302b20 !important;
+  color: #e7dcc1 !important;
+  border: 1px solid #665a3d;
+}
+
+html.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .reg-note *,
+body.dark-mode .container[data-layanan="tata-cara-haji"] .reg-note *,
+html.dark .container[data-layanan="tata-cara-haji"] .reg-note *,
+html.theme-dark .container[data-layanan="tata-cara-haji"] .reg-note * {
+  color: inherit !important;
+}
+
+html.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .reg-note strong,
+body.dark-mode .container[data-layanan="tata-cara-haji"] .reg-note strong,
+html.dark .container[data-layanan="tata-cara-haji"] .reg-note strong,
+html.theme-dark .container[data-layanan="tata-cara-haji"] .reg-note strong {
+  color: #f1e6c9 !important;
+}
+
+
+/* ==========================================================================
+   FINAL DARK MODE FIX — INFO TAMBAHAN / CATATAN TATA CARA HAJI
+   Catatan yang tampil pada kartu manasik menggunakan .info-box, bukan
+   .reg-note. Hanya warna tampilan yang diperbaiki.
+   ========================================================================== */
+html.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .info-box,
+body.dark-mode .container[data-layanan="tata-cara-haji"] .info-box,
+html.dark .container[data-layanan="tata-cara-haji"] .info-box,
+html.theme-dark .container[data-layanan="tata-cara-haji"] .info-box {
+  background: #2a302c !important;
+  color: #e6ece8 !important;
+  border: 1px solid #48564d !important;
+}
+
+html.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .info-box *,
+body.dark-mode .container[data-layanan="tata-cara-haji"] .info-box *,
+html.dark .container[data-layanan="tata-cara-haji"] .info-box *,
+html.theme-dark .container[data-layanan="tata-cara-haji"] .info-box * {
+  color: #e6ece8 !important;
+}
+
+html.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .info-box b,
+body.dark-mode .container[data-layanan="tata-cara-haji"] .info-box b,
+html.dark .container[data-layanan="tata-cara-haji"] .info-box b,
+html.theme-dark .container[data-layanan="tata-cara-haji"] .info-box b {
+  color: #e2bd68 !important;
+}
+
+html.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .info-box b i,
+body.dark-mode .container[data-layanan="tata-cara-haji"] .info-box b i,
+html.dark .container[data-layanan="tata-cara-haji"] .info-box b i,
+html.theme-dark .container[data-layanan="tata-cara-haji"] .info-box b i {
+  color: #e2bd68 !important;
+}
+
+
+/* ==========================================================================
+   FINAL PATCH — DARK MODE TATA CARA HAJI
+   Hanya memperbaiki keterbacaan tombol saat hover/focus/active.
+   Isi dan alur tidak diubah.
+   ========================================================================== */
+html.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .tab-btn:hover,
+html.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .tab-btn:focus,
+html.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .tab-btn:focus-visible,
+body.dark-mode .container[data-layanan="tata-cara-haji"] .tab-btn:hover,
+body.dark-mode .container[data-layanan="tata-cara-haji"] .tab-btn:focus,
+body.dark-mode .container[data-layanan="tata-cara-haji"] .tab-btn:focus-visible,
+html.dark .container[data-layanan="tata-cara-haji"] .tab-btn:hover,
+html.dark .container[data-layanan="tata-cara-haji"] .tab-btn:focus,
+html.dark .container[data-layanan="tata-cara-haji"] .tab-btn:focus-visible,
+html.theme-dark .container[data-layanan="tata-cara-haji"] .tab-btn:hover,
+html.theme-dark .container[data-layanan="tata-cara-haji"] .tab-btn:focus,
+html.theme-dark .container[data-layanan="tata-cara-haji"] .tab-btn:focus-visible {
+  background: #315044 !important;
+  color: #eef5ef !important;
+  -webkit-text-fill-color: #eef5ef !important;
+}
+
+html.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .tab-btn:hover i,
+html.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .tab-btn:focus i,
+html.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .tab-btn:focus-visible i,
+body.dark-mode .container[data-layanan="tata-cara-haji"] .tab-btn:hover i,
+body.dark-mode .container[data-layanan="tata-cara-haji"] .tab-btn:focus i,
+body.dark-mode .container[data-layanan="tata-cara-haji"] .tab-btn:focus-visible i,
+html.dark .container[data-layanan="tata-cara-haji"] .tab-btn:hover i,
+html.dark .container[data-layanan="tata-cara-haji"] .tab-btn:focus i,
+html.dark .container[data-layanan="tata-cara-haji"] .tab-btn:focus-visible i {
+  color: #eef5ef !important;
+}
+
+/* Tombol aktif tetap memiliki kontras paling kuat. */
+html.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .tab-btn.active,
+body.dark-mode .container[data-layanan="tata-cara-haji"] .tab-btn.active,
+html.dark .container[data-layanan="tata-cara-haji"] .tab-btn.active,
+html.theme-dark .container[data-layanan="tata-cara-haji"] .tab-btn.active {
+  background: #7fa58a !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+/* Dropdown Jenis Haji tetap terbaca saat dark mode. */
+html.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .dropdown-menu,
+body.dark-mode .container[data-layanan="tata-cara-haji"] .dropdown-menu,
+html.dark .container[data-layanan="tata-cara-haji"] .dropdown-menu,
+html.theme-dark .container[data-layanan="tata-cara-haji"] .dropdown-menu {
+  background: #24382f !important;
+  border-color: #365246 !important;
+}
+
+html.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .dropdown-menu .dropdown-item,
+body.dark-mode .container[data-layanan="tata-cara-haji"] .dropdown-menu .dropdown-item,
+html.dark .container[data-layanan="tata-cara-haji"] .dropdown-menu .dropdown-item,
+html.theme-dark .container[data-layanan="tata-cara-haji"] .dropdown-menu .dropdown-item {
+  color: #eef5ef !important;
+}
+
+html.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .dropdown-menu .dropdown-item:hover,
+body.dark-mode .container[data-layanan="tata-cara-haji"] .dropdown-menu .dropdown-item:hover,
+html.dark .container[data-layanan="tata-cara-haji"] .dropdown-menu .dropdown-item:hover,
+html.theme-dark .container[data-layanan="tata-cara-haji"] .dropdown-menu .dropdown-item:hover {
+  background: #315044 !important;
+  color: #ffffff !important;
+}
+
+
+/* ==========================================================================
+   DARK MODE COLOR PATCH — TATA CARA HAJI
+   Hanya memperbaiki keterbacaan kotak catatan/info saat dark mode.
+   Tidak mengubah isi, HTML, JavaScript, data, urutan, atau alur.
+   ========================================================================== */
+
+body.dark-mode .reg-note,
+.theme-dark-preload body .reg-note,
+html.dark .reg-note,
+html.theme-dark .reg-note,
+html.theme-dark-preload body .reg-note {
+  background: #302b20 !important;
+  color: #e4ddca !important;
+  border: 1px solid #665a3d !important;
+}
+
+body.dark-mode .reg-note *,
+.theme-dark-preload body .reg-note *,
+html.dark .reg-note *,
+html.theme-dark .reg-note *,
+html.theme-dark-preload body .reg-note * {
+  color: #e4ddca !important;
+}
+
+body.dark-mode .reg-note strong,
+.theme-dark-preload body .reg-note strong,
+html.dark .reg-note strong,
+html.theme-dark .reg-note strong,
+html.theme-dark-preload body .reg-note strong {
+  color: #f0dfad !important;
+}
+
+body.dark-mode .reg-note i,
+.theme-dark-preload body .reg-note i,
+html.dark .reg-note i,
+html.theme-dark .reg-note i,
+html.theme-dark-preload body .reg-note i {
+  color: #d6b97a !important;
+}
+
+/* ========================================================================== 
+   FINAL UNIFIED NOTE COLORS — TATA CARA HAJI
+   Hanya menyamakan tampilan kotak catatan/info.
+   Tidak mengubah isi, data, JavaScript, urutan, atau alur halaman.
+   ========================================================================== */
+
+/* Mode terang: semua catatan memakai warna yang sama dengan .reg-note. */
+.container[data-layanan="tata-cara-haji"] .reg-note,
+.container[data-layanan="tata-cara-haji"] .info-box,
+.container[data-layanan="tata-cara-haji"] .consequence-banner,
+.container[data-layanan="tata-cara-haji"] .seg-panel[data-theme="rukun"] .consequence-banner,
+.container[data-layanan="tata-cara-haji"] .seg-panel[data-theme="wajib"] .consequence-banner,
+.container[data-layanan="tata-cara-haji"] .seg-panel[data-theme="sunnah"] .consequence-banner {
+  background: var(--tc-gold-soft) !important;
+  color: var(--text) !important;
+}
+
+.container[data-layanan="tata-cara-haji"] .info-box b {
+  color: var(--tc-gold-deep) !important;
+}
+
+/* Mode gelap: gunakan warna note pendaftaran yang sudah diperbaiki,
+   sehingga info tambahan, catatan teknis, dan catatan ketentuan identik. */
+html.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .reg-note,
+body.dark-mode .container[data-layanan="tata-cara-haji"] .reg-note,
+html.dark .container[data-layanan="tata-cara-haji"] .reg-note,
+html.theme-dark .container[data-layanan="tata-cara-haji"] .reg-note,
+html.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .info-box,
+body.dark-mode .container[data-layanan="tata-cara-haji"] .info-box,
+html.dark .container[data-layanan="tata-cara-haji"] .info-box,
+html.theme-dark .container[data-layanan="tata-cara-haji"] .info-box,
+html.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .consequence-banner,
+body.dark-mode .container[data-layanan="tata-cara-haji"] .consequence-banner,
+html.dark .container[data-layanan="tata-cara-haji"] .consequence-banner,
+html.theme-dark .container[data-layanan="tata-cara-haji"] .consequence-banner {
+  background: #302b20 !important;
+  color: #e7dcc1 !important;
+  border: 1px solid #665a3d !important;
+}
+
+html.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .reg-note *,
+body.dark-mode .container[data-layanan="tata-cara-haji"] .reg-note *,
+html.dark .container[data-layanan="tata-cara-haji"] .reg-note *,
+html.theme-dark .container[data-layanan="tata-cara-haji"] .reg-note *,
+html.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .info-box *,
+body.dark-mode .container[data-layanan="tata-cara-haji"] .info-box *,
+html.dark .container[data-layanan="tata-cara-haji"] .info-box *,
+html.theme-dark .container[data-layanan="tata-cara-haji"] .info-box *,
+html.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .consequence-banner *,
+body.dark-mode .container[data-layanan="tata-cara-haji"] .consequence-banner *,
+html.dark .container[data-layanan="tata-cara-haji"] .consequence-banner *,
+html.theme-dark .container[data-layanan="tata-cara-haji"] .consequence-banner * {
+  color: #e7dcc1 !important;
+}
+
+html.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .info-box b,
+body.dark-mode .container[data-layanan="tata-cara-haji"] .info-box b,
+html.dark .container[data-layanan="tata-cara-haji"] .info-box b,
+html.theme-dark .container[data-layanan="tata-cara-haji"] .info-box b,
+html.theme-dark-preload body .container[data-layanan="tata-cara-haji"] .info-box b i,
+body.dark-mode .container[data-layanan="tata-cara-haji"] .info-box b i,
+html.dark .container[data-layanan="tata-cara-haji"] .info-box b i,
+html.theme-dark .container[data-layanan="tata-cara-haji"] .info-box b i {
+  color: #f1e6c9 !important;
 }
